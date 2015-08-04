@@ -2,7 +2,7 @@
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
- <display-name>jbase</display-name>
+ <display-name>asset</display-name>
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:spring.xml,classpath:spring-ehcache.xml,classpath:spring-hibernate.xml,classpath:spring-druid.xml<!-- classpath:spring-tasks.xml --></param-value>
@@ -135,9 +135,4 @@
     <error-code>500</error-code>
     <location>/error/500.jsp</location>
   </error-page>
-  
-  <!-- 定时获取可接入令牌 -->
-	<listener>
-        <listener-class>jb.listener.TokenListener</listener-class>
-	</listener>
 </web-app>
