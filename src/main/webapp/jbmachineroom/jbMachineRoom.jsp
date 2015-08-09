@@ -204,38 +204,23 @@
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit : true,border : false">
-		<div data-options="region:'north',title:'查询条件',border:false" style="height: 160px; overflow: hidden;">
+		<div data-options="region:'north',title:'查询条件',border:false" style="height: 70px; overflow: hidden;">
 			<form id="searchForm">
 				<table class="table table-hover table-condensed" style="display: none;">
-						<tr>	
-							<th><%=TjbMachineRoom.ALIAS_NAME%></th>	
-							<td>
-											<input type="text" name="name" maxlength="36" class="span2"/>
-							</td>
-							<th><%=TjbMachineRoom.ALIAS_IMAGE_PATH%></th>	
-							<td>
-											<input type="text" name="imagePath" maxlength="128" class="span2"/>
-							</td>
-							<th><%=TjbMachineRoom.ALIAS_AREA_CODE%></th>	
-							<td>
-											<jb:select dataType="SL01" name="areaCode"></jb:select>	
-							</td>
-							<th><%=TjbMachineRoom.ALIAS_ADDRESS%></th>	
-							<td>
-											<input type="text" name="address" maxlength="256" class="span2"/>
-							</td>
-						</tr>	
-						<tr>	
-							<th><%=TjbMachineRoom.ALIAS_REMARK%></th>	
-							<td>
-											<input type="text" name="remark" maxlength="256" class="span2"/>
-							</td>
-							<th><%=TjbMachineRoom.ALIAS_ADDTIME%></th>	
-							<td>
-								<input type="text" class="span2" onclick="WdatePicker({dateFmt:'<%=TjbMachineRoom.FORMAT_ADDTIME%>'})" id="addtimeBegin" name="addtimeBegin"/>
-								<input type="text" class="span2" onclick="WdatePicker({dateFmt:'<%=TjbMachineRoom.FORMAT_ADDTIME%>'})" id="addtimeEnd" name="addtimeEnd"/>
-							</td>
-						</tr>	
+					<tr>	
+						<th><%=TjbMachineRoom.ALIAS_NAME%></th>	
+						<td>
+										<input type="text" name="name" maxlength="36" class="span2"/>
+						</td>							
+						<th><%=TjbMachineRoom.ALIAS_AREA_CODE%></th>	
+						<td>
+										<jb:select dataType="SL01" name="areaCode"></jb:select>	
+						</td>	
+						<td>
+						</td>
+						<td>
+						</td>						
+					</tr>							
 				</table>
 			</form>
 		</div>

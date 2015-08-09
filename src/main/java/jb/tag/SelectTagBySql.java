@@ -40,7 +40,7 @@ public class SelectTagBySql extends TagSupport{
     public int doStartTag() throws JspException {  
 		JspWriter out = pageContext.getOut();  		  
         try{
-        	out.print("<select name=\""+name+"\" class=\"easyui-combobox\" data-options=\"width:140,height:29,editable:false,panelHeight:'auto'\">");
+        	out.print("<select name=\""+name+"\" id=\""+name+"\" class=\"easyui-combobox\" data-options=\"width:140,height:29,editable:false,panelHeight:'auto'\">");
         	BasedataServiceI service = Application.getBasedataService();
         	String sql = Application.get(dataType).getDescription();
         	List<Map> baseDataList = service.getSelectMapList(sql, null);

@@ -18,7 +18,9 @@ import jb.service.JbMachineRoomServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 
@@ -97,8 +99,10 @@ public class JbMachineRoomController extends BaseController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public Json add(JbMachineRoom jbMachineRoom) {
+	public Json add(JbMachineRoom jbMachineRoom,HttpServletRequest request,@RequestParam MultipartFile imagePathFile) {
 		Json j = new Json();		
+		String imagPath = uploadFile(request, "machineroom", imagePathFile);
+		jbMachineRoom.setImagePath(imagPath);
 		jbMachineRoomService.add(jbMachineRoom);
 		j.setSuccess(true);
 		j.setMsg("添加成功！");		
