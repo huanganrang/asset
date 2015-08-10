@@ -141,8 +141,10 @@ public class JbMachineRoomController extends BaseController {
 	 */
 	@RequestMapping("/edit")
 	@ResponseBody
-	public Json edit(JbMachineRoom jbMachineRoom) {
+	public Json edit(JbMachineRoom jbMachineRoom,HttpServletRequest request,@RequestParam MultipartFile imagePathFile) {
 		Json j = new Json();		
+		String imagPath = uploadFile(request, "machineroom", imagePathFile);
+		jbMachineRoom.setImagePath(imagPath);
 		jbMachineRoomService.edit(jbMachineRoom);
 		j.setSuccess(true);
 		j.setMsg("编辑成功！");		

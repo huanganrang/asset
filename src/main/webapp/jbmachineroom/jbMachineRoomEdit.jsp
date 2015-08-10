@@ -48,7 +48,7 @@
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
 	<div data-options="region:'center',border:false" title="" style="overflow: hidden;">
-		<form id="form" method="post">
+		<form id="form" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="id" value = "${jbMachineRoom.id}"/>
 			<table class="table table-hover table-condensed">
 				<tr>	
