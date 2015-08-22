@@ -10,6 +10,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 import jb.absx.F;
 import jb.listener.Application;
+import jb.pageModel.BaseData;
 import jb.service.BasedataServiceI;
 
 public class SelectTagBySql extends TagSupport{
@@ -42,20 +43,23 @@ public class SelectTagBySql extends TagSupport{
         try{
         	out.print("<select name=\""+name+"\" id=\""+name+"\" class=\"easyui-combobox\" data-options=\"width:140,height:29,editable:false,panelHeight:'auto'\">");
         	BasedataServiceI service = Application.getBasedataService();
-        	String sql = Application.get(dataType).getDescription();
-        	List<Map> baseDataList = service.getSelectMapList(sql, null);
         	if(!required)
         	out.print("<option value=\"\">    </option>");
-        	String value;
-        	String text;
-        	for(Map bd : baseDataList){
-        		value = bd.get("value").toString();
-        		text = bd.get("text").toString();
-        		if(F.empty(this.value)||!this.value.equals(value)){
-                	out.print("<option value=\""+value+"\">"+text+"</option>");
-        		}else{
-                	out.print("<option value=\""+value+"\" selected=\"selected\">"+text+"</option>");
-        		}
+        	BaseData baseData = Application.get(dataType);
+        	if(baseData != null) {
+	        	String sql = baseData.getDescription();
+	        	List<Map> baseDataList = service.getSelectMapList(sql, null);
+	        	String value;
+	        	String text;
+	        	for(Map bd : baseDataList){
+	        		value = bd.get("value").toString();
+	        		text = bd.get("text").toString();
+	        		if(F.empty(this.value)||!this.value.equals(value)){
+	                	out.print("<option value=\""+value+"\">"+text+"</option>");
+	        		}else{
+	                	out.print("<option value=\""+value+"\" selected=\"selected\">"+text+"</option>");
+	        		}
+	        	}
         	}
         	out.print("</select>");  
         } catch (IOException e) {  
