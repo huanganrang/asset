@@ -3,14 +3,21 @@ function showJTopoToobar(stage){
 	var toobarDiv = $('<div class="jtopo_toolbar">').html(''
 		+'<input type="radio" name="modeRadio" value="normal" checked id="r1"/>'
 		+'<label for="r1"> 默认</label>'
-		+'&nbsp;<input type="radio" name="modeRadio" value="select" id="r2"/><label for="r2"> 框选</label>'
-		+'&nbsp;<input type="radio" name="modeRadio" value="drag" id="r3"/><label for="r3"> 平移</label>'
+//		+'&nbsp;<input type="radio" name="modeRadio" value="select" id="r2"/><label for="r2"> 框选</label>'
+//		+'&nbsp;<input type="radio" name="modeRadio" value="drag" id="r3"/><label for="r3"> 平移</label>'
 		+'&nbsp;<input type="radio" name="modeRadio" value="edit" id="r4"/><label for="r4"> 编辑</label>'
-		+'&nbsp;&nbsp;<input type="button" id="centerButton" value="居中显示"/>'
-		+'<input type="button" id="fullScreenButton" value="全屏显示"/>'
-		+'<input type="button" id="zoomOutButton" value=" 放 大 " />'
-		+'<input type="button" id="zoomInButton" value=" 缩 小 " />'
+		/*+'&nbsp;&nbsp;<input type="button" id="centerButton" value="居中显示"/>'
+		+'<input type="button" id="fullScreenButton" value="全屏显示"/>'*/
+		/*+'<input type="button" id="zoomOutButton" value=" 放 大 " />'
+		+'<input type="button" id="zoomInButton" value=" 缩 小 " />'*/
+		+'<input type="button" id="zoomAlignLeftButton" value="水平对齐" />'
+		+'<input type="button" id="zoomAlignTopButton" value="垂直对齐" />'
+		+'<input type="button" id="zoomDeleteButton" value="删除" />'
 		+'<input type="button" id="zoomCopyButton" value="复制 " />'
+		+'<input type="button" id="zoomCopyAddButton" value="递增复制 " />'
+		+'水平<input type="text" id="zoomCopyLeft" value="10" size="1">'
+		+'垂直<input type="text" id="zoomCopyTop" value="0" size="1">'
+		+'递增量<input type="text" id="zoomCopyAddNum" value="0" size="1">'
 		+'&nbsp;&nbsp;<input type="checkbox" id="zoomCheckbox"/><label for="zoomCheckbox">鼠标缩放</label>'
 		+'&nbsp;&nbsp;<input type="text" id="findText" value="" onkeydown="findButton.click()">'
 		+'<input type="button" id="findButton" value=" 查 询 ">'
@@ -44,7 +51,38 @@ function showJTopoToobar(stage){
 	$('#fullScreenButton').click(function(){
 		runPrefixMethod(stage.canvas, "RequestFullScreen")
 	});
-
+	$('#zoomAlignLeftButton').click(function(){
+		var scene = stage.childs[0];
+		alignNode(scene,false);
+		
+	});
+	function alignNode(scene,isLeft){
+		var nodes = scene.getDisplayedNodes();
+		if(nodes.length<2)return;
+		var firstNode = null;
+		var bound = null;
+		for(var i = 0;i<nodes.length;i++){
+			var node = nodes[i];
+			if(node.selected&&!node.isTool){
+				if(firstNode == null){
+					firstNode = node;
+					bound = firstNode.getBound();
+					continue;
+				}
+				var selfBound = node.getBound();
+				if(isLeft){
+					node.setLocation(bound.left, selfBound.top);
+				}else{
+					node.setLocation(selfBound.left, bound.top);
+				}
+				
+			}
+		}
+	}
+	$('#zoomAlignTopButton').click(function(){
+		var scene = stage.childs[0];
+		alignNode(scene,true);
+	});
 	// 查询
 	$('#findButton').click(function(){
 		var text = $('#findText').val().trim();

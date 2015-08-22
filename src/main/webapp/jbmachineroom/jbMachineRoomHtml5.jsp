@@ -25,14 +25,85 @@
 	}
 	.jtopo_toolbar {
 		background-color: initial;
+		padding-left:initial;
+		padding-top:initial;
+	}
+	.jtopo_toolbar #zoomCopyLeft,#zoomCopyAddNum,#zoomCopyTop{
+		width:20px
 	}
 	
 </style>		
 </head>
 <body>
 <script type="text/javascript">
+var room;
 $(function() {
 	parent.$.messager.progress('close');	
+	
+	var dataGrid = $('#dataGrid').datagrid({
+		url : '${pageContext.request.contextPath}/jbAssetsController/dataGrid',
+		fit : true,
+		//fitColumns : true,
+		border : false,
+		pagination : true,
+		idField : 'id',
+		pageSize : 100,
+		pageList : [ 100,200],
+		sortName : 'id',
+		sortOrder : 'desc',
+		checkOnSelect : false,
+		selectOnCheck : false,
+		nowrap : false,
+		striped : true,
+/* 		rownumbers : true,
+ */		singleSelect : true,
+		columns : [ [ {
+			field : 'id',
+			title : '编号',
+			width : 10,
+			hidden : true
+			}, {
+			field : 'assetNumber',
+			title : '资产编号',
+			width : 100,
+			formatter : function(value, row, index) {
+				var unbiding_show ="block;";
+				var binding_show ="block;";
+				if(row.scope&&row.scope.length>0){
+					unbiding_show = "none;"
+					room.initNode($.parseJSON(row.scope),row.id);
+				}else{
+					binding_show = "none;"
+				}
+				var unbinding = $.formatString('<img onclick="unbinding(\'{0}\',this);" src="{1}" title="取消" style="display:'+binding_show+'"/>', row.id, '${pageContext.request.contextPath}/style/images/extjs_icons/cancel.png');
+				var binding  = $.formatString('<img onclick="bindAroud(\'{0}\',this);" src="{1}" title="绑定" style="display:'+unbiding_show+'"/>', row.id, '${pageContext.request.contextPath}/style/images/extjs_icons/arrow/add.png');	
+				var str = value+""+unbinding+binding;					
+				return str;
+			}
+		} ] ],
+		onLoadSuccess : function() {
+			parent.$.messager.progress('close');
+		}
+	});
+	
+	$('#updateForm').form({
+		url : '${pageContext.request.contextPath}/jbAssetsController/edit',
+		onSubmit : function() {
+			parent.$.messager.progress({
+				title : '提示',
+				text : '数据处理中，请稍后....'
+			});
+			var isValid = $(this).form('validate');
+			if (!isValid) {
+				parent.$.messager.progress('close');
+			}
+			return isValid;
+		},
+		success : function(result) {
+			parent.$.messager.progress('close');		
+		}
+	});
+	
 	//机房选择事件绑定
 	$("#machineRoom").combobox({
 		onSelect: function(obj){
@@ -62,9 +133,42 @@ $(function() {
 					$(img).css("width",realWidth+'px').css("height",realHeight+'px');
 				} */
 			});
+			room.clear();
+			$('#dataGrid').datagrid('load',{
+				parentId: path[0]
+			});
 		}	
 	});	
+	
 });
+
+
+function bindAroud(id,obj){
+	if (id == undefined) {
+		var rows = dataGrid.datagrid('getSelections');
+		id = rows[0].id;
+	}
+	$("#assertId").val(id);
+	room.bindSelect(function(node,params){
+		$("#scope").val(JSON.stringify(node.getBound()));
+		$('#updateForm').submit();
+		
+	},id);
+	$(obj).hide().siblings().show();
+}
+function unbinding(id,obj){
+	if (id == undefined) {
+		var rows = dataGrid.datagrid('getSelections');
+		id = rows[0].id;
+	}
+	$("#assertId").val(id);
+	room.unbindSelect(function(node,params){
+		$("#scope").val("");
+		$('#updateForm').submit();		
+	},id);
+	$(obj).hide().siblings().show();
+}
+
 var buildRoom = function(option){
 	var room = {
 		option :{dragable:false,edit:false},
@@ -78,8 +182,9 @@ var buildRoom = function(option){
 			s0.setLocation(0, 0);
 			s0.zIndex =80;
 			s0.dragable = false;
-			s0.setBound(0,0,850,500);
+			s0.setBound(0,0,1000,500);
 			backendNode = s0;
+			s0.isbackend = true;
 			this.scene.add(backendNode);
 		},
 		init:function(_option){
@@ -94,23 +199,33 @@ var buildRoom = function(option){
 			if(this.option.edit){
 				showJTopoToobar(stage);
 				$("#zoomCopyButton").click(this,this.copyNode);
+				$("#zoomCopyAddButton").click(this,this.copyAddNode);	
+				$("#zoomDeleteButton").click(this,this.deleteNode);	
+				
 			}
 			this.initBackendNode(url);
 			this.stage.add(this.scene);
 		},
-		initNode:function(option){
+		initNode:function(option,assetId){
 			var node = new JTopo.Node();
 			if(option.img)
 			node.setImage(img, true);				
-			node.setLocation(option.x, option.y);
+			node.setLocation(option.left, option.top);
+			if(option.width&&option.height)
+			node.setSize(option.width,option.height);
 			node.zIndex = 100;
-			node.alpha = 0.7;
+			node.alpha = 0.4;
 			node.dragable = this.option.edit||this.option.dragable;
 			this.scene.add(node);
+			if(assetId){
+				node.assetId = assetId;
+			}
 			return node;
 		},
 		initDefaultNode : function(){
-			this.initNode({x:10,y:10});
+			var node = this.initNode({left:10,top:10});
+			node.isTool = true;
+			node.dragable = false;
 		},
 		initDataNode : function(options){			 
 			for(var i = 0;i<options.length;i++){
@@ -121,14 +236,91 @@ var buildRoom = function(option){
 		},
 		copyNode:function(event){
 			var _this = event.data;
+			_this.copyRederNode(_this,1);
+		},
+		deleteNode:function(event){
+			var _this = event.data;
 			var nodes = _this.scene.getDisplayedNodes();
+			for(var i =0;i<nodes.length;i++){
+				var node = nodes[i];
+				if(node.selected&&!node.isTool){
+					_this.scene.remove(node);
+				}
+			}
+		},
+		copyAddNode:function(event){
+			var _this = event.data;
+			var nodes = _this.scene.getDisplayedNodes();
+			var addNum = $("#zoomCopyAddNum").val();
+			if(isNaN(addNum))addNum = 0;
+			addNum++;
+			_this.copyRederNode(_this,addNum);
+		   $("#zoomCopyAddNum").val(addNum);
+		},
+		copyRederNode : function(_this,addNum){
+			var nodes = _this.scene.getDisplayedNodes();
+			var left = $("#zoomCopyLeft").val();
+			var top = $("#zoomCopyTop").val();
+			if(isNaN(left)){left=0;$("#zoomCopyLeft").val(left);}
+			if(isNaN(top)){top=0;$("#zoomCopyTop").val(top);}
+			left = parseInt(left);
+			top = parseInt(top);
 			for(var i =0;i<nodes.length;i++){
 				var oldNode = nodes[i];
 				if(oldNode.selected){
 					var pros = oldNode.getBound();
-					_this.initNode({x:pros.left+10+pros.width,y:pros.top});
+					//console.log(pros);
+					//console.log(left);
+					if(left!=0)
+						pros.left = pros.left + (pros.width+left)*addNum;
+					if(top!=0)
+						pros.top = pros.top + (pros.height+top)*addNum;
+					_this.initNode(pros);
 				}
 			}
+		},
+		bindSelect:function(callBack,params){
+			var nodes = this.scene.getDisplayedNodes();
+			var oneNode;
+			var jj = 0;
+			for(var i =0;i<nodes.length;i++){
+				var node = nodes[i];
+				if(node.selected&&!node.isTool&&!node.assetId){
+					oneNode = node;	
+					jj++;
+				}
+			}
+			if(jj==1){
+				callBack(oneNode,params);
+				oneNode.assetId = params;
+				return true;
+			}else{
+				return false;
+			}
+			
+		},
+		unbindSelect:function(callBack,params){
+			var nodes = this.scene.getDisplayedNodes();
+			var oneNode;
+			for(var i =0;i<nodes.length;i++){
+				var node = nodes[i];
+				if(node.assetId&&node.assetId==params){
+					oneNode = node;	
+					break;
+				}
+			}
+			callBack(oneNode,params);
+			oneNode.assetId = null;
+		},
+		clear : function(){
+			var nodes = this.scene.getDisplayedNodes();
+			for(var i =0;i<nodes.length;i++){
+				var node = nodes[i];
+				if(!node.isTool&&!node.isbackend){
+					this.scene.remove(node);
+				}
+			}
+			
 		}
 	}
 	if(option){
@@ -137,7 +329,7 @@ var buildRoom = function(option){
 	return room;
 }
 $(document).ready(function(){			
-	var room = new buildRoom({canvasId:"canvas",backendUrl:"machineroom_Uubo1439217197812.png",edit:true});
+	room = new buildRoom({canvasId:"canvas",backendUrl:"machineroom_Uubo1439217197812.png",edit:true});
 	room.initDefaultNode();
 	
 	/* var canvas = document.getElementById('canvas');
@@ -258,11 +450,21 @@ $(document).ready(function(){
 			
 		</div>
 		<div data-options="region:'center',border:true">
-			<div style="width:1100px;height:460px;overflow:auto;">
-				
-				 <canvas id='canvas' width='850' height='500'>Canvas not supported</canvas>
+			<div class="easyui-layout" data-options="fit : true,border : false">
+				<div data-options="region:'west',border:false" style="width: 100px; ">
+					<table id="dataGrid"></table>
+					<form id ="updateForm" style="display:none;">
+						<input type="text" id="assertId" name="id">
+						<input type="text" id="scope" name="scope">
+					</form>
+				</div>
+				<div data-options="region:'center',border:false">
+						
+						 <canvas id='canvas' width='1000' height='500'>Canvas not supported</canvas>
+					
+				</div>
+			</div>
 			
-			</div>		
 		</div>
 	</div>
 </body>
