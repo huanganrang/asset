@@ -1,4 +1,4 @@
-﻿package jb.service;
+package jb.service;
 
 import jb.pageModel.JbMachineRoomArea;
 import jb.pageModel.DataGrid;
