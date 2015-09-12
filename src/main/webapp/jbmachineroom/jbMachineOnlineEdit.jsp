@@ -142,6 +142,7 @@
 								var _equip = rows[i];
 								cabinet.parse(_equip).buildFwq(_equip);
 							}
+							creatChart();
 						}
 					});
 				}
@@ -180,6 +181,7 @@
 			equip.dbStatus = cabinet.dbStatus.add;
 			if(cabinet.validate(equip)) {
 				cabinet.buildFwq(equip);
+				creatChart();
 			}
 		};
 
@@ -193,6 +195,7 @@
 				if (cabinet.validate(equip)) {
 					equip.dbStatus = cabinet.dbStatus.edit;
 					cabinet.adjust(equip);
+					creatChart();
 				}
 			}
 		}
@@ -206,6 +209,7 @@
 				cabinet.select(null);
 				selected.image.remove();
 				cabinet.delEquips.push(selected);
+				creatChart();
 			}
 		}
 		//保存
@@ -247,6 +251,128 @@
 
 		}
 		cabinet.load();
+
+		var chart = function(option){
+			var cfg = option||{};
+			var c = $('#'+cfg.id).highcharts({
+				credits : {
+					enabled : false
+				},
+				chart:{type:'column',width:200,height:250},
+				title: {
+					text: cfg.title
+				},
+				subtitle: {
+					text: cfg.subtitle
+				},
+				xAxis:{categories:cfg.categories}
+				,
+				yAxis: {
+					min: 0,
+					title: {
+						text: ''
+					}
+				},
+				tooltip: {
+					headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+					pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+					'<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+					footerFormat: '</table>',
+					shared: true,
+					useHTML: true
+				},
+				plotOptions: {
+					column: {
+						pointPadding: 0.2,
+						borderWidth: 0
+					}
+				},
+				series: [{
+					name: cfg.name,
+					data: cfg.data
+				}]
+			});
+			return c;
+		}
+		function creatChart(){
+			var weightOption = {
+				id:'weight_chart',
+				title: '重量',
+				subtitle: null, categories: new Array(), name: '重量',
+				data:new Array()
+			};
+			var standardPowerOption = {
+				id:'standardPower_chart',
+				title: '标准功率',
+				subtitle: null, categories: new Array(), name: '功率',
+				data:new Array()
+			};
+			var measureOption = {
+				id:'measure_chart',
+				title: '尺寸',
+				subtitle:null, categories: new Array(), name: '尺寸',
+				data:new Array()
+			};
+			var uData = new Array();
+			var uShengyu = cabinet.uplace;
+			for (var i = 0; i < cabinet.equips.length; i++) {
+				var equip = cabinet.equips[i];
+				weightOption.categories.push(equip.assetNumber);
+				standardPowerOption.categories.push(equip.assetNumber);
+				measureOption.categories.push(equip.assetNumber);
+				var weight = equip.weight||0;
+				weightOption.data.push(parseFloat(weight));
+				var measure = equip.measure||0;
+				var standardPower = equip.standardPower||0;
+				measureOption.data.push(parseFloat(measure));
+				standardPowerOption.data.push(parseFloat(standardPower));
+				var uSize = equip.uEnd-equip.uStart+1;
+				uData.push([equip.assetNumber,uSize]);
+				uShengyu = uShengyu - uSize;
+			}
+			uData.push(['空',uShengyu]);
+
+			new chart(weightOption);
+			new chart(standardPowerOption);
+			new chart(measureOption);
+
+			$('#u_chart').highcharts({
+				credits : {
+					enabled : false
+				},
+				chart: {
+					plotBackgroundColor: null,
+					plotBorderWidth: null,
+					plotShadow: false,width:300,height:250
+				},
+				title: {
+					text: 'U位容量图',
+					margin:0,
+					style:{ "fontSize": "12px" }
+				},
+				tooltip: {
+					pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+				},
+				plotOptions: {
+					pie: {
+						allowPointSelect: true,
+						cursor: 'pointer',
+						dataLabels: {
+							enabled: true,
+							color: '#000000',
+							connectorColor: '#000000',
+							distance:10,
+							format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+						}
+					}
+				},
+				series: [{
+					type: 'pie',
+					name: 'U位占比',
+					data: uData
+				}]
+			});
+		}
 	});
 
 </script>
@@ -296,6 +422,7 @@
 							</td>
 						</tr>
 					</table>
+					<div id="u_chart"></div>
 				</div>
 				<div title="其他属性" style="padding:10px">
 					<table class="table table-hover table-condensed">
@@ -362,6 +489,15 @@
 							<td colspan="3">
 								<input class="span2" name="standardPower" type="text"/>
 							</td>
+						</tr>
+					</table>
+					<table>
+						<tr>
+							<td>
+								<div id="measure_chart"></div>
+							</td>
+							<td><div id="weight_chart"></div></td>
+							<td><div id="standardPower_chart"></div></td>
 						</tr>
 					</table>
 
