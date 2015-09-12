@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="../jtopo-0.4.8-min.js"></script>
+    <script type="text/javascript" src="../asset-core.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    var color_red = '255,0,0';
+    var color_green ='0,255,0';
+    var color_yellow = '255,255,0';
+    var room;
+    $(function() {
+        room = new buildRoom({canvasId: "canvas", backendUrl: "machineroom_Uubo1439217197812.png", edit: false});
+        var node1 = room.initNode({"left":202,"top":190,"right":234,"bottom":244,"width":32,"height":54,"rotate":0});
+        var node2 = room.initNode({"left":164,"top":191,"right":196,"bottom":244,"width":32,"height":53,"rotate":0});
+        var node3 = room.initNode({"left":163,"top":307,"right":194,"bottom":366,"width":31,"height":59,"rotate":0});
+        node1.fillColor = color_yellow;
+        node1.number = 1;
+        node2.fillColor = color_yellow;
+        node2.number = 0;
+        node3.fillColor = color_yellow;
+        node3.number = 2;
+
+        //{"left":202,"top":190,"right":234,"bottom":244,"width":32,"height":54,"rotate":0}
+        //{"left":164,"top":191,"right":196,"bottom":244,"width":32,"height":53,"rotate":0}
+        //{"left":163,"top":307,"right":194,"bottom":366,"width":31,"height":59,"rotate":0}
+    });
+    function youhua(){
+        var nodes = room.getSelectedNode();
+        if(nodes.length<2){
+            alert("请选两个以上机柜");
+            return;
+        }
+        nodes.sort(function(a,b){
+            return a.number-b.number;
+        });
+        nodes[0].fillColor = color_red;
+        for(var i = 1;i<nodes.length;i++){
+            nodes[i].fillColor = color_green;
+        }
+    }
+</script>
+<span>
+<canvas id='canvas' width='800' height='500'>Canvas not supported</canvas>
+</span>
+<span style="position:absolute;
+  top:15px;">
+<input type="button" value="空间优化" onclick="youhua()">
+</span>
+</body>
+</html>

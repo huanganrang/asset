@@ -2,7 +2,10 @@ package jb.service;
 
 import jb.pageModel.JbMachineRoom;
 import jb.pageModel.DataGrid;
+import jb.pageModel.JbMachineRoomRemark;
 import jb.pageModel.PageHelper;
+
+import java.util.List;
 
 /**
  * 
@@ -50,5 +53,18 @@ public interface JbMachineRoomServiceI {
 	 * @param id
 	 */
 	public void delete(String id);
+
+	/**
+	 * 修改备注
+	 * @param remarks
+	 */
+	public void updateRemarks(String id,String[] remarks);
+
+	/**
+	 * 获取机房下配置信息
+	 * @param roomId
+	 * @return
+	 */
+	public List<JbMachineRoomRemark> getRemarkList(String roomId);
 
 }

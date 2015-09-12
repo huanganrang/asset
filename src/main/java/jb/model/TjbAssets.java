@@ -172,7 +172,7 @@ public class TjbAssets implements java.io.Serializable,IEntity{
 		this.factory = factory;
 	}
 	
-	@Column(name = "asset_type", unique = false, nullable = true, insertable = true, updatable = true, length = 4)
+	@Column(name = "asset_type", unique = false, nullable = true, insertable = true, updatable = true, length = 10)
 	public java.lang.String getAssetType() {
 		return this.assetType;
 	}

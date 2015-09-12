@@ -9,6 +9,7 @@
 <title>机房模拟部署</title>
 <jsp:include page="../inc.jsp"></jsp:include>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jtopo/jtopo-0.4.8-min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jtopo/asset-core.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jtopo/toolbar.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/jtopo/css/base.css" type="text/css">
 
@@ -37,15 +38,19 @@
 <body>
 <script type="text/javascript">
 var room;
+var dataGrid;
+function getSaveUrl(){
+	return '${pageContext.request.contextPath}/jbMachineRoomController/updateRoomNode';
+}
 $(function() {
 	parent.$.messager.progress('close');	
 	
-	var dataGrid = $('#dataGrid').datagrid({
+	dataGrid = $('#dataGrid').datagrid({
 		url : '${pageContext.request.contextPath}/jbAssetsController/dataGrid',
 		fit : true,
 		//fitColumns : true,
 		border : false,
-		pagination : true,
+		pagination : false,
 		idField : 'id',
 		pageSize : 100,
 		pageList : [ 100,200],
@@ -55,8 +60,7 @@ $(function() {
 		selectOnCheck : false,
 		nowrap : false,
 		striped : true,
-/* 		rownumbers : true,
- */		singleSelect : true,
+		singleSelect : true,
 		columns : [ [ {
 			field : 'id',
 			title : '编号',
@@ -67,8 +71,8 @@ $(function() {
 			title : '资产编号',
 			width : 100,
 			formatter : function(value, row, index) {
-				var unbiding_show ="block;";
-				var binding_show ="block;";
+				var unbiding_show ="inline;";
+				var binding_show ="inline;";
 				if(row.scope&&row.scope.length>0){
 					unbiding_show = "none;"
 					room.initNode($.parseJSON(row.scope),row.id);
@@ -83,7 +87,17 @@ $(function() {
 		} ] ],
 		onLoadSuccess : function() {
 			parent.$.messager.progress('close');
+		},
+		onSelect :function(index,row){
+			setTimeout(function(){
+				room.showSelected(row.id);
+			},500);
+
+		},
+		onDblClickRow :function(index,row){
+			editOnlineFun(row.id);
 		}
+
 	});
 	
 	$('#updateForm').form({
@@ -134,23 +148,61 @@ $(function() {
 				} */
 			});
 			room.clear();
-			$('#dataGrid').datagrid('load',{
+			dataGrid.datagrid('load',{
 				parentId: path[0]
 			});
+			dataGrid.roomId = path[0];
+			initTextNode(dataGrid.roomId);
 		}	
 	});	
 	
 });
 
+function initTextNode(roomId){
+
+	$.ajax({
+		url: '${pageContext.request.contextPath}/jbMachineRoomController/getRemarkList',
+		data: { 'roomId': roomId},
+		dataType: "json",
+		type: "POST",
+		success: function (response) {
+			if(response.success){
+				var datas = response.obj;
+				for(var i = 0;i<datas.length;i++){
+					room.initTextNode($.parseJSON(datas[i].remark));
+				}
+			}
+		}
+
+	});
+}
+
+function getRowData(id){
+	var data = dataGrid.datagrid('getData');
+	data = data.rows;
+	for(var i = 0;i<data.length;i++){
+		if(data[i].id == id){
+			return data[i];
+		}
+	}
+}
 
 function bindAroud(id,obj){
 	if (id == undefined) {
 		var rows = dataGrid.datagrid('getSelections');
 		id = rows[0].id;
 	}
+	var selectedNode = room.getSelectedNode();
+	if(selectedNode.length!=1){
+		alert("绑定时，只能选中一个节点");
+		return;
+	}
 	$("#assertId").val(id);
 	room.bindSelect(function(node,params){
-		$("#scope").val(JSON.stringify(node.getBound()));
+		var json = node.getBound();
+		json.rotate = node.rotate;
+		console.log(json);
+		$("#scope").val(JSON.stringify(json));
 		$('#updateForm').submit();
 		
 	},id);
@@ -169,165 +221,40 @@ function unbinding(id,obj){
 	$(obj).hide().siblings().show();
 }
 
-var buildRoom = function(option){
-	var room = {
-		option :{dragable:false,edit:false},
-		scene : null,
-		stage : null,
-		backendNode : null,
-		container : new Object(),
-		initBackendNode : function(url){
-			var s0 = new JTopo.Node();
-			s0.setImage(url, true);				
-			s0.setLocation(0, 0);
-			s0.zIndex =80;
-			s0.dragable = false;
-			s0.setBound(0,0,1000,500);
-			backendNode = s0;
-			s0.isbackend = true;
-			this.scene.add(backendNode);
-		},
-		init:function(_option){
-			if(!_option)return;
-			$.extend(this.option, _option);
-			var url = this.option.backendUrl;
-			var canvas = document.getElementById(this.option.canvasId);
-			var stage = new JTopo.Stage(canvas);			
-			console.log(this);
-			this.stage = stage;
-			this.scene = new JTopo.Scene();	
-			if(this.option.edit){
-				showJTopoToobar(stage);
-				$("#zoomCopyButton").click(this,this.copyNode);
-				$("#zoomCopyAddButton").click(this,this.copyAddNode);	
-				$("#zoomDeleteButton").click(this,this.deleteNode);	
-				
-			}
-			this.initBackendNode(url);
-			this.stage.add(this.scene);
-		},
-		initNode:function(option,assetId){
-			var node = new JTopo.Node();
-			if(option.img)
-			node.setImage(img, true);				
-			node.setLocation(option.left, option.top);
-			if(option.width&&option.height)
-			node.setSize(option.width,option.height);
-			node.zIndex = 100;
-			node.alpha = 0.4;
-			node.dragable = this.option.edit||this.option.dragable;
-			this.scene.add(node);
-			if(assetId){
-				node.assetId = assetId;
-			}
-			return node;
-		},
-		initDefaultNode : function(){
-			var node = this.initNode({left:10,top:10});
-			node.isTool = true;
-			node.dragable = false;
-		},
-		initDataNode : function(options){			 
-			for(var i = 0;i<options.length;i++){
-				var option = options[i];
-				var node = initNode(option);
-				this.container[option.key] = {data:option,node:node};
-			}
-		},
-		copyNode:function(event){
-			var _this = event.data;
-			_this.copyRederNode(_this,1);
-		},
-		deleteNode:function(event){
-			var _this = event.data;
-			var nodes = _this.scene.getDisplayedNodes();
-			for(var i =0;i<nodes.length;i++){
-				var node = nodes[i];
-				if(node.selected&&!node.isTool){
-					_this.scene.remove(node);
-				}
-			}
-		},
-		copyAddNode:function(event){
-			var _this = event.data;
-			var nodes = _this.scene.getDisplayedNodes();
-			var addNum = $("#zoomCopyAddNum").val();
-			if(isNaN(addNum))addNum = 0;
-			addNum++;
-			_this.copyRederNode(_this,addNum);
-		   $("#zoomCopyAddNum").val(addNum);
-		},
-		copyRederNode : function(_this,addNum){
-			var nodes = _this.scene.getDisplayedNodes();
-			var left = $("#zoomCopyLeft").val();
-			var top = $("#zoomCopyTop").val();
-			if(isNaN(left)){left=0;$("#zoomCopyLeft").val(left);}
-			if(isNaN(top)){top=0;$("#zoomCopyTop").val(top);}
-			left = parseInt(left);
-			top = parseInt(top);
-			for(var i =0;i<nodes.length;i++){
-				var oldNode = nodes[i];
-				if(oldNode.selected){
-					var pros = oldNode.getBound();
-					//console.log(pros);
-					//console.log(left);
-					if(left!=0)
-						pros.left = pros.left + (pros.width+left)*addNum;
-					if(top!=0)
-						pros.top = pros.top + (pros.height+top)*addNum;
-					_this.initNode(pros);
-				}
-			}
-		},
-		bindSelect:function(callBack,params){
-			var nodes = this.scene.getDisplayedNodes();
-			var oneNode;
-			var jj = 0;
-			for(var i =0;i<nodes.length;i++){
-				var node = nodes[i];
-				if(node.selected&&!node.isTool&&!node.assetId){
-					oneNode = node;	
-					jj++;
-				}
-			}
-			if(jj==1){
-				callBack(oneNode,params);
-				oneNode.assetId = params;
-				return true;
-			}else{
-				return false;
-			}
-			
-		},
-		unbindSelect:function(callBack,params){
-			var nodes = this.scene.getDisplayedNodes();
-			var oneNode;
-			for(var i =0;i<nodes.length;i++){
-				var node = nodes[i];
-				if(node.assetId&&node.assetId==params){
-					oneNode = node;	
-					break;
-				}
-			}
-			callBack(oneNode,params);
-			oneNode.assetId = null;
-		},
-		clear : function(){
-			var nodes = this.scene.getDisplayedNodes();
-			for(var i =0;i<nodes.length;i++){
-				var node = nodes[i];
-				if(!node.isTool&&!node.isbackend){
-					this.scene.remove(node);
-				}
-			}
-			
-		}
+function editOnlineFun(id) {
+	if (id == undefined) {
+		var rows = dataGrid.datagrid('getSelections');
+		id = rows[0].id;
 	}
-	if(option){
-		room.init(option);
-	}
-	return room;
+	parent.$.modalDialog({
+		title : '服务器上架',
+		width : 780,
+		height : 500,
+		href : '${pageContext.request.contextPath}/jbMachineRoomController/onlinePage?id=' + id,
+		buttons : [ {
+			text : '上架',
+			handler : function() {
+				parent.$.modalDialog.online();
+			}
+		},{
+			text : '下架',
+			handler : function() {
+				parent.$.modalDialog.offline();
+			}
+		},{
+			text : '调整',
+			handler : function() {
+				parent.$.modalDialog.change();
+			}
+		}, {
+			text : '保存',
+			handler : function() {
+				parent.$.modalDialog.save();
+			}
+		} ]
+	});
 }
+
 $(document).ready(function(){			
 	room = new buildRoom({canvasId:"canvas",backendUrl:"machineroom_Uubo1439217197812.png",edit:true});
 	room.initDefaultNode();
@@ -459,8 +386,8 @@ $(document).ready(function(){
 					</form>
 				</div>
 				<div data-options="region:'center',border:false">
-						
-						 <canvas id='canvas' width='1000' height='500'>Canvas not supported</canvas>
+					<textarea id="jtopo_textfield" style="width: 60px; position: absolute; top: 377px; left: 732px; display: none;" onkeydown="if(event.keyCode==13)this.blur();" value="1"></textarea>
+					<canvas id='canvas' width='1000' height='500'>Canvas not supported</canvas>
 					
 				</div>
 			</div>

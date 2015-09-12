@@ -8,11 +8,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jb.pageModel.Colum;
-import jb.pageModel.JbMachineRoom;
-import jb.pageModel.DataGrid;
-import jb.pageModel.Json;
-import jb.pageModel.PageHelper;
+import jb.pageModel.*;
+import jb.service.JbAssetsServiceI;
 import jb.service.JbMachineRoomServiceI;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +34,9 @@ public class JbMachineRoomController extends BaseController {
 	@Autowired
 	private JbMachineRoomServiceI jbMachineRoomService;
 
+	@Autowired
+	private JbAssetsServiceI jbAssetsService;
+
 
 	/**
 	 * 跳转到JbMachineRoom管理页面
@@ -51,7 +51,6 @@ public class JbMachineRoomController extends BaseController {
 	/**
 	 * 获取JbMachineRoom数据表格
 	 * 
-	 * @param user
 	 * @return
 	 */
 	@RequestMapping("/dataGrid")
@@ -62,7 +61,6 @@ public class JbMachineRoomController extends BaseController {
 	/**
 	 * 获取JbMachineRoom数据表格excel
 	 * 
-	 * @param user
 	 * @return
 	 * @throws NoSuchMethodException 
 	 * @throws SecurityException 
@@ -149,6 +147,43 @@ public class JbMachineRoomController extends BaseController {
 		j.setSuccess(true);
 		j.setMsg("编辑成功！");		
 		return j;
+	}
+
+	@RequestMapping("/updateRoomNode")
+	@ResponseBody
+	public Json updateRoomNode(String roomId,String[] remarks,String[] ids,String[] scopes){
+		Json j = new Json();
+		jbMachineRoomService.updateRemarks(roomId,remarks);
+		for (int i = 0; i < ids.length; i++) {
+			JbAssets jbAssets = new JbAssets();
+			jbAssets.setId(ids[i]);
+			jbAssets.setScope(scopes[i]);
+			jbAssetsService.edit(jbAssets);
+		}
+		j.success();
+		j.setMsg("保存成功");
+		return j;
+	}
+	@RequestMapping("/getRemarkList")
+	@ResponseBody
+	public Json getRemarkList(String roomId){
+		Json j = new Json();
+		j.setObj(jbMachineRoomService.getRemarkList(roomId));
+		j.success();
+		return j;
+	}
+
+	/**
+	 * 资产上架页面
+	 *
+	 * @return
+	 */
+	@RequestMapping("/onlinePage")
+	public String assertOnlinePage(HttpServletRequest request, String id) {
+		JbAssets jbAssets = jbAssetsService.get(id);
+		jbAssets.initAssertIcon();
+		request.setAttribute("jbAssets", jbAssets);
+		return "/jbmachineroom/jbMachineOnlineEdit";
 	}
 
 	/**

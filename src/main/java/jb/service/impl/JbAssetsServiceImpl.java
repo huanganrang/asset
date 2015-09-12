@@ -151,7 +151,6 @@ public class JbAssetsServiceImpl extends BaseServiceImpl<JbAssets> implements Jb
 		TjbAssets t = jbAssetsDao.get(TjbAssets.class, jbAssets.getId());
 		if (t != null) {
 			MyBeanUtils.copyProperties(jbAssets, t, new String[] { "id" , "createdatetime" },true);
-			//t.setModifydatetime(new Date());
 		}
 	}
 

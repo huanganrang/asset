@@ -8,9 +8,12 @@ import java.util.UUID;
 
 import jb.absx.F;
 import jb.dao.JbMachineRoomDaoI;
+import jb.dao.JbMachineRoomRemarkDaoI;
 import jb.model.TjbMachineRoom;
+import jb.model.TjbMachineRoomRemark;
 import jb.pageModel.DataGrid;
 import jb.pageModel.JbMachineRoom;
+import jb.pageModel.JbMachineRoomRemark;
 import jb.pageModel.PageHelper;
 import jb.service.JbMachineRoomServiceI;
 import jb.util.MyBeanUtils;
@@ -24,6 +27,8 @@ public class JbMachineRoomServiceImpl extends BaseServiceImpl<JbMachineRoom> imp
 
 	@Autowired
 	private JbMachineRoomDaoI jbMachineRoomDao;
+	@Autowired
+	private JbMachineRoomRemarkDaoI jbMachineRoomRemarkDao;
 
 	@Override
 	public DataGrid dataGrid(JbMachineRoom jbMachineRoom, PageHelper ph) {
@@ -103,6 +108,37 @@ public class JbMachineRoomServiceImpl extends BaseServiceImpl<JbMachineRoom> imp
 	@Override
 	public void delete(String id) {
 		jbMachineRoomDao.delete(jbMachineRoomDao.get(TjbMachineRoom.class, id));
+	}
+
+	@Override
+	public void updateRemarks(String id,String[] remarks) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("id", id);
+		jbMachineRoomRemarkDao.executeHql("delete from TjbMachineRoomRemark t where t.roomId = :id",params);
+		if(remarks == null) return;
+		for (String remark : remarks) {
+			TjbMachineRoomRemark remarkEntity = new TjbMachineRoomRemark();
+			remarkEntity.setRoomId(id);
+			remarkEntity.setRemark(remark);
+			remarkEntity.setId(UUID.randomUUID().toString());
+			jbMachineRoomRemarkDao.save(remarkEntity);
+		}
+	}
+
+	@Override
+	public List<JbMachineRoomRemark> getRemarkList(String roomId) {
+		List<JbMachineRoomRemark> jbMachineRoomRemarkList = new ArrayList<JbMachineRoomRemark>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("id", roomId);
+		List<TjbMachineRoomRemark> tjbMachineRoomRemarkList = jbMachineRoomRemarkDao.find("from TjbMachineRoomRemark t where t.roomId = :id", params);
+		if(tjbMachineRoomRemarkList!=null){
+			for (TjbMachineRoomRemark tjbMachineRoomRemark : tjbMachineRoomRemarkList) {
+				JbMachineRoomRemark jbMachineRoomRemark = new JbMachineRoomRemark();
+				BeanUtils.copyProperties(tjbMachineRoomRemark,jbMachineRoomRemark);
+				jbMachineRoomRemarkList.add(jbMachineRoomRemark);
+			}
+		}
+		return jbMachineRoomRemarkList;
 	}
 
 }

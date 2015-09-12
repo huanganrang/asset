@@ -10,18 +10,22 @@ function showJTopoToobar(stage){
 		+'<input type="button" id="fullScreenButton" value="全屏显示"/>'*/
 		/*+'<input type="button" id="zoomOutButton" value=" 放 大 " />'
 		+'<input type="button" id="zoomInButton" value=" 缩 小 " />'*/
-		+'<input type="button" id="zoomAlignLeftButton" value="水平对齐" />'
-		+'<input type="button" id="zoomAlignTopButton" value="垂直对齐" />'
+		+'<input type="button" id="zoomAlignRotateLeft" value="↘" title="顺时针旋转"/>'
+		+'<input type="button" id="zoomAlignRotateRight" value="↙" title="逆时针旋转"/>'
+		+'<input type="button" id="zoomAlignLeftButton" value="＝" title="水平对齐" />'
+		+'<input type="button" id="zoomAlignTopButton" value=" ‖ " title="垂直对齐" />'
+		+'<input type="button" id="zoomUpdateSave" value="保存" />'
 		+'<input type="button" id="zoomDeleteButton" value="删除" />'
-		+'<input type="button" id="zoomCopyButton" value="复制 " />'
-		+'<input type="button" id="zoomCopyAddButton" value="递增复制 " />'
+		+'<input type="button" id="zoomCopyButton" value="复制" />'
+		+'<input type="button" id="zoomCopyAddButton" value="复制+" title="递增复制" />'
 		+'水平<input type="text" id="zoomCopyLeft" value="10" size="1">'
 		+'垂直<input type="text" id="zoomCopyTop" value="0" size="1">'
 		+'递增量<input type="text" id="zoomCopyAddNum" value="0" size="1">'
 		+'&nbsp;&nbsp;<input type="checkbox" id="zoomCheckbox"/><label for="zoomCheckbox">鼠标缩放</label>'
 		+'&nbsp;&nbsp;<input type="text" id="findText" value="" onkeydown="findButton.click()">'
 		+'<input type="button" id="findButton" value=" 查 询 ">'
-		+'&nbsp;&nbsp;<input type="button" id="exportButton" value="导出PNG">');
+		+'&nbsp;&nbsp;<input type="button" id="exportButton" value="导出PNG">'
+	);
 		
 	$('#content').prepend(toobarDiv);
 
@@ -55,6 +59,65 @@ function showJTopoToobar(stage){
 		var scene = stage.childs[0];
 		alignNode(scene,false);
 		
+	});
+	$('#zoomUpdateSave').click(function() {
+		if (!dataGrid)return;
+		var roomId = dataGrid.roomId;
+		if (!roomId)return;
+		var scene = stage.childs[0];
+		var nodes = scene.getDisplayedNodes();
+		var remarks = new Array();
+		var scopes = new Array();
+		var ids = new Array();
+		for (var i = 0; i < nodes.length; i++) {
+			var node = nodes[i];
+			if (!node.isTool) {
+				var option = node.getBound();
+				option.rotate = node.rotate;
+				if (node.elementType == 'TextNode') {
+					option.text = node.text;
+					remarks.push(JSON.stringify(option))
+				} else {
+					if (node.assetId) {
+						scopes.push(JSON.stringify(option))
+						ids.push(node.assetId);
+					}
+				}
+			}
+		}
+		$.ajax({
+			url: getSaveUrl(),
+			data: { 'roomId': roomId,'remarks':remarks,'ids':ids,'scopes':scopes},
+			dataType: "json",
+			type: "POST",
+			traditional: true,
+			success: function (response) {
+				alert('Ok');
+			}
+
+		});
+	});
+	$('#zoomAlignRotateLeft').click(function(){
+		var scene = stage.childs[0];
+		var nodes = scene.getDisplayedNodes();
+		for(var i = 0;i<nodes.length;i++){
+			var node = nodes[i];
+			if(node.selected&&!node.isTool){
+				node.rotate +=0.1;
+			}
+		}
+
+	});
+	$('#zoomAlignRotateRight').click(function(){
+		var scene = stage.childs[0];
+		var nodes = scene.getDisplayedNodes();
+		for(var i = 0;i<nodes.length;i++){
+			var node = nodes[i];
+			if(node.selected&&!node.isTool){
+				node.rotate -=0.1;
+			}
+		}
+
 	});
 	function alignNode(scene,isLeft){
 		var nodes = scene.getDisplayedNodes();

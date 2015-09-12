@@ -33,7 +33,7 @@
 	});
 </script>
 <div class="easyui-layout" data-options="fit:true,border:false">
-	<div data-options="region:'center',border:false" title="" style="overflow: hidden;">
+	<div data-options="region:'center',border:false" title="" style="overflow: auto;">
 		<form id="form" method="post">
 				<input type="hidden" name="id" value = "${jbAssets.id}"/>
 			<table class="table table-hover table-condensed">

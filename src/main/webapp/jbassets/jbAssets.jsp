@@ -61,10 +61,6 @@
 				title : '<%=TjbAssets.ALIAS_SECOND_CATEGORY%>',
 				width : 50		
 				}, {
-				field : 'description',
-				title : '<%=TjbAssets.ALIAS_DESCRIPTION%>',
-				width : 50		
-				}, {
 				field : 'factory',
 				title : '<%=TjbAssets.ALIAS_FACTORY%>',
 				width : 50		
@@ -75,10 +71,6 @@
 				}, {
 				field : 'serialNumber',
 				title : '<%=TjbAssets.ALIAS_SERIAL_NUMBER%>',
-				width : 50		
-				}, {
-				field : 'location',
-				title : '<%=TjbAssets.ALIAS_LOCATION%>',
 				width : 50		
 				}, {
 				field : 'deptId',
@@ -125,14 +117,6 @@
 				title : '<%=TjbAssets.ALIAS_PARENT_ID%>',
 				width : 50		
 				}, {
-				field : 'roomAreaId',
-				title : '<%=TjbAssets.ALIAS_ROOM_AREA_ID%>',
-				width : 50		
-				}, {
-				field : 'scope',
-				title : '<%=TjbAssets.ALIAS_SCOPE%>',
-				width : 50		
-				}, {
 				field : 'uplace',
 				title : '<%=TjbAssets.ALIAS_UPLACE%>',
 				width : 50		
@@ -141,10 +125,6 @@
 				title : '<%=TjbAssets.ALIAS_UID%>',
 				width : 50		
 				}, {
-				field : 'addtime',
-				title : '<%=TjbAssets.ALIAS_ADDTIME%>',
-				width : 50		
-			}, {
 				field : 'action',
 				title : '操作',
 				width : 100,
@@ -276,7 +256,7 @@
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit : true,border : false">
-		<div data-options="region:'north',title:'查询条件',border:false" style="height: 160px; overflow: hidden;">
+		<div data-options="region:'north',title:'查询条件',border:false" style="height: 120px; overflow: hidden;">
 			<form id="searchForm">
 				<table class="table table-hover table-condensed" style="display: none;">
 						<tr>	
@@ -292,16 +272,13 @@
 							<td>
 											<jb:select dataType="SC" name="secondCategory"></jb:select>	
 							</td>
-							<th><%=TjbAssets.ALIAS_DESCRIPTION%></th>	
+							<th><%=TjbAssets.ALIAS_FACTORY%></th>
 							<td>
-											<input type="text" name="description" maxlength="512" class="span2"/>
+								<jb:select dataType="FY" name="factory"></jb:select>
 							</td>
 						</tr>	
 						<tr>	
-							<th><%=TjbAssets.ALIAS_FACTORY%></th>	
-							<td>
-											<jb:select dataType="FY" name="factory"></jb:select>	
-							</td>
+
 							<th><%=TjbAssets.ALIAS_ASSET_TYPE%></th>	
 							<td>
 											<jb:select dataType="TN" name="assetType"></jb:select>	
@@ -310,86 +287,13 @@
 							<td>
 											<input type="text" name="serialNumber" maxlength="64" class="span2"/>
 							</td>
-							<th><%=TjbAssets.ALIAS_LOCATION%></th>	
-							<td>
-											<input type="text" name="location" maxlength="128" class="span2"/>
+							<th><%=TjbAssets.ALIAS_DEPT_ID%></th>
+							<td colspan="3">
+								<jb:select dataType="SL02" name="deptId"></jb:select>
 							</td>
+
 						</tr>	
-						<tr>	
-							<th><%=TjbAssets.ALIAS_DEPT_ID%></th>	
-							<td>
-											<jb:select dataType="SL02" name="deptId"></jb:select>	
-							</td>
-							<th><%=TjbAssets.ALIAS_PRINCIPAL%></th>	
-							<td>
-											<input type="text" name="principal" maxlength="36" class="span2"/>
-							</td>
-							<th><%=TjbAssets.ALIAS_BUY_DATE%></th>	
-							<td>
-								<input type="text" class="span2" onclick="WdatePicker({dateFmt:'<%=TjbAssets.FORMAT_BUY_DATE%>'})" id="buyDateBegin" name="buyDateBegin"/>
-								<input type="text" class="span2" onclick="WdatePicker({dateFmt:'<%=TjbAssets.FORMAT_BUY_DATE%>'})" id="buyDateEnd" name="buyDateEnd"/>
-							</td>
-							<th><%=TjbAssets.ALIAS_MAKE_DATE%></th>	
-							<td>
-								<input type="text" class="span2" onclick="WdatePicker({dateFmt:'<%=TjbAssets.FORMAT_MAKE_DATE%>'})" id="makeDateBegin" name="makeDateBegin"/>
-								<input type="text" class="span2" onclick="WdatePicker({dateFmt:'<%=TjbAssets.FORMAT_MAKE_DATE%>'})" id="makeDateEnd" name="makeDateEnd"/>
-							</td>
-						</tr>	
-						<tr>	
-							<th><%=TjbAssets.ALIAS_SUPPLIER%></th>	
-							<td>
-											<input type="text" name="supplier" maxlength="128" class="span2"/>
-							</td>
-							<th><%=TjbAssets.ALIAS_SUPPLIER_PHONE%></th>	
-							<td>
-											<input type="text" name="supplierPhone" maxlength="32" class="span2"/>
-							</td>
-							<th><%=TjbAssets.ALIAS_MEASURE%></th>	
-							<td>
-											<input type="text" name="measure" maxlength="32" class="span2"/>
-							</td>
-							<th><%=TjbAssets.ALIAS_WEIGHT%></th>	
-							<td>
-											<input type="text" name="weight" maxlength="12" class="span2"/>
-							</td>
-						</tr>	
-						<tr>	
-							<th><%=TjbAssets.ALIAS_STANDARD_POWER%></th>	
-							<td>
-											<input type="text" name="standardPower" maxlength="12" class="span2"/>
-							</td>
-							<th><%=TjbAssets.ALIAS_ICON%></th>	
-							<td>
-											<input type="text" name="icon" maxlength="128" class="span2"/>
-							</td>
-							<th><%=TjbAssets.ALIAS_PARENT_ID%></th>	
-							<td>
-											<jb:select dataType="SL03" name="parentId"></jb:select>	
-							</td>
-							<th><%=TjbAssets.ALIAS_ROOM_AREA_ID%></th>	
-							<td>
-											<jb:select dataType="SL04" name="roomAreaId"></jb:select>	
-							</td>
-						</tr>	
-						<tr>	
-							<th><%=TjbAssets.ALIAS_SCOPE%></th>	
-							<td>
-											<input type="text" name="scope" maxlength="128" class="span2"/>
-							</td>
-							<th><%=TjbAssets.ALIAS_UPLACE%></th>	
-							<td>
-											<input type="text" name="uplace" maxlength="10" class="span2"/>
-							</td>
-							<th><%=TjbAssets.ALIAS_UID%></th>	
-							<td>
-											<input type="text" name="uid" maxlength="32" class="span2"/>
-							</td>
-							<th><%=TjbAssets.ALIAS_ADDTIME%></th>	
-							<td>
-								<input type="text" class="span2" onclick="WdatePicker({dateFmt:'<%=TjbAssets.FORMAT_ADDTIME%>'})" id="addtimeBegin" name="addtimeBegin"/>
-								<input type="text" class="span2" onclick="WdatePicker({dateFmt:'<%=TjbAssets.FORMAT_ADDTIME%>'})" id="addtimeEnd" name="addtimeEnd"/>
-							</td>
-						</tr>	
+
 				</table>
 			</form>
 		</div>

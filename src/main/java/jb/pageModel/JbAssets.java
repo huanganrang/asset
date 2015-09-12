@@ -1,5 +1,8 @@
 package jb.pageModel;
 
+import jb.absx.F;
+import jb.listener.Application;
+
 import java.util.Date;
 
 @SuppressWarnings("serial")
@@ -31,7 +34,8 @@ public class JbAssets implements java.io.Serializable {
 	private java.lang.String scope;	
 	private java.lang.Integer uplace;	
 	private java.lang.String uid;	
-	private Date addtime;			
+	private Date addtime;
+	private String assertIcon;
 
 	
 
@@ -213,4 +217,12 @@ public class JbAssets implements java.io.Serializable {
 		return this.addtime;
 	}
 
+	public void initAssertIcon(){
+		if(F.empty(this.assetType))return;
+		this.assertIcon = Application.get(this.assetType).getIcon();
+	}
+
+	public String getAssertIcon() {
+		return assertIcon;
+	}
 }
