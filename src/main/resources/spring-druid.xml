@@ -28,6 +28,7 @@
 		<property name="patterns">
 			<list>
 				<value>jb.service.*</value>
+				<value>asset.service.*</value>
 			</list>
 		</property>
 	</bean>

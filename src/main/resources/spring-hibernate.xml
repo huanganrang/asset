@@ -85,6 +85,7 @@
 		<property name="packagesToScan">
 			<list>
 				<value>jb.model</value>
+				<value>asset.model</value>
 			</list>
 		</property>
 
@@ -127,7 +128,7 @@
 		</tx:attributes>
 	</tx:advice>
 	<aop:config proxy-target-class="true">
-		<aop:pointcut id="transactionPointcut" expression="execution(* jb.service..*Impl.*(..))" />
+		<aop:pointcut id="transactionPointcut" expression="execution(* jb.service..*Impl.*(..)) || execution(* asset.service..*Impl.*(..))" />
 		<aop:advisor pointcut-ref="transactionPointcut"
 			advice-ref="transactionAdvice" />
 	</aop:config>
