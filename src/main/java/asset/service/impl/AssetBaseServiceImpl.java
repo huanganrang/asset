@@ -7,10 +7,8 @@ import java.util.List;
 
 import jb.pageModel.PageHelper;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import asset.dao.AssetBaseDaoI;
 import asset.model.AssetAttr;
 import asset.model.AssetBaseInfo;
 import asset.model.AssetExtInfo;
@@ -24,9 +22,6 @@ import asset.service.AssetBaseServiceI;
 @Service
 public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 
-	@Autowired
-	private AssetBaseDaoI assetBaseDao;
-	
 
 	@Override
 	public AssetBaseInfo getAssetBaseInfo(Integer id) throws Exception {
