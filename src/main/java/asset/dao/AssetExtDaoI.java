@@ -1,9 +1,9 @@
 package asset.dao;
 
 import jb.dao.BaseDaoI;
-import asset.model.AssetBaseInfo;
+import asset.model.AssetExtInfo;
 
 
-public interface AssetExtDaoI extends BaseDaoI<AssetBaseInfo> {
+public interface AssetExtDaoI extends BaseDaoI<AssetExtInfo> {
 
 }

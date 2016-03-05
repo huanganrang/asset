@@ -53,6 +53,15 @@ public interface AssetBaseServiceI {
 	 */
 	List<AssetBaseInfo> searchAssetBaseInfo(String key,PageHelper ph) throws Exception;
 	
+	
+	/**
+	 * 搜索总记录数
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	Long countAssetSearch (String key) throws Exception;
+	
 	/**
 	 * 高级搜索
 	 * @param id
@@ -60,7 +69,6 @@ public interface AssetBaseServiceI {
 	 * @throws Exception
 	 */
 	List<AssetInfo> searchAssetInfo(String key,PageHelper ph) throws Exception;
-	
 	
 	
 	/**
