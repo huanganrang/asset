@@ -28,6 +28,8 @@ public class AssetExtInfo implements java.io.Serializable {
 	private String assetAddUser;
 	private Date assetModifyTime;
 	private String assetModifyUser;
+	
+	private String assetAttrName;
 
 	public AssetExtInfo() {
 	}
@@ -135,4 +137,13 @@ public class AssetExtInfo implements java.io.Serializable {
 		this.assetModifyUser = assetModifyUser;
 	}
 
+	@Column(name = "asset_attr_name")
+	public String getAssetAttrName() {
+		return assetAttrName;
+	}
+
+	public void setAssetAttrName(String assetAttrName) {
+		this.assetAttrName = assetAttrName;
+	}
+	
 }

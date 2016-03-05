@@ -495,5 +495,4 @@ public class AssetBaseInfo implements java.io.Serializable {
 	public void setAssetStatus(String assetStatus) {
 		this.assetStatus = assetStatus;
 	}
-
 }

@@ -7,13 +7,14 @@ import jb.dao.impl.BaseDaoImpl;
 
 import org.springframework.stereotype.Repository;
 
-import asset.model.AssetBaseInfo;
+import asset.dao.AssetDicDaoI;
+import asset.model.AssetDic;
 
 /**
  * @author yanghui
  *
  */
 @Repository
-public class AssetDicDaoImpl extends BaseDaoImpl<AssetBaseInfo> {
+public class AssetDicDaoImpl extends BaseDaoImpl<AssetDic> implements AssetDicDaoI  {
 	
 }
