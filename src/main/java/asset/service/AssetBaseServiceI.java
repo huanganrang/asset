@@ -4,6 +4,7 @@
 package asset.service;
 
 import java.util.List;
+import java.util.Map;
 
 import jb.pageModel.PageHelper;
 import asset.model.AssetAttr;
@@ -79,5 +80,12 @@ public interface AssetBaseServiceI {
 	 */
 	List<AssetAttr> getAssetAttr(String cate) throws Exception;
 	
+	
+	/**
+	 * 获取所有的扩展属性（数据量不是很多）
+	 * @return
+	 * @throws Exception
+	 */
+	Map<String,String> getAllAttr() throws Exception;
 	
 }

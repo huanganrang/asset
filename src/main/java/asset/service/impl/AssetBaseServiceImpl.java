@@ -11,6 +11,7 @@ import java.util.Map;
 
 import jb.pageModel.PageHelper;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,7 +107,7 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 			whereHql += " t.assetModel like '%"+key+"%' or ";
 			whereHql += " t.assetSerial like '%"+key+"%' or ";
 			whereHql += " t.assetInvoice like '%"+key+"%' or ";
-			whereHql += " t.assetProperties like '%"+key+"%')";
+			whereHql += " t.assetProperty like '%"+key+"%')";
 		}
 		return whereHql;
 	}
@@ -144,10 +145,25 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 
 	@Override
 	public Long countAssetSearch(String key) throws Exception {
-		String hql = " from AssetBaseInfo t ";
+		String hql = "select count(*)  from AssetBaseInfo t ";
 		String where = whereHql(key);
-		 Long count = baseDao.count(hql+where);
+		 Long count = baseDao.count(hql + where);
 		return count;
+	}
+
+
+	@Override
+	public Map<String, String> getAllAttr() throws Exception {
+		String hql = "from AssetAttr where attrStatus = 1";
+		List<AssetAttr> list = attrDao.find(hql);
+		if(CollectionUtils.isNotEmpty(list)){
+			HashMap<String,String> attrMap = new HashMap<String,String>();
+			for(AssetAttr attr:list){
+				attrMap.put(attr.getAttrId()+"", attr.getAttrName());
+			}
+			return attrMap;
+		}
+		return null;
 	}
 
 }
