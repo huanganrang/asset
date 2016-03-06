@@ -166,4 +166,27 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 		return null;
 	}
 
+
+	@Override
+	public Map<String, List<AssetAttr>> getAllAttrByCate() throws Exception {
+		String hql = "from AssetAttr where attrStatus = 1";
+		List<AssetAttr> list = attrDao.find(hql);
+		if(CollectionUtils.isNotEmpty(list)){
+			HashMap<String,List<AssetAttr>> attrMap = new HashMap<String,List<AssetAttr>>();
+			for(AssetAttr attr:list){
+				String key = attr.getAttrCate();
+				if(attrMap.containsKey(key)){
+					List<AssetAttr> attrList = attrMap.get(key);
+					attrList.add(attr);
+				}else{
+					List<AssetAttr> attrList = new ArrayList<AssetAttr>();
+					attrList.add(attr);
+					attrMap.put(key, attrList);
+				}
+			}
+			return attrMap;
+		}
+		return null;
+	}
+
 }

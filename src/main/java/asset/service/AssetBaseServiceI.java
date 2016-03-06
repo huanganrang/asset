@@ -88,4 +88,12 @@ public interface AssetBaseServiceI {
 	 */
 	Map<String,String> getAllAttr() throws Exception;
 	
+	
+	/**
+	 * 获取所有的扩展属性（数据量不是很多）
+	 * @return
+	 * @throws Exception
+	 */
+	Map<String,List<AssetAttr>> getAllAttrByCate() throws Exception;
+	
 }

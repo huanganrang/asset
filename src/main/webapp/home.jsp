@@ -75,7 +75,7 @@
 
 								<div id="nav-search" style="margin-left:300px;">
 										<span class="input-icon">
-											<input type="text" style="width: 400px" name="key" class="nav-search-input" />
+											<input type="text" style="width: 400px" id="key" name="key" class="nav-search-input" />
 											<i class="icon-search nav-search-icon"></i>
 										</span>
 										<input type="button" id="to-search" value="搜索"/>
@@ -160,7 +160,9 @@
 		<script type="text/javascript">
 		$(function(){
 			$("#to-search").click(function(){
-				location.href="${pageContext.request.contextPath}/asset/tosearch"
+				if($("#key").val() != ""){
+					location.href="${pageContext.request.contextPath}/asset/tosearch?key="+$("#key").val();
+				}
 			});
 		});
 		</script>
