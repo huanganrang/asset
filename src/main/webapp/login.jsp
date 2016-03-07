@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link href="${pageContext.request.contextPath}/assets/css/reset.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/html5.js"></script>
 </head>
 <body>
 <header><h1></h1></header>
@@ -18,31 +19,35 @@
     </div>
     <article>
     	<div class="msg1">
-        	<a></a>
-            <input name="name" id="name" placeholder="用户名"/>
+        	<a><img src="${pageContext.request.contextPath}/assets/images/user-1.png"/></a>
+            <input id="name" placeholder="用户名"/>
+            
         </div>
         <div class="msg2">
-        	<a class="icon"></a>
-            <input type="password" id="pwd"  name="pwd"  placeholder="密码"/>
+        	<a class="icon"><img src="${pageContext.request.contextPath}/assets/images/password-1.png"/></a>
+            <input type="password" id="pwd" placeholder="密码"/>
+          
         </div>
         <div class="msg3">
             <input type="checkbox"/>
-            <a href="#">记住密码</a>
-            <a href="#">忘记密码</a>
+            <a>记住密码</a>
+            <a>忘记密码</a>
         </div>
         
-        <div id="msg" style="float:right;color:red;width:100px;height:20px"></div>
-      <input type="button" id="submit" value="登录"/>
+         <p id="msg" style="float:right;color:red;border:none;margin-right:20px">
+        </p>
+      <input type="button" value="登录" id="submit"/>
+       
     </article>
 </main>
 
-<script src="${pageContext.request.contextPath}/assets\js\jquery-2.0.3.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery-2.0.3.min.js"></script>
 
 		<!-- <![endif]-->
 
 		<!--[if IE]>
-<script src="${pageContext.request.contextPath}/assets\js\jquery-1.10.2.min.js"></script>
-<![endif]-->
+		<script src="${pageContext.request.contextPath}/assets/js/jquery-1.10.2.min.js"></script>
+		<![endif]-->
 
 		<!--[if !IE]> -->
 		
