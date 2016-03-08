@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,7 +28,7 @@
           
         </div>
         <div class="msg3">
-            <input type="checkbox"/>
+            <input type="checkbox" id="rempw" />
             <a>记住密码</a>
             <a>忘记密码</a>
         </div>
@@ -42,17 +41,18 @@
 </main>
 
 <script src="${pageContext.request.contextPath}/assets/js/jquery-2.0.3.min.js"></script>
-
-		<!-- <![endif]-->
-
-		<!--[if IE]>
-		<script src="${pageContext.request.contextPath}/assets/js/jquery-1.10.2.min.js"></script>
-		<![endif]-->
-
-		<!--[if !IE]> -->
+<script src="${pageContext.request.contextPath}/assets/js/jquery.cookie.js"></script>
 		
 <script type="text/javascript">
 $(function(){
+
+	var cookie_user = $.cookie("cookie_user");
+	if(cookie_user){
+		$("#name").val(cookie_user.split(":")[0]);
+		$("#pwd").val(cookie_user.split(":")[1]);
+		$("#rempw").attr("checked", true);
+	}
+
 	$("#submit").click(function(){
 		var returnUrl = "${returnUrl}";
 		if(returnUrl == ""){
@@ -68,6 +68,11 @@ $(function(){
 			cache:false,
 			success:function(response){
 				if(response.success){
+					if($("#rempw").is(" :checked")){
+						$.cookie("cookie_user", $("#name").val() + ":" + $("#pwd").val(), {expires: 30});
+					}else {
+						$.cookie("cookie_user", "", {expires: -1});
+					}
 				    location.href=returnUrl;
 				}else{
 					 $("#msg").text("用户名密码错误");
@@ -78,14 +83,9 @@ $(function(){
 				 $("#msg").text("服务器内部错误");
 				 $("#msg").show();
 			}
+		});
 	});
 });
-	
-	
-});
-
-
-
 </script>
 
 </body>
