@@ -59,7 +59,6 @@ public class SecurityInterceptor implements HandlerInterceptor {
 		String url = requestUri.substring(contextPath.length());
 		// logger.info(url);
 
-		//if (url.indexOf("/baseController/") > -1 || url.indexOf("/asset/") > -1 || excludeUrls.contains(url)) {// 如果要访问的资源是不需要验证的
 		if (url.indexOf("/baseController/") > -1 || excludeUrls.contains(url)) {// 如果要访问的资源是不需要验证的
 			return true;
 		}

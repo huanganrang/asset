@@ -69,9 +69,9 @@ $(function(){
 			success:function(response){
 				if(response.success){
 					if($("#rempw").is(" :checked")){
-						$.cookie("cookie_user", $("#name").val() + ":" + $("#pwd").val(), {expires: 30});
+						$.cookie("cookie_user", $("#name").val() + ":" + $("#pwd").val(), {path: "/", expires: 30});
 					}else {
-						$.cookie("cookie_user", "", {expires: -1});
+						$.cookie("cookie_user", "", {path: "/", expires: -1});
 					}
 				    location.href=returnUrl;
 				}else{

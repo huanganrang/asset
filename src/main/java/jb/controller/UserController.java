@@ -115,8 +115,11 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/manager")
-	public String manager() {
-		return "/admin/user";
+	public String manager(HttpServletRequest request, User user, PageHelper ph) {
+		DataGrid dataGrid = userService.dataGrid(user, ph);
+		List userList = dataGrid.getRows();
+		request.setAttribute("userList", userList);
+		return "/assets/user";
 	}
 
 	/**
