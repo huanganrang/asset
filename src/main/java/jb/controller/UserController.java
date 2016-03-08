@@ -1,29 +1,22 @@
 package jb.controller;
 
-import java.util.List;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import jb.pageModel.DataGrid;
-import jb.pageModel.Json;
-import jb.pageModel.PageHelper;
-import jb.pageModel.SessionInfo;
-import jb.pageModel.User;
+import com.alibaba.fastjson.JSON;
+import jb.pageModel.*;
 import jb.service.ResourceServiceI;
 import jb.service.RoleServiceI;
 import jb.service.UserServiceI;
 import jb.util.ConfigUtil;
 import jb.util.IpUtil;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * 用户控制器
