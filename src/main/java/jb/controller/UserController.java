@@ -20,9 +20,9 @@ import java.util.UUID;
 
 /**
  * 用户控制器
- * 
+ *
  * @author John
- * 
+ *
  */
 @Controller
 @RequestMapping("/userController")
@@ -39,7 +39,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 用户登录
-	 * 
+	 *
 	 * @param user
 	 *            用户对象
 	 * @param session
@@ -70,7 +70,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 用户注册
-	 * 
+	 *
 	 * @param user
 	 *            用户对象
 	 * @return
@@ -93,7 +93,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 退出登录
-	 * 
+	 *
 	 * @param session
 	 * @return
 	 */
@@ -111,7 +111,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 跳转到用户管理页面
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/manager")
@@ -121,7 +121,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 获取用户数据表格
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -133,7 +133,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 跳转到添加用户页面
-	 * 
+	 *
 	 * @param request
 	 * @return
 	 */
@@ -147,7 +147,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 添加用户
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/add")
@@ -168,7 +168,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 跳转到用户修改页面
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/editPage")
@@ -180,7 +180,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 修改用户
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -202,7 +202,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 删除用户
-	 * 
+	 *
 	 * @param id
 	 * @return
 	 */
@@ -221,7 +221,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 批量删除用户
-	 * 
+	 *
 	 * @param ids
 	 *            ('0','1','2')
 	 * @return
@@ -242,13 +242,13 @@ public class UserController extends BaseController {
 		return j;
 	}
 	/**
-	**
+	 **
 	 * 批量名人明星
-	 * 
+	 *
 	 * @param ids
 	 *            ('0','1','2')
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping("/batchUpateToStar")
 	@ResponseBody
@@ -271,15 +271,15 @@ public class UserController extends BaseController {
 		j.setSuccess(true);
 		return j;
 	}
-	
+
 	/**
-	**
+	 **
 	 * 批量达人
-	 * 
+	 *
 	 * @param ids
 	 *            ('0','1','2')
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping("/batchUpateToTarento")
 	@ResponseBody
@@ -302,12 +302,12 @@ public class UserController extends BaseController {
 		j.setSuccess(true);
 		return j;
 	}
-	
-	
+
+
 
 	/**
 	 * 跳转到用户授权页面
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/grantPage")
@@ -322,7 +322,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 用户授权
-	 * 
+	 *
 	 * @param ids
 	 * @return
 	 */
@@ -338,7 +338,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 跳转到编辑用户密码页面
-	 * 
+	 *
 	 * @param id
 	 * @param request
 	 * @return
@@ -352,7 +352,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 编辑用户密码
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
@@ -368,7 +368,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 跳转到编辑自己的密码页面
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/editCurrentUserPwdPage")
@@ -378,7 +378,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 修改自己的密码
-	 * 
+	 *
 	 * @param session
 	 * @param pwd
 	 * @return
@@ -407,7 +407,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 跳转到显示用户角色页面
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/currentUserRolePage")
@@ -419,7 +419,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 跳转到显示用户权限页面
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("/currentUserResourcePage")
@@ -431,7 +431,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 用户登录时的autocomplete
-	 * 
+	 *
 	 * @param q
 	 *            参数
 	 * @return
@@ -444,7 +444,7 @@ public class UserController extends BaseController {
 
 	/**
 	 * 用户登录时的combogrid
-	 * 
+	 *
 	 * @param q
 	 * @param ph
 	 * @return
