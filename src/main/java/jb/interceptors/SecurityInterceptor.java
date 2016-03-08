@@ -1,16 +1,14 @@
 package jb.interceptors;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import jb.pageModel.SessionInfo;
 import jb.util.ConfigUtil;
-
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 权限拦截器
@@ -61,22 +59,25 @@ public class SecurityInterceptor implements HandlerInterceptor {
 		String url = requestUri.substring(contextPath.length());
 		// logger.info(url);
 
-		if (url.indexOf("/baseController/") > -1 || url.indexOf("/asset/") > -1 || excludeUrls.contains(url)) {// 如果要访问的资源是不需要验证的
+		//if (url.indexOf("/baseController/") > -1 || url.indexOf("/asset/") > -1 || excludeUrls.contains(url)) {// 如果要访问的资源是不需要验证的
+		if (url.indexOf("/baseController/") > -1 || excludeUrls.contains(url)) {// 如果要访问的资源是不需要验证的
 			return true;
 		}
 
 		SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(ConfigUtil.getSessionInfoName());
 		if (sessionInfo == null || sessionInfo.getId().equalsIgnoreCase("")) {// 如果没有登录或登录超时
 			request.setAttribute("msg", "您还没有登录或登录已超时，请重新登录，然后再刷新本功能！");
-			request.getRequestDispatcher("/error/noSession.jsp").forward(request, response);
+			request.setAttribute("returnUrl", request.getRequestURI());
+			//request.getRequestDispatcher("/error/noSession.jsp").forward(request, response);
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
 			return false;
 		}
 
-		if (!sessionInfo.getResourceList().contains(url)) {// 如果当前用户没有访问此资源的权限
+/*		if (!sessionInfo.getResourceList().contains(url)) {// 如果当前用户没有访问此资源的权限
 			request.setAttribute("msg", "您没有访问此资源的权限！<br/>请联系超管赋予您<br/>[" + url + "]<br/>的资源访问权限！");
 			request.getRequestDispatcher("/error/noSecurity.jsp").forward(request, response);
 			return false;
-		}
+		}*/
 
 		return true;
 	}
