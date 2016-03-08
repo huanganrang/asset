@@ -37,7 +37,7 @@
          <p id="msg" style="float:right;color:red;border:none;margin-right:20px">
         </p>
       <input type="button" value="登录" id="submit"/>
-       
+
     </article>
 </main>
 
@@ -54,17 +54,21 @@
 <script type="text/javascript">
 $(function(){
 	$("#submit").click(function(){
+		var returnUrl = "${returnUrl}";
+		if(returnUrl == ""){
+			returnUrl = "${pageContext.request.contextPath}/home.jsp";
+		}
 		$("#msg").hide();
 		var data = "name="+$("#name").val()+"&pwd="+$("#pwd").val();
 		$.ajax({
-			url:"userController/login",
+			url:"${pageContext.request.contextPath}/userController/login",
 			type:"post",
 			data:data,
 			dataType:"json",
 			cache:false,
 			success:function(response){
 				if(response.success){
-				    location.href="${pageContext.request.contextPath}/home.jsp"; 
+				    location.href=returnUrl;
 				}else{
 					 $("#msg").text("用户名密码错误");
 					 $("#msg").show();

@@ -3,14 +3,14 @@
  */
 package asset.service;
 
-import java.util.List;
-import java.util.Map;
-
-import jb.pageModel.PageHelper;
 import asset.model.AssetAttr;
 import asset.model.AssetBaseInfo;
 import asset.model.AssetExtInfo;
 import asset.model.AssetInfo;
+import jb.pageModel.PageHelper;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author yanghui
@@ -48,7 +48,7 @@ public interface AssetBaseServiceI {
 	
 	/**
 	 * 搜索
-	 * @param id
+	 * @param key
 	 * @return
 	 * @throws Exception
 	 */
@@ -65,7 +65,7 @@ public interface AssetBaseServiceI {
 	
 	/**
 	 * 高级搜索
-	 * @param id
+	 * @param key
 	 * @return
 	 * @throws Exception
 	 */
@@ -95,5 +95,32 @@ public interface AssetBaseServiceI {
 	 * @throws Exception
 	 */
 	Map<String,List<AssetAttr>> getAllAttrByCate() throws Exception;
-	
+
+	/**
+	 * 获取获取台账信息
+	 * @return
+	 */
+	List<AssetBaseInfo> getLedgerList(PageHelper ph);
+
+	/**
+	 * 添加AssetBaseInfo
+	 *
+	 * @param assetBaseInfo
+	 */
+	void add(AssetBaseInfo assetBaseInfo);
+
+	/**
+	 * 修改AssetBaseInfo
+	 *
+	 * @param assetBaseInfo
+	 */
+	void edit(AssetBaseInfo assetBaseInfo);
+
+	/**
+	 * 删除AssetBaseInfo
+	 *
+	 * @param assetId
+	 */
+	void delete(String assetId);
+
 }

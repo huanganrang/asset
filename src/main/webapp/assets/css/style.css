@@ -9,7 +9,7 @@ main .title{padding-bottom:20px;}
 main h2{font:24px/30px "微软雅黑"; color:#FFF; font-weight:bold; text-align:center;}
 main .title p{font:12px/20px "Arial"; color:#FFF; text-align:center; word-spacing:12px;}
 article{margin:0 auto; width:441px; height:235px; background:url(../images/login.png) no-repeat; position:relative;}
-article div{width:420px; height:60px; border-bottom:1px solid #c9c9c9; margin:0 auto; }
+article div{width:420px; height:60px; border-bottom:1px solid #c9c9c9; margin:0 auto; background:url(../images/delet-1.png) no-repeat 400px 30px;}
 article div:nth-child(3){background:none;}
 .msg1 a:nth-child(1){display:block; width:17px; height:20px; margin:20px 0 0 20px; float:left;}
 input{width:325px; height:40px; margin-left:20px; margin-top:12px; margin-bottom:5px; float:left; border:none; border-left:1px solid #c9c9c9; padding-left:5px; color:#777676;}

@@ -3,19 +3,6 @@
  */
 package asset.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import jb.pageModel.PageHelper;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import asset.dao.AssetAttrDaoI;
 import asset.dao.AssetBaseDaoI;
 import asset.dao.AssetExtDaoI;
@@ -24,6 +11,17 @@ import asset.model.AssetBaseInfo;
 import asset.model.AssetExtInfo;
 import asset.model.AssetInfo;
 import asset.service.AssetBaseServiceI;
+import jb.pageModel.PageHelper;
+import jb.util.MyBeanUtils;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author yanghui
@@ -187,6 +185,41 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 			return attrMap;
 		}
 		return null;
+	}
+
+	@Override
+	public List getLedgerList(PageHelper ph){
+		String hql = "from AssetBaseInfo t ";
+		List<AssetBaseInfo> list = baseDao.find(hql + orderHql(ph), null, ph.getPage(), ph.getRows());
+		return list;
+	}
+
+	@Override
+	public void add(AssetBaseInfo assetBaseInfo){
+		baseDao.save(assetBaseInfo);
+	}
+
+	@Override
+	public void edit(AssetBaseInfo assetBaseInfo){
+		AssetBaseInfo a = baseDao.get(AssetBaseInfo.class, assetBaseInfo.getAssetId());
+		if (a != null) {
+			MyBeanUtils.copyProperties(assetBaseInfo, a, new String[] {"assetId"},true);
+		}
+	}
+
+	@Override
+	public void delete(String assetId){
+		if(StringUtils.isNotBlank(assetId)){
+			if(!assetId.contains(",")){
+				Map<String, Object> params = new HashMap<String,Object>();
+				params.put("assetId", Integer.parseInt(assetId));
+				AssetBaseInfo assetBaseInfo = baseDao.get(" from AssetBaseInfo where assetId = :assetId", params);
+				baseDao.delete(assetBaseInfo);
+			}else {
+				String hql = "delete from AssetBaseInfo where assetId in (" + assetId +")";
+				baseDao.executeHql(hql);
+			}
+		}
 	}
 
 }

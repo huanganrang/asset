@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* CSS Document */
+body,html{height:100%; margin:0;}
+header{width:100%; margin:0 auto; height:70px;}
+
+h1{width:12%; height:50px; background:#ed6c44 url(../images/logo.png) no-repeat 40% 50%; padding-top:20px; padding-left:5%; float:left;}
+header ul{width:83%; height:70px; float:left; position:relative; background:#ffffff;}
+header ul li:nth-child(1){width:34px; height:34px; position:absolute; top:20px; left:-20px; background:url(../images/System%20switch-1.png) no-repeat;}
+header ul li:nth-child(2){width:34px; height:34px; position:absolute; top:20px; left:30px; background:url(../images/Alarm-1.png) no-repeat;}
+header ul li:nth-child(3){height:34px; position:absolute; top:20px; left:40%; font:16px/34px "黑体";}
+header ul li:nth-child(4){width:34px; height:34px; position:absolute; top:20px; right:30px; background:url(../images/search-top1.png) no-repeat;}
+main{width:100%; height:100%; margin:0 auto; background:#e5e9eb;}
+main nav{width:17%; height:100%; background:#423e3b; float:left; }
+main nav ul{height:100%; position:relative;}
+nav li{width:100%; height:50px; background:url(../images/Arrow-01.png) no-repeat 180px 20px; border-bottom:1px solid #222; position:relative;}
+nav li:hover{background:url(../images/Arrow-02.png) no-repeat 180px 20px;}
+nav li:hover a{color:#ed6c44;}
+nav li:nth-child(8){width:95%; height:50px; border-bottom:1px solid #222; border-top:1px solid #222; position:absolute; bottom:0; padding-right:10px; background:url(../images/Cancellation%20of%20.png) no-repeat 180px 20px;}
+nav li a{font:14px/50px "黑体"; color:#CCC; vertical-align:top; margin-left:20px;} 
+nav li:nth-child(8)>img:nth-child(1){margin-top:5px; width:28px; height:28px; padding-top:10px; margin-left:14px;}
+nav p{width:50px; height:115%; background:rgba(255,255,255,0.2); position:absolute; top:0; left:0; z-index:10;}
+.subNav{position:relative; top:50px; width:85%; padding-left:25%; display:none;}
+.subNav li{width:100%; height:50px; padding:0; background:#262626;}
+aside{width:83%; height:100%; background:url(../images/main1.png) no-repeat; float:left; background-size:cover; margin-top:10px;}
+main:after{content:""; clear:both; display:block; height:0;}
