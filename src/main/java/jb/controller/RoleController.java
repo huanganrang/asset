@@ -1,22 +1,20 @@
 package jb.controller;
 
-import java.util.List;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import jb.pageModel.Json;
 import jb.pageModel.Role;
 import jb.pageModel.SessionInfo;
 import jb.pageModel.Tree;
 import jb.service.RoleServiceI;
 import jb.util.ConfigUtil;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * 角色控制器
@@ -104,10 +102,16 @@ public class RoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/treeGrid")
-	@ResponseBody
-	public List<Role> treeGrid(HttpSession session) {
+	//@ResponseBody
+	//public List<Role> treeGrid(HttpSession session) {
+	//	SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
+	//	return roleService.treeGrid(sessionInfo);
+	//}
+	public String treeGrid(HttpServletRequest request, HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
-		return roleService.treeGrid(sessionInfo);
+		List<Role> userRoleList = roleService.treeGrid(sessionInfo);
+		request.setAttribute("userRoleList", userRoleList);
+		return "/assets/rolemanager";
 	}
 
 	/**

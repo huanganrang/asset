@@ -33,13 +33,12 @@
     </ul>
     <article>
         <ul class="list">
-            <li style="border-bottom:2px solid #f60">用户管理</li>
-            <li><a href="${pageContext.request.contextPath}/roleController/treeGrid">角色管理</a></li>
+            <li><a href="${pageContext.request.contextPath}/userController/manager">用户管理</a></li>
+            <li style="border-bottom:2px solid #f60">角色管理</li>
         </ul>
 
         <ul class="tablist">
             <li><a href="#"></a></li>
-            <li><a href="#">1/7</a></li>
             <li><a href="#"></a></li>
             <li><a href="#">添加</a></li>
             <li><a href="#">编辑</a></li>
@@ -50,29 +49,30 @@
         <ul class="tableheader">
             <li><img src="${pageContext.request.contextPath}/assets/images/Screen-icon--1-(2).png"/></li>
             <li><input type="checkbox" /></li>
-            <li>用户名</li>
-            <li>密码</li>
-            <li>创建时间</li>
-            <li>最后修改时间</li>
-            <li>所属角色名称</li>
+            <li>角色名称</li>
+            <li>排序</li>
+            <li>上级角色</li>
+            <li>拥有资源</li>
+            <li>备注</li>
         </ul>
         <div class="tablebox">
             <table>
                 <tr>
                     <td><input type="checkbox" value="" /></td>
-                    <td>测试用户名</td>
-                    <td>02041263</td>
-                    <td>02041263</td>
-                    <td>M6900/17LCD</td>
+                    <td>测试角色名</td>
+                    <td>0</td>
+                    <td>上级角色</td>
+                    <td>拥有各种资源</td>
+                    <td>备注在这里，看这里</td>
                 </tr>
-                <c:forEach var="content" items="${userList}">
+                <c:forEach var="content" items="${userRoleList}">
                     <tr>
                         <td><input type="checkbox" value="${content.id}" /></td>
                         <td>${content.name}</td>
-                        <td>${content.pwd}</td>
-                        <td>${content.createdatetime}</td>
-                        <td>${content.modifydatetime}</td>
-                        <td>${content.roleNames}</td>
+                        <td>${content.seq}</td>
+                        <td>${content.pname}</td>
+                        <td>${content.resourceNames}</td>
+                        <td>${content.remark}</td>
                     </tr>
                 </c:forEach>
             </table>

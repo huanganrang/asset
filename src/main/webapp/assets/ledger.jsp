@@ -33,7 +33,7 @@
 	</ul>
 	<article>
 		<ul class="list">
-			<li><a href="#">台账明细</a></li>
+			<li style="border-bottom:2px solid #f60">台账明细</li>
 			<li><a href="#">库存</a></li>
 			<li><a href="#">对账</a></li>
 			<li><a href="#">报废表</a></li>
