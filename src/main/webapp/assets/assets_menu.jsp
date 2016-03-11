@@ -58,16 +58,16 @@
 
 							<ul class="submenu">
 								<li>
-									<a href="tables.html">
+									<a href="${pageContext.request.contextPath}/asset/ledger/list">
 										<i class="icon-double-angle-right"></i>
-										测试
+										台账明细
 									</a>
 								</li>
 
 								<li>
-									<a href="jqgrid.html">
+									<a href="${pageContext.request.contextPath}/asset/ledger/list">
 										<i class="icon-double-angle-right"></i>
-										测试
+										台账明细
 									</a>
 								</li>
 							</ul>
@@ -113,7 +113,7 @@
 						</li>
 
 						<li>
-							<a href="widgets.html">
+							<a href="${pageContext.request.contextPath}/userController/manager">
 								<i class="icon-list-alt"></i>
 								<span >系统管理</span>
 							</a>
