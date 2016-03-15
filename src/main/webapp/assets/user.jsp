@@ -75,7 +75,7 @@
     </article>
     <%--添加用户框--%>
     <article id="addUserContent" style="display:none;line-height: 30px; position: absolute; z-index: 1000; width: 100%; height: 100%; text-align: center;">
-        <div style="border: 2px #8FA4F5 solid; top: 25%; position: relative; left: 40%; height: 200px; width: 300px; font-size: 16px;background: wheat;">
+        <div style="border: 2px #8FA4F5 solid; top: 25%; position: relative; left: 40%; height: 200px; width: 300px; font-size: 16px;background-color: wheat;">
             <div style="height: 50px;line-height: 50px;margin-top: 30px;"><span style="line-height: 30px;"> 用户名：</span><input type="text" id="addUserName" name="addUserName" style="line-height:30px;" /></div>
             <div style="height: 50px;line-height: 50px;"><span style="line-height: 30px;">密码：</span><input type="text" id="addPassword" name="addPassword" style="line-height:30px;margin-left: 15px;" /></div>
             <div style="height: 50px;line-height: 50px;margin-top: 10px;"><input type="button" value="添加" id="add" style="line-height:30px;margin-right: 50px; width: 80px;" /><input type="button" value="取消" id="addReset" style="line-height:30px;width: 80px;" /></div>
@@ -83,7 +83,7 @@
     </article>
     <%--编辑用户框--%>
     <article id="editUserContent" style="display:none;line-height: 30px; position: absolute; z-index: 1000; width: 100%; height: 100%; text-align: center;">
-        <div style="border: 2px #8FA4F5 solid; top: 25%; position: relative; left: 40%; height: 200px; width: 300px; font-size: 16px;background: wheat none repeat scroll 0% 0%;">
+        <div style="border: 2px #8FA4F5 solid; top: 25%; position: relative; left: 40%; height: 200px; width: 300px; font-size: 16px;background-color: wheat;">
             <input type="hidden" id="userId" name="userId" />
             <div style="height: 50px;line-height: 50px;margin-top: 30px;"><span style="line-height: 30px;"> 用户名：</span><input readonly="true" type="text" id="editUserName" name="editUserName" style="line-height:30px;background-color: silver;" /></div>
             <div style="height: 50px;line-height: 50px;"><span style="line-height: 30px;">密码：</span><input type="text" id="editPassword" name="editPassword" style="line-height:30px;margin-left: 15px;" /></div>
