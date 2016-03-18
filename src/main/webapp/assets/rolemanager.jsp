@@ -34,28 +34,28 @@
     <article>
         <ul class="list">
             <li><a href="${pageContext.request.contextPath}/userController/manager">用户管理</a></li>
-            <li style="border-bottom:2px solid #f60">角色管理</li>
+            <li style="border-bottom:2px solid #f60;font: 16px/40px '微软雅黑';">角色管理</li>
         </ul>
 
         <ul class="tablist">
             <li><a href="#"></a></li>
-            <li><a href="#">1/7</a></li>
+            <li><a href="#">1/1</a></li>
             <li><a href="#"></a></li>
             <li id="addRole" style="padding-top: 15px;">添加</li>
             <li id="editRole" style="padding-top: 15px;">编辑</li>
-            <li id="roleResource" style="padding-top: 15px;">批量授权</li>
+            <li id="roleResource" style="padding-top: 15px;">角色授权</li>
             <li id="delrole" style="padding-top: 15px;">批量删除</li>
             <li id="logout" style="padding-top: 15px;">退出登陆</li>
         </ul>
 
         <ul class="tableheader">
             <li><img src="${pageContext.request.contextPath}/assets/images/Screen-icon--1-(2).png"/></li>
-            <li><input id="checkAll" type="checkbox" /></li>
-            <li>角色名称</li>
-            <li>排序</li>
-            <li>上级角色</li>
-            <li>拥有资源</li>
-            <li>备注</li>
+            <li style="margin-left: 40px;"><input id="checkAll" type="checkbox" /></li>
+            <li style="margin-left: 120px;">角色名称</li>
+            <li style="margin-left: 122px;">排序</li>
+            <li style="margin-left: 120px;">上级角色</li>
+            <li style="margin-left: 120px;">拥有资源</li>
+            <li style="margin-left: 120px;">备注</li>
         </ul>
         <div class="tablebox">
             <table id="roleList">
@@ -72,102 +72,139 @@
             </table>
         </div>
     </article>
-    <%--添加用户框--%>
-    <article id="addUserContent" style="display:none;line-height: 30px; position: absolute; z-index: 1000; width: 100%; height: 100%; text-align: center;">
-        <div style="border: 2px #8FA4F5 solid; top: 25%; position: relative; left: 40%; height: 200px; width: 300px; font-size: 16px;background-color: wheat;">
-            <div style="height: 50px;line-height: 50px;margin-top: 30px;"><span style="line-height: 30px;"> 用户名：</span><input type="text" id="addUserName" name="addUserName" style="line-height:30px;" /></div>
-            <div style="height: 50px;line-height: 50px;"><span style="line-height: 30px;">密码：</span><input type="text" id="addPassword" name="addPassword" style="line-height:30px;margin-left: 15px;" /></div>
+    <%--添加角色框--%>
+    <article id="addRoleContent" style="display:none;line-height: 30px; position: absolute; z-index: 1000; width: 100%; height: 100%; text-align: center;">
+        <div style="border: 2px #8FA4F5 solid; top: 25%; position: relative; left: 40%; height: 400px; width: 400px; font-size: 16px;background-color: wheat;">
+            <div style="height: 50px;line-height: 50px;margin-top: 30px;"><span style="line-height: 30px;"> 角色名称：</span><input type="text" id="addRoleName" name="addRoleName" style="line-height:30px;" /></div>
+            <div style="height: 50px;line-height: 50px;"><span style="line-height: 30px;">排序：</span><input type="text" id="addSeq" name="addSeq" style="line-height:30px;margin-left: 30px;" /></div>
+            <div style="height: 50px;line-height: 50px;">
+                <span style="line-height: 30px;">上级角色：</span>
+                <select id="addPid" name="addPid" style="line-height:30px;width: 180px;">
+                    <option value =""></option>
+                    <c:forEach var="content" items="${userRoleList}">
+                        <option value ="${content.id}">${content.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div style="height: 150px;line-height: 150px;"><span style="line-height: 30px;">备注：</span><textarea id="addRemark" name="addRemark" style="line-height:50px;margin-left: 15px;vertical-align: text-top;"></textarea></div>
             <div style="height: 50px;line-height: 50px;margin-top: 10px;"><input type="button" value="添加" id="add" style="line-height:30px;margin-right: 50px; width: 80px;" /><input type="button" value="取消" id="addReset" style="line-height:30px;width: 80px;" /></div>
         </div>
     </article>
-    <%--编辑用户框--%>
-    <article id="editUserContent" style="display:none;line-height: 30px; position: absolute; z-index: 1000; width: 100%; height: 100%; text-align: center;">
-        <div style="border: 2px #8FA4F5 solid; top: 25%; position: relative; left: 40%; height: 200px; width: 300px; font-size: 16px;background-color: wheat;">
-            <input type="hidden" id="userId" name="userId" />
-            <div style="height: 50px;line-height: 50px;margin-top: 30px;"><span style="line-height: 30px;"> 用户名：</span><input readonly="true" type="text" id="editUserName" name="editUserName" style="line-height:30px;background-color: silver;" /></div>
-            <div style="height: 50px;line-height: 50px;"><span style="line-height: 30px;">密码：</span><input type="text" id="editPassword" name="editPassword" style="line-height:30px;margin-left: 15px;" /></div>
-            <div style="height: 50px;line-height: 50px;margin-top: 10px;"><input type="button" value="编辑" id="edit" style="line-height:30px;margin-right: 50px; width: 80px;" /><input type="button" value="取消" id="editReset" style="line-height:30px;width: 80px;" /></div>
+    <%--编辑角色框--%>
+    <article id="editRoleContent" style="display:none;line-height: 30px; position: absolute; z-index: 1000; width: 100%; height: 100%; text-align: center;">
+        <div style="border: 2px #8FA4F5 solid; top: 25%; position: relative; left: 40%; height: 400px; width: 400px; font-size: 16px;background-color: wheat;">
+            <input type="hidden" id="roleId" name="roleId" />
+            <div style="height: 50px;line-height: 50px;margin-top: 30px;"><span style="line-height: 30px;"> 角色名称：</span><input type="text" id="editRoleName" name="editRoleName" style="line-height:30px;" /></div>
+            <div style="height: 50px;line-height: 50px;"><span style="line-height: 30px;">排序：</span><input type="text" id="editSeq" name="editSeq" style="line-height:30px;margin-left: 30px;" /></div>
+            <div style="height: 50px;line-height: 50px;">
+                <span style="line-height: 30px;">上级角色：</span>
+                <select id="editPid" name="editPid" style="line-height:30px;width: 180px;">
+                    <option value =""></option>
+                    <c:forEach var="content" items="${userRoleList}">
+                        <option value ="${content.id}">${content.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div style="height: 150px;line-height: 150px;"><span style="line-height: 30px;">备注：</span><textarea id="editRemark" name="editRemark" style="line-height:50px;margin-left: 15px;vertical-align: text-top;"></textarea></div>
+            <div style="height: 50px;line-height: 50px;margin-top: 10px;"><input type="button" value="修改" id="edit" style="line-height:30px;margin-right: 50px; width: 80px;" /><input type="button" value="取消" id="editReset" style="line-height:30px;width: 80px;" /></div>
         </div>
     </article>
-    <%--用户权限框--%>
-    <article id="userRoleContent" style="display:none;line-height: 30px; position: absolute; z-index: 1000; width: 100%; height: 100%; text-align: center;">
-        <div style="border: 2px #8FA4F5 solid; top: 25%; position: relative; left: 40%; height: 420px; width: 500px; font-size: 16px;background-color: wheat;">
-            <input type="hidden" id="ids" name="ids" />
-            <table id="userRoleList">
-                <c:forEach var="content" items="${userRoles}">
+    <%--角色授权框--%>
+    <article id="resourceContent" style="display:none;line-height: 30px; position: absolute; z-index: 1000; width: 100%; height: 100%; text-align: center;">
+        <div style="border: 2px #8FA4F5 solid; top: 18%; position: relative; left: 40%; height: 600px; width: 500px; font-size: 16px;background-color: wheat;overflow: auto;">
+            <input type="hidden" id="id" name="id" />
+            <ul>
+                <li>全选<input id="allResource" type="checkbox" /><span style="margin-left:180px;font-size:20px;">资源名称</span></li>
+            </ul>
+            <table id="resourceList">
+                <c:forEach var="content" items="${resourceList}">
                     <tr>
-                        <td><input type="checkbox" value="${content.id}" /></td>
-                        <td>${content.text}</td>
+                        <td style="height:20px;"><input type="checkbox" value="${content.id}" /></td>
+                        <td style="height:20px;">${content.name}</td>
                     </tr>
                 </c:forEach>
             </table>
-            <div style="height: 50px;line-height: 50px;margin-top: 10px;"><input type="button" value="修改" id="role" style="line-height:30px;margin-right: 50px; width: 80px;" /><input type="button" value="取消" id="roleReset" style="line-height:30px;width: 80px;" /></div>
+            <div style="height: 50px;line-height: 50px;margin-top: 10px;"><input type="button" value="授权" id="resource" style="line-height:30px;margin-right: 50px; width: 80px;" /><input type="button" value="取消" id="resourceReset" style="line-height:30px;width: 80px;" /></div>
         </div>
     </article>
 </main>
 
 <script type="text/javascript">
     $(function(){
-
+        //alert("fsdfsdf");
         $(".tree_href").click(function(){
             location.href=$(this).attr("href");
         });
 
-        //全选
+        //角色全选
         $("#checkAll").click(function(){
             if($("#checkAll").prop("checked")){
-                $("#userList").find("tbody :checkbox").prop("checked", true);
+                $("#roleList").find("tbody :checkbox").prop("checked", true);
             }else{
-                $("#userList").find("tbody :checkbox").prop("checked", false);
+                $("#roleList").find("tbody :checkbox").prop("checked", false);
             }
         });
 
-        //弹出添加用户框
-        $("#addUser").click(function(){
-            $("#addUserContent").show();
+        //资源全选
+        $("#allResource").click(function(){
+            if($("#allResource").prop("checked")){
+                $("#resourceList").find("tbody :checkbox").prop("checked", true);
+            }else{
+                $("#resourceList").find("tbody :checkbox").prop("checked", false);
+            }
         });
 
-        //添加用户框的添加按键
+        //弹出添加角色框
+        $("#addRole").click(function(){
+            $("#addRoleContent").show();
+        });
+
+        //添加角色框的添加按键
         $("#add").click(function(){
-            var addUserName = $("#addUserName").val();
-            var addPassword = $("#addPassword").val();
-            if(addUserName != "" && addPassword != ""){
-                var data = "name="+addUserName+"&pwd="+addPassword;
+            var addRoleName = $("#addRoleName").val();
+            var addSeq = $("#addSeq").val();
+            var addPid = $("#addPid").val();
+            var addRemark = $("#addRemark").val();
+            if(addRoleName != ""){
+                var data = "name="+addRoleName+"&seq="+addSeq+"&pid="+addPid+"&remark="+addRemark;
                 $.ajax({
-                    url:"${pageContext.request.contextPath}/userController/reg",
-                    type:"get",
+                    url:"${pageContext.request.contextPath}/roleController/add",
+                    type:"post",
                     data:data,
                     dataType:"json",
                     cache:false,
                     success:function(response){
                         if(response.success){
-                            location.href="${pageContext.request.contextPath}/userController/manager";
+                            location.href="${pageContext.request.contextPath}/roleController/treeGrid";
                         }
                     }
                 });
             }else {
-                alert("请填写用户名或密码！");
+                alert("请填写角色名称！");
             }
         });
 
-        //添加用户框的取消按键
+        //添加角色框的取消按键
         $("#addReset").click(function(){
-            $("#addUserName").val("");
-            $("#addPassword").val("");
-            $("#addUserContent").hide();
+            $("#addRoleName").val("");
+            $("#addSeq").val("");
+            $("#addPid").val("");
+            $("#addRemark").val("");
+            $("#addRoleContent").hide();
         });
 
-        //弹出编辑用户框
-        $("#editUser").click(function(){
-            var checkUser = $("#userList").find("tbody :checked");
-            if(checkUser.size() == 1){
-                $("#userId").val(checkUser.val());
-                checkUser.parent().parent().each(function(){
-                    $("#editUserName").val($(this).children().eq(1).text());
-                    $("#editPassword").val($(this).children().eq(2).text());
+        //弹出编辑角色框
+        $("#editRole").click(function(){
+            var checkRole = $("#roleList").find("tbody :checked");
+            if(checkRole.size() == 1){
+                $("#roleId").val(checkRole.val());
+                checkRole.parent().parent().each(function(){
+                    $("#editRoleName").val($(this).children().eq(1).text());
+                    $("#editSeq").val($(this).children().eq(2).text());
+                    $("#editRemark").val($(this).children().eq(5).text());
                 });
-                $("#editUserContent").show();
-            }else if(checkUser.size() < 1){
+                $("#editRoleContent").show();
+            }else if(checkRole.size() < 1){
                 alert("请选择一个用户！");
                 return false;
             }else {
@@ -176,58 +213,59 @@
             }
         });
 
-        //编辑用户框的编辑按键
+        //编辑角色框的编辑按键
         $("#edit").click(function(){
-            var userId = $("#userId").val();
-            var editPassword = $("#editPassword").val();
-            if(userId != "" && editPassword != ""){
-                var data = "id="+userId+"&pwd="+editPassword;
+            var roleId = $("#roleId").val();
+            var editRoleName = $("#editRoleName").val();
+            var editSeq = $("#editSeq").val();
+            var editPid = $("#editPid").val();
+            var editRemark = $("#editRemark").val();
+            if(editRoleName != ""){
+                var data = "id="+roleId+"&name="+editRoleName+"&seq="+editSeq+"&pid="+editPid+"&remark="+editRemark;
                 $.ajax({
-                    url:"${pageContext.request.contextPath}/userController/editPwd",
-                    type:"get",
+                    url:"${pageContext.request.contextPath}/roleController/edit",
+                    type:"post",
                     data:data,
                     dataType:"json",
                     cache:false,
                     success:function(response){
                         if(response.success){
-                            location.href="${pageContext.request.contextPath}/userController/manager";
+                            location.href="${pageContext.request.contextPath}/roleController/treeGrid";
                         }
                     }
                 });
             }else {
-                alert("请填写用户名或密码！");
+                alert("请填写角色名称！");
             }
         });
 
-        //编辑用户框的取消按键
+        //编辑角色框的取消按键
         $("#editReset").click(function(){
-            $("#editUserContent").hide();
+            $("#editRoleContent").hide();
         });
 
-        //批量删除用户
-        $("#delUser").click(function(){
-            var checkUsers = $("#userList").find("tbody :checked");
-            if(checkUsers.size() >= 1){
-                if(confirm("您确定要删除所选用户吗？")){
-                    var ids = checkUsers.map(function() {
-                        return $(this).val();
-                    }).get().join(',');
-                    var data = "ids="+ids;
+        //删除角色
+        $("#delrole").click(function(){
+            var checkUser = $("#roleList").find("tbody :checked");
+            if(checkUser.size() == 1){
+                if(confirm("您确定要删除所选角色吗？")){
+                    var id = checkUser.val();
+                    var data = "id="+id;
                     $.ajax({
-                        url:"${pageContext.request.contextPath}/userController/batchDelete",
+                        url:"${pageContext.request.contextPath}/roleController/delete",
                         type:"post",
                         data:data,
                         dataType:"json",
                         cache:false,
                         success:function(response){
                             if(response.success){
-                                location.href="${pageContext.request.contextPath}/userController/manager";
+                                location.href="${pageContext.request.contextPath}/roleController/treeGrid";
                             }
                         }
                     });
                 }
             }else {
-                alert("请选择至少一个用户！");
+                alert("请选择一个角色！");
                 return false;
             }
         });
@@ -247,54 +285,52 @@
             });
         });
 
-        //弹出用户权限修改框
-        $("#userRole").click(function(){
-            var checkUsers = $("#userList").find("tbody :checked");
-            if(checkUsers.size() >= 1){
-                var ids = checkUsers.map(function() {
-                    return $(this).val();
-                }).get().join(',');
-                $("#ids").val(ids);
-                $("#userRoleContent").show();
+        //弹出角色资源修改框
+        $("#roleResource").click(function(){
+            var checkRoles = $("#roleList").find("tbody :checked");
+            if(checkRoles.size() == 1){
+                var id = checkRoles.val();
+                $("#id").val(id);
+                $("#resourceContent").show();
             }else {
                 alert("只能选择一个用户！");
                 return false;
             }
         });
 
-        //用户权限修改的修改按键
-        $("#role").click(function(){
-            var checkRoles = $("#userRoleList").find("tbody :checked");
-            if(checkRoles.size() >= 1){
-                var roleIds = checkRoles.map(function() {
+        //角色资源修改的修改按键
+        $("#resource").click(function(){
+            var checkResources = $("#resourceList").find("tbody :checked");
+            if(checkResources.size() >= 1){
+                var resourceIds = checkResources.map(function() {
                     return $(this).val();
                 }).get().join(',');
-                var ids = $("#ids").val();
-                if(roleIds != "" && ids != ""){
-                    var data = "ids="+ids+"&roleIds="+roleIds;
+                var id = $("#id").val();
+                if(resourceIds != "" && id != ""){
+                    var data = "id="+id+"&resourceIds="+resourceIds;
                     $.ajax({
-                        url:"${pageContext.request.contextPath}/userController/grant",
+                        url:"${pageContext.request.contextPath}/roleController/grant",
                         type:"post",
                         data:data,
                         dataType:"json",
                         cache:false,
                         success:function(response){
                             if(response.success){
-                                location.href="${pageContext.request.contextPath}/userController/manager";
+                                location.href="${pageContext.request.contextPath}/roleController/treeGrid";
                             }
                         }
                     });
                 }
             }else {
-                alert("请选择角色！");
+                alert("请选择资源！");
                 return false;
             }
         });
 
-        //用户权限修改的取消按键
-        $("#roleReset").click(function(){
-            $("#userRoleList").find("tbody :checkbox").prop("checked", false);
-            $("#userRoleContent").hide();
+        //角色资源修改的取消按键
+        $("#resourceReset").click(function(){
+            $("#resourceList").find("tbody :checkbox").prop("checked", false);
+            $("#resourceContent").hide();
         });
 
     });

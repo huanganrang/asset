@@ -33,13 +33,13 @@
     </ul>
     <article>
         <ul class="list">
-            <li style="border-bottom:2px solid #f60">用户管理</li>
+            <li style="border-bottom:2px solid #f60;font: 16px/40px '微软雅黑';">用户管理</li>
             <li><a href="${pageContext.request.contextPath}/roleController/treeGrid">角色管理</a></li>
         </ul>
 
         <ul class="tablist">
             <li><a href="#"></a></li>
-            <li><a href="#">1/7</a></li>
+            <li><a href="#">1/1</a></li>
             <li><a href="#"></a></li>
             <li id="addUser" style="padding-top: 15px;">添加</li>
             <li id="editUser" style="padding-top: 15px;">编辑</li>
@@ -50,12 +50,12 @@
 
         <ul class="tableheader">
             <li><img src="${pageContext.request.contextPath}/assets/images/Screen-icon--1-(2).png"/></li>
-            <li><input id="checkAll" type="checkbox" /></li>
-            <li>用户名</li>
-            <li>密码</li>
-            <li>创建时间</li>
-            <li>最后修改时间</li>
-            <li>所属角色名称</li>
+            <li style="margin-left: 36px;"><input id="checkAll" type="checkbox" /></li>
+            <li style="margin-left: 115px;">用户名</li>
+            <li style="margin-left: 130px;">密码</li>
+            <li style="margin-left: 130px;">创建时间</li>
+            <li style="margin-left: 130px;">最后修改时间</li>
+            <li style="margin-left: 110px;">所属角色名称</li>
         </ul>
         <div class="tablebox">
             <table id="userList">
@@ -91,7 +91,7 @@
     </article>
     <%--用户权限框--%>
     <article id="userRoleContent" style="display:none;line-height: 30px; position: absolute; z-index: 1000; width: 100%; height: 100%; text-align: center;">
-        <div style="border: 2px #8FA4F5 solid; top: 25%; position: relative; left: 40%; height: 420px; width: 500px; font-size: 16px;background-color: wheat;">
+        <div style="border: 2px #8FA4F5 solid; top: 25%; position: relative; left: 40%; height: 420px; width: 500px; font-size: 16px;background-color: wheat;overflow: auto;">
             <input type="hidden" id="ids" name="ids" />
             <table id="userRoleList">
                 <c:forEach var="content" items="${userRoles}">
