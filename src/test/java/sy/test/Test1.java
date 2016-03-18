@@ -1,5 +1,7 @@
 package sy.test;
 
+import java.util.List;
+
 import jb.service.InitServiceI;
 import jb.service.UserServiceI;
 
@@ -8,6 +10,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
+import asset.model.AssetExtInfo;
+import asset.service.AssetBaseServiceI;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring.xml", "classpath:spring-hibernate.xml", "classpath:spring-druid.xml" })
@@ -18,6 +26,8 @@ public class Test1 {
 
 	@Autowired
 	private UserServiceI userService;
+	
+	@Autowired AssetBaseServiceI baseService;
 
 	// @Test1111
 	// public void t1() {
@@ -112,7 +122,15 @@ public class Test1 {
 	public void test() {
 		// ApplicationContext ac = new ClassPathXmlApplicationContext(new String[]{"classpath:spring.xml", "classpath:spring-hibernate.xml", "classpath:spring-druid.xml" });
 		// System.out.println(ac);
-		initService.init();
+//		initService.init();
+		try {
+//			List<AssetExtInfo> extInfo = baseService.getAssetExtInfo(1);
+//			System.out.println(JSON.toJSONString(extInfo.get(0)));
+			baseService.searchAssetBaseInfo("11", null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -1,9 +1,7 @@
 package jb.controller;
 
-import jb.pageModel.Json;
-import jb.pageModel.Role;
-import jb.pageModel.SessionInfo;
-import jb.pageModel.Tree;
+import jb.pageModel.*;
+import jb.service.ResourceServiceI;
 import jb.service.RoleServiceI;
 import jb.util.ConfigUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,9 @@ public class RoleController extends BaseController {
 
 	@Autowired
 	private RoleServiceI roleService;
+
+	@Autowired
+	private ResourceServiceI resourceService;
 
 	/**
 	 * 跳转到角色管理页面
@@ -62,6 +63,7 @@ public class RoleController extends BaseController {
 	public Json add(Role role, HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
 		Json j = new Json();
+		role.setId(UUID.randomUUID().toString());
 		roleService.add(role, sessionInfo);
 		j.setSuccess(true);
 		j.setMsg("添加成功！");
@@ -110,7 +112,9 @@ public class RoleController extends BaseController {
 	public String treeGrid(HttpServletRequest request, HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
 		List<Role> userRoleList = roleService.treeGrid(sessionInfo);
+		List<Resource> resourceList = resourceService.treeGrid(sessionInfo);
 		request.setAttribute("userRoleList", userRoleList);
+		request.setAttribute("resourceList", resourceList);
 		return "/assets/rolemanager";
 	}
 

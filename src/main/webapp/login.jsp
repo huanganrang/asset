@@ -42,21 +42,23 @@
 
 <script src="${pageContext.request.contextPath}/assets/js/jquery-2.0.3.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/jquery.cookie.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery.base64.js"></script>
 		
 <script type="text/javascript">
 $(function(){
 
+	$.base64.utf8encode = true;
 	var cookie_user = $.cookie("cookie_user");
 	if(cookie_user){
-		$("#name").val(cookie_user.split(":")[0]);
-		$("#pwd").val(cookie_user.split(":")[1]);
+		$("#name").val($.base64.decode(cookie_user.split(":")[0]));
+		$("#pwd").val($.base64.decode(cookie_user.split(":")[1]));
 		$("#rempw").attr("checked", true);
 	}
 
 	$("#submit").click(function(){
 		var returnUrl = "${returnUrl}";
 		if(returnUrl == ""){
-			returnUrl = "/asset/ledger/list";
+			returnUrl = "${pageContext.request.contextPath}/home";
 		}
 		$("#msg").hide();
 		var data = "name="+$("#name").val()+"&pwd="+$("#pwd").val();
@@ -69,7 +71,7 @@ $(function(){
 			success:function(response){
 				if(response.success){
 					if($("#rempw").is(" :checked")){
-						$.cookie("cookie_user", $("#name").val() + ":" + $("#pwd").val(), {path: "/", expires: 30});
+						$.cookie("cookie_user", $.base64.encode($("#name").val()) + ":" + $.base64.encode($("#pwd").val()), {path: "/", expires: 7});
 					}else {
 						$.cookie("cookie_user", "", {path: "/", expires: -1});
 					}

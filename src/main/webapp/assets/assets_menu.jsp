@@ -65,7 +65,7 @@
 								</li>
 
 								<li>
-									<a href="jqgrid.html">
+									<a href="">
 										<i class="icon-double-angle-right"></i>
 										库存
 									</a>
@@ -134,7 +134,7 @@
 						</li>
 
 						<li>
-							<a href="widgets.html">
+							<a href="${pageContext.request.contextPath}/userController/manager">
 								<i class="icon-list-alt"></i>
 								<span >系统管理</span>
 							</a>

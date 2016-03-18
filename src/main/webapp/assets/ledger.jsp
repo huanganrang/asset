@@ -22,7 +22,7 @@
 </header>
 <main>
 	<ul class="nav">
-		<li></li>
+		<li class="tree_href" href="${pageContext.request.contextPath}/home"></li>
 		<li></li>
 		<li></li>
 		<li><span style="width: 100%; display: inline-block; height: 50px; line-height: 50px; padding-left: 40px; color: burlywood;">台账管理</span></li>
