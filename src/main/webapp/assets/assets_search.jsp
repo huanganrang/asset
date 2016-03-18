@@ -117,6 +117,8 @@
         	var key=$("#key").val();
         	var columns = $("#columns").val();
             $('#dg').datagrid({
+            	url:rootpath+'/asset/search?key='+key,
+            	columns:eval($("#columns").val()),
                 method: 'get',
                 fitColumns: false,
                 rownumbers:true,
@@ -135,12 +137,6 @@
                 }
             });
         	
-        	options={};  
-        	options.url = rootpath+'/asset/search?key='+key;
-       	    options.columns = eval($("#columns").val());  
-        	
-        	 $('#dg').datagrid(options); 
-        	 
         	 $("#to-search").click(function(){
  				if($("#to-search").val() != ""){
  					location.href="${pageContext.request.contextPath}/asset/tosearch?key="+$("#key").val();

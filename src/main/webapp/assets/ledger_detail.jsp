@@ -129,8 +129,10 @@
 								        $(function(){
 								        	var rootpath = $("#rootpath").val();
 								            var dg = $('#dg').datagrid({
+								            	url:rootpath+'/ledger/data',
 								                pagination: true,
 								                remoteFilter: true,
+								                columns:eval($("#columns").val()),
 								                fitColumns: true,
 								                rownumbers: true,
 								                toolbar:toolbar,
@@ -148,11 +150,6 @@
 								                    });
 								                }
 								            });
-								            
-								            options={};  
-								            options.url = rootpath+'/ledger/data',
-								       	    options.columns = eval($("#columns").val());  
-								        	dg.datagrid(options);
 								        	dg.datagrid('enableFilter');
 								        });
 								        var cmenu;
