@@ -1,7 +1,7 @@
 package asset.controller;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -9,13 +9,17 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 
 import jb.pageModel.DataGrid;
+import jb.pageModel.Json;
 import jb.pageModel.PageHelper;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -41,9 +45,7 @@ public class AssetController {
 	@Autowired
 	private AssetDicServiceI assetDicService;
 	
-	@RequestMapping("/tosearch")
-	public String tosearch(HttpServletRequest request) {
-		request.setAttribute("key", request.getParameter("key"));
+	private void setColumns(HttpServletRequest request){
 		String baseids = request.getParameter("baseids");
 		String attrids = request.getParameter("attrids");
 		StringBuilder columns = new StringBuilder("[[");
@@ -95,7 +97,13 @@ public class AssetController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+	}
+	
+	
+	@RequestMapping("/tosearch")
+	public String tosearch(HttpServletRequest request) {
+		request.setAttribute("key", request.getParameter("key"));
+		setColumns(request);
 		return "assets/assets_search";
 	}
 	
@@ -160,7 +168,6 @@ public class AssetController {
 				
 				dataGrid.setRows(rows);
 				dataGrid.setTotal(assetBaseService.countAssetSearch(key));
-				System.out.println(JSON.toJSONString(dataGrid));
 				return dataGrid;
 			}
 		} catch (Exception e) {
@@ -169,6 +176,9 @@ public class AssetController {
 		}
 		return dataGrid;
 	}
+	
+	
+	
 	
 	
 }

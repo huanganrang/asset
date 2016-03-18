@@ -10,7 +10,7 @@
 					</script>
 					<ul class="nav nav-list">
 						<li class="active">
-							<a href="">
+							<a href="${pageContext.request.contextPath}/home">
 								<i class="icon-dashboard"></i>
 								<span > 搜索 </span>
 							</a>
@@ -58,16 +58,37 @@
 
 							<ul class="submenu">
 								<li>
-									<a href="tables.html">
+									<a href="${pageContext.request.contextPath}/ledger/detail">
 										<i class="icon-double-angle-right"></i>
-										测试
+									     台账明细
 									</a>
 								</li>
 
 								<li>
 									<a href="jqgrid.html">
 										<i class="icon-double-angle-right"></i>
-										测试
+										库存
+									</a>
+								</li>
+								
+								<li>
+									<a href="jqgrid.html">
+										<i class="icon-double-angle-right"></i>
+										对账
+									</a>
+								</li>
+								
+								<li>
+									<a href="jqgrid.html">
+										<i class="icon-double-angle-right"></i>
+										报废库
+									</a>
+								</li>
+								
+								<li>
+									<a href="jqgrid.html">
+										<i class="icon-double-angle-right"></i>
+										调拨
 									</a>
 								</li>
 							</ul>
@@ -76,7 +97,7 @@
 						<li>
 							<a href="#" class="dropdown-toggle">
 								<i class="icon-edit"></i>
-								<span> 台账报表 </span>
+								<span> 系统报表 </span>
 
 								<b class="arrow icon-angle-down"></b>
 							</a>
@@ -85,28 +106,28 @@
 								<li>
 									<a href="form-elements.html">
 										<i class="icon-double-angle-right"></i>
-										表单组件
+										历史事件
 									</a>
 								</li>
 
 								<li>
 									<a href="form-wizard.html">
 										<i class="icon-double-angle-right"></i>
-										向导提示 &amp; 验证
+										系统日志
 									</a>
 								</li>
 
 								<li>
 									<a href="wysiwyg.html">
 										<i class="icon-double-angle-right"></i>
-										编辑器
+										操作日志
 									</a>
 								</li>
 
 								<li>
 									<a href="dropzone.html">
 										<i class="icon-double-angle-right"></i>
-										文件上传
+										资产分析
 									</a>
 								</li>
 							</ul>
@@ -117,6 +138,21 @@
 								<i class="icon-list-alt"></i>
 								<span >系统管理</span>
 							</a>
+							<ul class="submenu">
+								<li>
+									<a href="form-elements.html">
+										<i class="icon-double-angle-right"></i>
+										用户管理
+									</a>
+								</li>
+
+								<li>
+									<a href="form-wizard.html">
+										<i class="icon-double-angle-right"></i>
+										角色管理
+									</a>
+								</li>
+							</ul>
 						</li>
 
 						<li>
@@ -130,6 +166,21 @@
 									</span>
 								</span>
 							</a>
+							<ul class="submenu">
+								<li>
+									<a href="form-elements.html">
+										<i class="icon-double-angle-right"></i>
+										模拟部署
+									</a>
+								</li>
+
+								<li>
+									<a href="form-wizard.html">
+										<i class="icon-double-angle-right"></i>
+										机房维护
+									</a>
+								</li>
+							</ul>
 						</li>
 					</ul><!-- /.nav-list -->
 

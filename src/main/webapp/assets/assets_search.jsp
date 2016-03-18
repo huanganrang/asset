@@ -82,7 +82,7 @@
 
 								<div class="hr hr32 hr-dotted"></div>
 								
-								<table id="dg"></table>
+								<table id="dg" style="width:700px;height:450px"></table>
 								<!-- PAGE CONTENT ENDS -->
 							</div><!-- /.col -->
 						</div><!-- /.row -->
@@ -117,12 +117,7 @@
         	var key=$("#key").val();
         	var columns = $("#columns").val();
             $('#dg').datagrid({
-                url: rootpath+'/asset/search?key='+key,
                 method: 'get',
-                title: '',
-                iconCls: '',
-                width: 1024,
-                height: 400,
                 fitColumns: false,
                 rownumbers:true,
                 scrollbarSize:18,
@@ -141,6 +136,7 @@
             });
         	
         	options={};  
+        	options.url = rootpath+'/asset/search?key='+key;
        	    options.columns = eval($("#columns").val());  
         	
         	 $('#dg').datagrid(options); 

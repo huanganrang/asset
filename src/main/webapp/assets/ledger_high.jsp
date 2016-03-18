@@ -62,15 +62,10 @@
 								<!-- PAGE CONTENT BEGINS -->
 								<div class="hr32"></div>
 								<div id="nav-search" style="margin-left:300px;">
-										<span class="input-icon">
-											<input type="text" style="width: 400px" id="key" name="key" class="nav-search-input" value="${key}" placeholder="" />
-											<i class="icon-search nav-search-icon"></i>
-										</span>
-										<input type="button" id="to-search" value="搜索"/>
+										<input type="button" id="to-search" value="确定"/>
 								</div>
 
 								<div class="hr hr32 hr-dotted"></div>
-								
 								 <div class="easyui-accordion" style="width:700px;height:auto;">
 								 		<div title="默认属性" style="padding:10px;border:none" id="base" class="base">
 								        		 <input type="checkbox" class="selectAll"/>全选<br/>
@@ -87,7 +82,6 @@
 								        </div>
 								        </c:forEach>
 								    </div>
-								
 								<!-- PAGE CONTENT ENDS -->
 							</div><!-- /.col -->
 						</div><!-- /.row -->
@@ -145,8 +139,9 @@
         		if(attrids.length > 1){
         			attrids = attrids.substring(0,attrids.length-1);
         		}
-        		location.href="${pageContext.request.contextPath}/asset/tosearch?key="+$("#key").val()+"&baseids="+baseids+"&attrids="+attrids;
+        		location.href="${pageContext.request.contextPath}/asset/ledger?baseids="+baseids+"&attrids="+attrids;
         	});
+        	
         });
     </script>
 		

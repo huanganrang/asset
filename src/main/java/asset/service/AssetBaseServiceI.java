@@ -9,6 +9,7 @@ import asset.model.AssetExtInfo;
 import asset.model.AssetInfo;
 import jb.pageModel.PageHelper;
 
+import java.util.Map;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,8 @@ public interface AssetBaseServiceI {
 	AssetBaseInfo getAssetBaseInfo(Integer id) throws Exception;
 	
 	
+	
+	public List<AssetExtInfo> getAssetExtInfo(List<Integer> ids) throws Exception;
 	/**
 	 * 根据ID获取资产扩展信息
 	 * @param id
@@ -64,6 +67,24 @@ public interface AssetBaseServiceI {
 	Long countAssetSearch (String key) throws Exception;
 	
 	/**
+	 * 资产记录数
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	Long countAsset (Map<String,String> paramMap) throws Exception;
+	
+	
+
+	/**
+	 * 资产记录数
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	Long countAsset (Map<String,String> baseMap,Map<String,String> extMap) throws Exception;
+	
+	/**
 	 * 高级搜索
 	 * @param key
 	 * @return
@@ -95,7 +116,50 @@ public interface AssetBaseServiceI {
 	 * @throws Exception
 	 */
 	Map<String,List<AssetAttr>> getAllAttrByCate() throws Exception;
-
+	
+	
+	/**
+	 * 获取资产列表
+	 * @param ph
+	 * @return
+	 * @throws Exception
+	 */
+	List<AssetInfo> getAssetList(Map<String,String> paramMap,PageHelper ph) throws Exception;
+	
+	
+	
+	/**
+	 * 获取资产列表
+	 * @param ph
+	 * @return
+	 * @throws Exception
+	 */
+	List<AssetInfo> getAssetList(Map<String,String> baseMap,Map<String,String> extMap,PageHelper ph) throws Exception;
+	
+	
+      
+	/**
+	 * 根据ID更新基本信息
+	 * @param base
+	 * @return
+	 * @throws Exception
+	 */
+	int updateAssetById(AssetBaseInfo base) throws Exception;
+	
+	
+	/**
+	 * 根据ID更新扩展信息
+	 * @param base
+	 * @return
+	 * @throws Exception
+	 */
+	int updateAssetExtById(AssetExtInfo ext) throws Exception;
+	
+	
+	/**
+	 * ###########################
+	 * 
+	 */
 	/**
 	 * 获取获取台账信息
 	 * @return

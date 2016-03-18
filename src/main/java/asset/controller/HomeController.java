@@ -19,7 +19,8 @@ public class HomeController {
 
 	
 	 @RequestMapping("/home")
-	 public String getLedgerList(HttpServletRequest request, PageHelper ph) {
+	 public String home(HttpServletRequest request, PageHelper ph) {
 	        return "/home";
 	 }
+	 
 }
