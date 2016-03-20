@@ -1,5 +1,6 @@
 package asset.controller;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -12,13 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import jb.pageModel.DataGrid;
 import jb.pageModel.Json;
 import jb.pageModel.PageHelper;
-import jb.pageModel.SessionInfo;
-import jb.util.ConfigUtil;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
@@ -465,12 +465,12 @@ public class LedgerDetailController {
 				baseInfo.setAssetCate(cate);
 				baseInfo.setAssetStatus("1");
 				baseInfo.setAssetAddTime(new Date());
-				SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(ConfigUtil.getSessionInfoName());
-				baseInfo.setAssetAddUser(sessionInfo.getId());
+//				SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(ConfigUtil.getSessionInfoName());
+//				baseInfo.setAssetAddUser(sessionInfo.getId());
 				if(StringUtils.isEmpty(baseInfo.getAssetStockStatus())){
 					baseInfo.setAssetStockStatus("入库");
 				}
-				
+				baseInfo.setAssetArriveDate(DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-DD"));
 				Integer assetId = assetBaseService.add(baseInfo);
 				
 				//扩展信息

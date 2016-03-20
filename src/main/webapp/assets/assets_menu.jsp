@@ -65,7 +65,7 @@
 								</li>
 
 								<li>
-									<a href="">
+									<a href="${pageContext.request.contextPath}/stock/tostock">
 										<i class="icon-double-angle-right"></i>
 										库存
 									</a>
