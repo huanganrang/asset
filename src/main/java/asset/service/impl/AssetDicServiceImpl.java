@@ -42,6 +42,11 @@ public class AssetDicServiceImpl  implements AssetDicServiceI {
 		}
 		return null;
 	}
+
+	@Override
+	public void saveOrUpdate(AssetDic dic) throws Exception {
+		dicDao.saveOrUpdate(dic);
+	}
 	
 	
 	

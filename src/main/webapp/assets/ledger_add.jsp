@@ -46,7 +46,6 @@
 
 		<%@include file="/assets/assets_header.jsp"%>
 		<input type="hidden" id="rootpath" value="${pageContext.request.contextPath}"/>
-		<input type="hidden" id="columns" value="${columns}"/>
 		<div class="main-container" id="main-container">
 			<script type="text/javascript">
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
@@ -59,16 +58,38 @@
 						<script type="text/javascript">
 							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
 						</script>
-					</div>
 
+						<!-- <ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="#">首页</a>
+							</li>
+							<li class="active">搜索</li>
+						</ul>.breadcrumb -->
+					</div>
+					<input type="hidden" id = "cate"  value = "${cate }"/>
 					<div class="page-content">
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								<div class="hr32"></div>
-								  <table id="dg"  style="width:700px;height:450px">
-								  </table>
-								    <!--[if !IE]> -->
+								   <table id="pg" class="easyui-propertygrid" style="width:700px" data-options="
+						                url:'${pageContext.request.contextPath}/ledger/addPro?cate=${cate }',
+						                method:'get',
+						                showGroup:false,
+						                showHeader:false,
+						                toolbar:toolbar,
+						                scrollbarSize:0
+						            "></table>
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+		
+		
+		<!-- ace scripts -->
+		    <!--[if !IE]> -->
 
 									<script src="${pageContext.request.contextPath}/assets\js\jquery-2.0.3.min.js"></script>
 							
@@ -99,20 +120,46 @@
 							<script src="${pageContext.request.contextPath}/assets/js/typeahead-bs2.min.js"></script>
 									<script src="${pageContext.request.contextPath}/jslib/jquery-easyui-1.3.6/jquery.easyui.min.js"></script>
 									<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jquery-easyui-1.3.6/locale/easyui-lang-zh_CN.js"></script>
-								    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/datagrid-filter.js"></script>
+									<script src="${pageContext.request.contextPath}/assets/js/ace.min.js"></script>
 								    <script type="text/javascript">
-									   $(function(){
-										   
-									   });
+									    var toolbar = [{
+								            text:'选择图片',
+								            iconCls:'icon-search',
+								            handler:function(){
+								            	//open model window
+								            }
+								        },'-',{
+								            text:'提交',
+								            iconCls:'icon-save',
+								            handler:getChanges
+								        }];
+									    function getChanges(){
+								            var b = '';
+								            var e = '';
+								            var rows = $('#pg').propertygrid('getRows');
+								            for(var i=0; i<rows.length; i++){
+								            	if("base" == rows[i].flag){
+								                	b += rows[i].key + ':' + rows[i].value + ',';
+								            	}
+								            	if("ext" == rows[i].flag){
+								            		e += rows[i].key + ':' + rows[i].name + ':' + rows[i].value + ',';
+								            	}
+								            }
+								        	 $.ajax({
+								    			url:"${pageContext.request.contextPath}/ledger/save",
+								    			type:"post",
+								    			data:"b="+b+"&e="+e+"&c="+$("#cate").val(),
+								    			dataType:"json",
+								    			cache:false,
+								    			success:function(response){
+								    				$.messager.alert("提示","新增成功");
+								    			},
+								    			error:function(e){
+								    				$.messager.alert("提示","新增失败，请稍后再试或联系管理员");
+								    			}
+								    		});
+								        }
 								    </script>
-								<!-- PAGE CONTENT ENDS -->
-							</div><!-- /.col -->
-						</div><!-- /.row -->
-					</div><!-- /.page-content -->
-				</div><!-- /.main-content -->
 		
-		
-		<!-- ace scripts -->
-		<script src="${pageContext.request.contextPath}/assets/js/ace.min.js"></script>
 </body>
 </html>

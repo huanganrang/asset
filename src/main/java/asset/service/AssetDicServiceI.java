@@ -30,4 +30,13 @@ public interface AssetDicServiceI {
 	 * @throws Exception
 	 */
 	Map<String,String> getAssetDicMap(Integer type) throws Exception;
+	
+	
+	
+	/**
+	 * 新增或者删除字典信息
+	 * @param dic
+	 * @throws Exception
+	 */
+	void saveOrUpdate(AssetDic dic) throws Exception;
 }

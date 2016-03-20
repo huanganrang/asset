@@ -73,7 +73,7 @@
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								<div class="hr32"></div>
-								   <table id="pg" class="easyui-propertygrid" style="width:400px" data-options="
+								   <table id="pg" class="easyui-propertygrid" style="width:700px" data-options="
 						                url:'${pageContext.request.contextPath}/ledger/pro?assetId=${assetId }',
 						                method:'get',
 						                showGroup:false,
@@ -81,7 +81,15 @@
 						                toolbar:toolbar,
 						                scrollbarSize:0
 						            "></table>
-								    <!--[if !IE]> -->
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+		
+		
+		<!-- ace scripts -->
+		    <!--[if !IE]> -->
 
 									<script src="${pageContext.request.contextPath}/assets\js\jquery-2.0.3.min.js"></script>
 							
@@ -112,7 +120,7 @@
 							<script src="${pageContext.request.contextPath}/assets/js/typeahead-bs2.min.js"></script>
 									<script src="${pageContext.request.contextPath}/jslib/jquery-easyui-1.3.6/jquery.easyui.min.js"></script>
 									<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jquery-easyui-1.3.6/locale/easyui-lang-zh_CN.js"></script>
-								    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/datagrid-filter.js"></script>
+									<script src="${pageContext.request.contextPath}/assets/js/ace.min.js"></script>
 								    <script type="text/javascript">
 									    var toolbar = [{
 								            text:'查看服务器',
@@ -152,14 +160,6 @@
 								    		});
 								        }
 								    </script>
-								<!-- PAGE CONTENT ENDS -->
-							</div><!-- /.col -->
-						</div><!-- /.row -->
-					</div><!-- /.page-content -->
-				</div><!-- /.main-content -->
 		
-		
-		<!-- ace scripts -->
-		<script src="${pageContext.request.contextPath}/assets/js/ace.min.js"></script>
 </body>
 </html>

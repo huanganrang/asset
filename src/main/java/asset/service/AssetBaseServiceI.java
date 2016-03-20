@@ -3,15 +3,14 @@
  */
 package asset.service;
 
+import java.util.List;
+import java.util.Map;
+
+import jb.pageModel.PageHelper;
 import asset.model.AssetAttr;
 import asset.model.AssetBaseInfo;
 import asset.model.AssetExtInfo;
 import asset.model.AssetInfo;
-import jb.pageModel.PageHelper;
-
-import java.util.Map;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author yanghui
@@ -171,7 +170,15 @@ public interface AssetBaseServiceI {
 	 *
 	 * @param assetBaseInfo
 	 */
-	void add(AssetBaseInfo assetBaseInfo);
+	Integer add(AssetBaseInfo assetBaseInfo);
+	
+	
+	/**
+	 * 添加AssetExtInfo
+	 *
+	 * @param assetBaseInfo
+	 */
+	void addExtInfo(AssetExtInfo extInfo);
 
 	/**
 	 * 修改AssetBaseInfo

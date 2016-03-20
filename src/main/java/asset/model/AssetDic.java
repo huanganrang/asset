@@ -19,12 +19,12 @@ public class AssetDic implements java.io.Serializable {
 	private Integer dicId;
 	private String dicKey;
 	private String dicValue;
-	private byte dicType;
+	private Integer dicType;
 
 	public AssetDic() {
 	}
 
-	public AssetDic(String dicKey, String dicValue, byte dicType) {
+	public AssetDic(String dicKey, String dicValue, Integer dicType) {
 		this.dicKey = dicKey;
 		this.dicValue = dicValue;
 		this.dicType = dicType;
@@ -60,11 +60,11 @@ public class AssetDic implements java.io.Serializable {
 	}
 
 	@Column(name = "dic_type", nullable = false)
-	public byte getDicType() {
+	public Integer getDicType() {
 		return this.dicType;
 	}
 
-	public void setDicType(byte dicType) {
+	public void setDicType(Integer dicType) {
 		this.dicType = dicType;
 	}
 

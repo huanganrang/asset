@@ -3,6 +3,7 @@
  */
 package asset.service.impl;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import asset.dao.AssetAttrDaoI;
 import asset.dao.AssetBaseDaoI;
-import asset.dao.AssetDicDaoI;
 import asset.dao.AssetExtDaoI;
 import asset.model.AssetAttr;
 import asset.model.AssetBaseInfo;
@@ -152,7 +152,7 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 	@Override
 	public List<AssetAttr> getAssetAttr(String cate) throws Exception {
 		Map<String, Object> params = new HashMap<String,Object>();
-		params.put("attrStatus", 1);
+		params.put("attrStatus", (byte)1);
 		params.put("attrCate", cate);
 		String hql = "from AssetAttr where attrCate = :attrCate and attrStatus = :attrStatus";
 		return attrDao.find(hql,params);
@@ -211,7 +211,6 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 		List<AssetBaseInfo> list = null;
 		long s1 = System.currentTimeMillis();
 		if(null != paramMap && paramMap.size() > 0){
-			Map<String,String> dicMap = dicService.getAssetDicMap(1);
 			for(Map.Entry<String, String> entry:paramMap.entrySet()){
 				String key = entry.getKey();
 				String value = entry.getValue();
@@ -398,8 +397,9 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 	}
 
 	@Override
-	public void add(AssetBaseInfo assetBaseInfo){
-		baseDao.save(assetBaseInfo);
+	public Integer add(AssetBaseInfo assetBaseInfo){
+		Serializable save = baseDao.save(assetBaseInfo);
+		return (Integer)save;
 	}
 
 	@Override
@@ -423,6 +423,12 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 				baseDao.executeHql(hql);
 			}
 		}
+	}
+
+
+	@Override
+	public void addExtInfo(AssetExtInfo extInfo) {
+		baseExtDao.save(extInfo);
 	}
 
 

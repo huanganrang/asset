@@ -1,5 +1,6 @@
 package asset.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -11,10 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import jb.pageModel.DataGrid;
 import jb.pageModel.Json;
 import jb.pageModel.PageHelper;
+import jb.pageModel.SessionInfo;
+import jb.util.ConfigUtil;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import asset.model.AssetAttr;
 import asset.model.AssetBaseInfo;
+import asset.model.AssetDic;
 import asset.model.AssetExtInfo;
 import asset.model.AssetInfo;
 import asset.service.AssetBaseServiceI;
@@ -45,6 +48,7 @@ public class LedgerDetailController {
 	
 	@Autowired
 	private AssetDicServiceI assetDicService;
+	
 
 	
 	@RequestMapping("/detail")
@@ -65,19 +69,111 @@ public class LedgerDetailController {
 		return "/assets/ledger_toadd";
 	}
 	
+	
+	@RequestMapping("/getItNumber")
+	@ResponseBody
+	public String getItNumber(HttpServletRequest request) {
+		String ownership = request.getParameter("ownership");
+		try {
+			if(StringUtils.isBlank(ownership)){
+				throw new IllegalArgumentException("param error");
+			}
+			Map<String, String> dicMap = assetDicService.getAssetDicMap(100);
+			
+			if(dicMap.containsKey(ownership)){
+				String value = dicMap.get(ownership);
+				return ownership+value;
+			}else{
+				AssetDic dic = new AssetDic();
+				dic.setDicKey(ownership);
+				dic.setDicValue("1");
+				dic.setDicType(100);
+				assetDicService.saveOrUpdate(dic);
+				return ownership + "1";
+			}
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
 	@RequestMapping("/add/{type}")
 	public String ledgerAdd(HttpServletRequest request, @PathVariable Integer type) {
 		try {
-			Map<String, String> dicMap = assetDicService.getAssetDicMap(type);
-			if(MapUtils.isEmpty(dicMap)){
-				throw new IllegalArgumentException("param error");
+			List<AssetDic> list = assetDicService.getAssetDic(type);
+			if(CollectionUtils.isEmpty(list)){
+				throw new IllegalArgumentException("字典表没有录入相应的设备小类");
 			}
-			request.setAttribute("dicMap", dicMap);
+			request.setAttribute("dicList", list);
+			
+			
+			AssetDic assetDic = list.get(0);
+			String key = assetDic.getDicKey();
+			//类别
+			request.setAttribute("cate", key);
+			
+			//获取设备归属
+			List<AssetDic> ownership = assetDicService.getAssetDic(101);
+			request.setAttribute("ownership",ownership);
+			
+			//获取第一个设备归属对应的设备编号
+			Map<String, String> dicMap = assetDicService.getAssetDicMap(100);
+			//获取IT设备编号
+			request.setAttribute("itNumber", dicMap.get("A"));
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "/assets/ledger_add";
+	}
+	
+	
+	@RequestMapping("/addPro")
+	@ResponseBody
+	public DataGrid addPro(HttpServletRequest request) {
+		DataGrid dataGrid = new DataGrid();
+		try {
+			String cate = request.getParameter("cate");
+			if(StringUtils.isBlank(cate)){
+				throw new IllegalArgumentException("param error");
+			}
+			List<AssetAttr> attrList = assetBaseService.getAssetAttr(cate);
+			if(CollectionUtils.isEmpty(attrList)){
+				throw new IllegalArgumentException("param error");
+			}
+			JSONArray resultArray = new JSONArray();
+			Map<String,String> dicMap = assetDicService.getAssetDicMap(1);
+			for(Map.Entry<String, String> entry:dicMap.entrySet()){
+				String key = entry.getKey();
+				String value = "";
+				JSONObject json = new JSONObject();
+				json.put("name", dicMap.get(key));
+				json.put("value", value);
+				json.put("key", key);
+				json.put("flag", "base");
+				json.put("editor", "text");
+				resultArray.add(json);
+			}
+			for(AssetAttr ext:attrList){
+				JSONObject json = new JSONObject();
+				json.put("name", ext.getAttrName());
+				json.put("value", "");
+				json.put("key", ext.getAttrId());
+				json.put("flag", "ext");
+				json.put("editor", "text");
+				resultArray.add(json);
+			}
+			dataGrid.setRows(resultArray);
+			dataGrid.setTotal(Long.valueOf(resultArray.size()));
+			return dataGrid;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dataGrid;
 	}
 	
 	private void setColumns(HttpServletRequest request){
@@ -198,7 +294,6 @@ public class LedgerDetailController {
 	@ResponseBody
 	public DataGrid ledgerData(HttpServletRequest request, PageHelper ph) {
 		
-		System.out.println("inininininininininininininininininininininininininin");
 		DataGrid dataGrid = new DataGrid();
 		List<AssetInfo> assetList = null;
 		try {
@@ -264,7 +359,6 @@ public class LedgerDetailController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("end");
 		return dataGrid;
 	}
 	
@@ -344,4 +438,68 @@ public class LedgerDetailController {
 		return j;
 	}
 	
+	
+	@RequestMapping("/save")
+	@ResponseBody
+	public Json saveAsset(HttpServletRequest request) {
+		Json j = new Json();
+		try {
+			//基本信息
+			String base = request.getParameter("b");
+			String cate = request.getParameter("c");
+			if(StringUtils.isBlank(base) || StringUtils.isBlank(cate)){
+				throw new IllegalArgumentException("param error");
+			}
+			Map<String,String> paramMap = new HashMap<String,String>();
+				String[] bases = base.split(",");
+				for(String param:bases){
+					String[] params = param.split(":");
+					if(params.length == 2){
+						paramMap.put(params[0], params[1]);
+					}else{
+						paramMap.put(params[0], "");
+					}
+				}
+				AssetBaseInfo baseInfo = new AssetBaseInfo();
+				BeanUtils.populate(baseInfo, paramMap);
+				baseInfo.setAssetCate(cate);
+				baseInfo.setAssetStatus("1");
+				baseInfo.setAssetAddTime(new Date());
+				SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(ConfigUtil.getSessionInfoName());
+				baseInfo.setAssetAddUser(sessionInfo.getId());
+				if(StringUtils.isEmpty(baseInfo.getAssetStockStatus())){
+					baseInfo.setAssetStockStatus("入库");
+				}
+				
+				Integer assetId = assetBaseService.add(baseInfo);
+				
+				//扩展信息
+				String ext = request.getParameter("e");
+				if(StringUtils.isNotBlank(ext)){
+					String[] exts = ext.split(",");
+					for(String param:exts){
+						String[] params = param.split(":");
+						AssetExtInfo extInfo = new AssetExtInfo();
+						extInfo.setAssetId(assetId);
+						if(params.length == 3){
+							extInfo.setAssetAttrId(Integer.parseInt(params[0]));
+							extInfo.setAssetAttrName(params[1]);
+							extInfo.setAssetAttrValue(params[2]);
+							
+						}else{
+							extInfo.setAssetAttrId(Integer.parseInt(params[0]));
+							extInfo.setAssetAttrName(params[1]);
+							extInfo.setAssetAttrValue("");
+						}
+						extInfo.setAssetStatus((byte)1);
+						assetBaseService.addExtInfo(extInfo);
+					}
+				}
+				j.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			j.setSuccess(false);
+		} 
+		return j;
+	}
 }
