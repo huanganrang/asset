@@ -4,6 +4,7 @@ import asset.model.AssetBaseInfo;
 import asset.service.AssetBaseServiceI;
 import jb.pageModel.Json;
 import jb.pageModel.PageHelper;
+import jb.util.TwoDimensionCodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,10 @@ public class LedgerController {
     public String getLedgerList(HttpServletRequest request, PageHelper ph) {
         List ledgerList = assetBaseService.getLedgerList(ph);
         request.setAttribute("ledgerList", ledgerList);
+        /*生成二维码测试开始*/
+        TwoDimensionCodeUtil twoDimensionCodeUtil = new TwoDimensionCodeUtil();
+        twoDimensionCodeUtil.createCode(400, 400, ledgerList.toString(), "F:\\二维码", "new", "png");
+        /*生成二维码测试结束*/
         return "/assets/ledger";
     }
 

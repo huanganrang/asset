@@ -303,7 +303,13 @@
 			    </exclusion>
 			</exclusions> 
 		</dependency>
-		<!-- androidpn server 依赖的jar 结束 -->		
+		<!-- androidpn server 依赖的jar 结束 -->
+		<!-- 谷歌生成二维码jar包 -->
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>core</artifactId>
+			<version>3.2.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>asset</finalName>
