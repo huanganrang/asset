@@ -3,7 +3,7 @@
  */
 package asset.service.impl;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,11 +30,11 @@ public class AssetDicServiceImpl  implements AssetDicServiceI {
 	}
 
 	@Override
-	public Map<String, String> getAssetDicMap(Integer type) throws Exception {
+	public LinkedHashMap<String, String> getAssetDicMap(Integer type) throws Exception {
 		
 		List<AssetDic> assetDicList = getAssetDic(type);
 		if(null != assetDicList && assetDicList.size() > 0){
-			HashMap<String,String> map = new HashMap<String,String>();
+			LinkedHashMap<String,String> map = new LinkedHashMap<String,String>();
 			for(AssetDic dic:assetDicList){
 				map.put(dic.getDicKey(),dic.getDicValue());
 			}

@@ -35,7 +35,6 @@ public class StockServiceImpl implements StockService {
 		StringBuilder hql = new StringBuilder("from AssetBaseInfo t where t.assetStatus = 1 "
 				+ "and (t.assetStockStatus = '在库' or t.assetStockStatus = '入库') ");
 		List<AssetBaseInfo> list = null;
-		long s1 = System.currentTimeMillis();
 		if(null != paramMap && paramMap.size() > 0){
 			for(Map.Entry<String, String> entry:paramMap.entrySet()){
 				String key = entry.getKey();
@@ -47,8 +46,6 @@ public class StockServiceImpl implements StockService {
 		}else{
 			list = baseDao.find(hql + orderHql(ph), null, ph.getPage(), ph.getRows());
 		}
-		long s2 = System.currentTimeMillis();
-		System.out.println(s2-s1+"ms");
 		return list;
 	}
 
@@ -60,7 +57,6 @@ public class StockServiceImpl implements StockService {
 			throws Exception {
 		StringBuilder hql = new StringBuilder("select count(*) from AssetBaseInfo t where t.assetStatus = 1 "
 				+ "and (t.assetStockStatus = '在库' or t.assetStockStatus = '入库') ");
-		long s1 = System.currentTimeMillis();
 		if(null != paramMap && paramMap.size() > 0){
 			for(Map.Entry<String, String> entry:paramMap.entrySet()){
 				String key = entry.getKey();
@@ -68,11 +64,8 @@ public class StockServiceImpl implements StockService {
 				//需要判断是否是基本表的属性
 				hql.append(" and t."+key+" like '%"+value+"%' ");
 			}
-			return baseDao.count(hql.toString());
 		}
-		long s2 = System.currentTimeMillis();
-		System.out.println(s2-s1+"ms");
-		return null;
+		return baseDao.count(hql.toString());
 	}
 	
 	protected String orderHql(PageHelper ph) {

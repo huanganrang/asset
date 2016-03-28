@@ -75,17 +75,17 @@
 								  </tr>
 								  
 								  <tr>
-								  <td><a href="javascript:void(0)" id="asset6">其他</a></td>
-								  <td><a href="javascript:void(0)" id="asset7">软件</a></td>
-								  <td><a href="javascript:void(0)" id="asset8">配件</a></td>
-								  <td><a href="javascript:void(0)" id="asset9">低质易耗器</a></td>
+								  <td><a href="javascript:void(0)" id="asset6">机房基础</a></td>
+								  <td><a href="javascript:void(0)" id="asset7">办公类设备</a></td>
+								  <td><a href="javascript:void(0)" id="asset8">其它类</a></td>
+								  <td><a href="javascript:void(0)" id="asset9">软件类</a></td>
 								  </tr>
 								  
 								   <tr>
-								  <td><a href="javascript:void(0)" id="asset10">储存类</a></td>
-								  <td><a href="javascript:void(0)" id="asset11">办公室办公</a></td>
-								  <td><a href="javascript:void(0)" id="asset12">机房基础</a></td>
-								  <td><a href="javascript:void(0)" id="asset13">办公类设备</a></td>
+								  <td><a href="javascript:void(0)" id="asset10">配件类</a></td>
+								  <td><a href="javascript:void(0)" id="asset11">低置易耗器</a></td>
+								  <td><a href="javascript:void(0)" id="asset12">储存类</a></td>
+								  <td><a href="javascript:void(0)" id="asset13">办公室办公</a></td>
 								  </tr>
 								  </table>
 								    <!--[if !IE]> -->
@@ -122,10 +122,9 @@
 								    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/datagrid-filter.js"></script>
 								    <script type="text/javascript">
 									   $(function(){
-										   
 										   $("#dg td a").click(function(){
 											   var id = $(this).attr("id");
-											   location.href="${pageContext.request.contextPath}/ledger/add/"+id.replace("asset","");
+											   location.href="${pageContext.request.contextPath}/ledger/add?type="+id.replace("asset","");
 										   });
 									   });
 								    </script>

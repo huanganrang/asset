@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -79,7 +80,6 @@ public class LedgerDetailController {
 				throw new IllegalArgumentException("param error");
 			}
 			Map<String, String> dicMap = assetDicService.getAssetDicMap(100);
-			
 			if(dicMap.containsKey(ownership)){
 				String value = dicMap.get(ownership);
 				return ownership+value;
@@ -99,29 +99,27 @@ public class LedgerDetailController {
 		return "";
 	}
 	
-	@RequestMapping("/add/{type}")
-	public String ledgerAdd(HttpServletRequest request, @PathVariable Integer type) {
+	@RequestMapping("/add")
+	public String ledgerAdd(HttpServletRequest request) {
 		try {
+			String typeStr = request.getParameter("type");
+			if(StringUtils.isBlank(typeStr)){
+				throw new IllegalArgumentException("param error");
+			}
+			Integer type = Integer.parseInt(typeStr);
 			List<AssetDic> list = assetDicService.getAssetDic(type);
 			if(CollectionUtils.isEmpty(list)){
 				throw new IllegalArgumentException("字典表没有录入相应的设备小类");
 			}
-			request.setAttribute("dicList", list);
-			
-			
+			request.setAttribute("type", type);
 			AssetDic assetDic = list.get(0);
-			String key = assetDic.getDicKey();
+			String key = assetDic.getDicValue();
 			//类别
-			request.setAttribute("cate", key);
-			
-			//获取设备归属
-			List<AssetDic> ownership = assetDicService.getAssetDic(101);
-			request.setAttribute("ownership",ownership);
-			
-			//获取第一个设备归属对应的设备编号
-			Map<String, String> dicMap = assetDicService.getAssetDicMap(100);
-			//获取IT设备编号
-			request.setAttribute("itNumber", dicMap.get("A"));
+			if(key.contains(",")){
+				request.setAttribute("cate", key.split(",")[1]);
+			}else{
+				request.setAttribute("cate", key);
+			}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -137,33 +135,93 @@ public class LedgerDetailController {
 		DataGrid dataGrid = new DataGrid();
 		try {
 			String cate = request.getParameter("cate");
-			if(StringUtils.isBlank(cate)){
+			String type = request.getParameter("type");
+			if(StringUtils.isBlank(cate) || StringUtils.isBlank(type)){
 				throw new IllegalArgumentException("param error");
+			}
+			String cateValue = "";
+			if(cate.contains(",")){
+				cateValue = cate.split(",")[0];
+				cate = cate.split(",")[1];
+			}else{
+				cateValue = cate;
 			}
 			List<AssetAttr> attrList = assetBaseService.getAssetAttr(cate);
 			if(CollectionUtils.isEmpty(attrList)){
 				throw new IllegalArgumentException("param error");
 			}
 			JSONArray resultArray = new JSONArray();
-			Map<String,String> dicMap = assetDicService.getAssetDicMap(1);
+			//获取第一个设备归属对应的设备编号
+			Map<String, String> itNumberMap = assetDicService.getAssetDicMap(100);
+			
+			//获取设备归属
+			List<AssetDic> ownership = assetDicService.getAssetDic(101);
+			
+			JSONObject options = new JSONObject();
+			options.put("data", ownership);
+			options.put("valueField", "dicValue");
+			options.put("textField", "dicValue");
+			JSONObject editor = new JSONObject();
+			editor.put("type", "combobox");
+			editor.put("options", options);
+			
+			JSONObject ownershipJson = new JSONObject();
+			ownershipJson.put("name", "设备归属");
+			ownershipJson.put("value", ownership.get(0).getDicValue());
+			ownershipJson.put("key", "");
+			ownershipJson.put("editor", editor);
+			resultArray.add(ownershipJson);
+			
+			LinkedHashMap<String,String> dicMap = assetDicService.getAssetDicMap(1);
+			List<AssetDic> list = assetDicService.getAssetDic(Integer.parseInt(type));
+			
 			for(Map.Entry<String, String> entry:dicMap.entrySet()){
 				String key = entry.getKey();
 				String value = "";
+				String name = dicMap.get(key);
 				JSONObject json = new JSONObject();
-				json.put("name", dicMap.get(key));
+				if("assetItNumber".equals(key)){
+					value = "A" + (Integer.parseInt(itNumberMap.get("A"))+1);
+				}else if("assetType".equals(key)){
+					JSONObject typeEditor = new JSONObject();
+					typeEditor.put("type", "combobox");
+					JSONObject typeJson = new JSONObject();
+					typeJson.put("data", list);
+					typeJson.put("valueField", "dicValue");
+					typeJson.put("textField", "dicKey");
+					typeEditor.put("options", typeJson);
+					json.put("editor", typeEditor);
+					value = cateValue;
+				}else{
+					if(name.contains("日期")){
+						json.put("editor", "datebox");
+					}else{
+						json.put("editor", "text");
+					}
+				}
+				
+				json.put("name", name);
 				json.put("value", value);
 				json.put("key", key);
 				json.put("flag", "base");
-				json.put("editor", "text");
+			
 				resultArray.add(json);
 			}
+			
 			for(AssetAttr ext:attrList){
 				JSONObject json = new JSONObject();
-				json.put("name", ext.getAttrName());
+				String attrName = ext.getAttrName();
+				json.put("name", attrName);
 				json.put("value", "");
 				json.put("key", ext.getAttrId());
 				json.put("flag", "ext");
-				json.put("editor", "text");
+				if(attrName.contains("日期")){
+					json.put("editor", "datebox");
+				}else{
+					json.put("editor", "text");
+				}
+				
+				
 				resultArray.add(json);
 			}
 			dataGrid.setRows(resultArray);

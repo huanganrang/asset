@@ -1,5 +1,8 @@
 package asset.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,6 +14,8 @@ import jb.pageModel.PageHelper;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import asset.model.AssetBaseInfo;
 import asset.service.AssetBaseServiceI;
-import asset.service.StockService;
+import asset.service.ScrapService;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -30,59 +35,70 @@ import com.alibaba.fastjson.JSONObject;
  *
  */
 @Controller
-@RequestMapping("/stock")
-public class StockController {
+@RequestMapping("/scrap")
+public class ScrapController {
 	
 	
 	@Autowired
-	private StockService stockService;
+	private ScrapService scrapService;
 	
 
 	@Autowired
 	private AssetBaseServiceI assetBaseService;
 	
 	
-	@RequestMapping("/tostock")
+	@RequestMapping("/toscrap")
 	public String tosearch(HttpServletRequest request) {
 //		SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(ConfigUtil.getSessionInfoName());
 //		System.out.println(sessionInfo.getId());
 //		System.out.println(sessionInfo.getName());
 //		System.out.println(sessionInfo.getResourceList().size());
-		return "assets/stock";
+		return "assets/scrap";
 	}
 	
 	@RequestMapping("/data")
 	@ResponseBody
-	public DataGrid stockData(HttpServletRequest request, PageHelper ph) {
+	public DataGrid scrapData(HttpServletRequest request, PageHelper ph) {
 		
 		DataGrid dataGrid = new DataGrid();
 		List<AssetBaseInfo> assetList = null;
 		try {
 			
-			String rulesStr = request.getParameter("filterRules");
-			HashMap<String,String> baseMap = new HashMap<String,String>();
-			if(StringUtils.isNotBlank(rulesStr)){
-				JSONArray rules = JSONArray.parseArray(rulesStr);
-				for(int i = 0;i<rules.size();i++){
-					JSONObject jsonObject = rules.getJSONObject(i);
-					
-					
-					String field = jsonObject.getString("field");
-					String value = jsonObject.getString("value");
-//					jsonObject.getString("op");
-					baseMap.put(field, value);
-				}
+			String yearsStr = request.getParameter("years");
+			String endDateStr = request.getParameter("endDate");
+			String format = "yyyy-MM-dd HH:mm:ss";
+			if(StringUtils.isBlank(yearsStr)){
+				 yearsStr = "1";
 			}
-			assetList = stockService.getStockList(baseMap,ph);	
+			if(StringUtils.isBlank(endDateStr)){
+				endDateStr = DateFormatUtils.format(Calendar.getInstance(), format);
+			}
+			
+			SimpleDateFormat sdf = new SimpleDateFormat(format);
+			Date date = sdf.parse(endDateStr);
+			Date endYear = DateUtils.addYears(date, Integer.parseInt(yearsStr)*-1);
+			String endDate = DateFormatUtils.format(endYear, format);
+			HashMap<String,String> paramMap = new HashMap<String,String>();
+			paramMap.put("endDate", endDate);
+			assetList = scrapService.getScrapList(paramMap,ph);	
 			if(null != assetList && assetList.size() > 0){
 				JSONArray rows = new JSONArray();
 				for(AssetBaseInfo baseInfo:assetList){
+					String assetUseDate = baseInfo.getAssetUseDate();
+					String assetDeviceStatus = baseInfo.getAssetDeviceStatus();
+					Date useDate = sdf.parse(assetUseDate);
 					JSONObject json = JSON.parseObject(JSON.toJSONString(baseInfo));
+					json.put("useTime", (endYear.getTime()-useDate.getTime())/(1000*3600*24));
+					json.put("scrapReason", "超期");
+					if(!"待报废".equals(assetDeviceStatus) && !"报废".equals(assetDeviceStatus)){
+						json.put("assetDeviceStatus", "");
+					}
 					rows.add(json);
 				}
 				
 				dataGrid.setRows(rows);
-				dataGrid.setTotal(stockService.countStock(baseMap));	
+				System.out.println(rows.toJSONString());
+				dataGrid.setTotal(scrapService.countScrap(paramMap));	
 				return dataGrid;
 			}
 		} catch (Exception e) {
@@ -93,13 +109,14 @@ public class StockController {
 	}
 	
 	
-	@RequestMapping("/outstock")
+	@RequestMapping("/saveStatus")
 	@ResponseBody
-	public Json outstock(HttpServletRequest request) {
+	public Json saveStatus(HttpServletRequest request) {
 		
 		Json j = new Json();
 		try {
 			String assetIds = request.getParameter("assetIds");
+			String status = request.getParameter("status");
 			if(StringUtils.isBlank(assetIds)){
 				throw new IllegalArgumentException("param error");
 			}
@@ -107,21 +124,8 @@ public class StockController {
 			if(ArrayUtils.isEmpty(assetIdArray)){
 				throw new IllegalArgumentException("param error");
 			}
-			String assetUser = request.getParameter("assetUser");
-			String assetUseDepartment = request.getParameter("assetUseDepartment");
-			String assetUseDate = request.getParameter("assetUseDate");
-			String assetDeviceLocation = request.getParameter("assetDeviceLocation");
-			String assetAddUser = request.getParameter("assetAddUser");
 			for(String assetId:assetIdArray){
-				AssetBaseInfo baseInfo = new AssetBaseInfo();
-				baseInfo.setAssetId(Integer.parseInt(assetId));
-				baseInfo.setAssetUser(assetUser);
-				baseInfo.setAssetUseDepartment(assetUseDepartment);
-				baseInfo.setAssetUseDate(assetUseDate);
-				baseInfo.setAssetDeviceLocation(assetDeviceLocation);
-				baseInfo.setAssetAddUser(assetAddUser);
-				baseInfo.setAssetStockStatus("出库");
-				assetBaseService.updateAssetById(baseInfo);
+				assetBaseService.updateAssetStatusById(Integer.parseInt(assetId), status);
 			}
 			j.setSuccess(true);
 		} catch (Exception e) {

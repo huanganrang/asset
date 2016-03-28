@@ -79,7 +79,7 @@
 								</li>
 								
 								<li>
-									<a href="jqgrid.html">
+									<a href="${pageContext.request.contextPath}/scrap/toscrap">
 										<i class="icon-double-angle-right"></i>
 										报废库
 									</a>

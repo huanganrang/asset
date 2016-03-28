@@ -3,8 +3,8 @@
  */
 package asset.service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import asset.model.AssetDic;
 
@@ -29,7 +29,7 @@ public interface AssetDicServiceI {
 	 * @return
 	 * @throws Exception
 	 */
-	Map<String,String> getAssetDicMap(Integer type) throws Exception;
+	LinkedHashMap<String,String> getAssetDicMap(Integer type) throws Exception;
 	
 	
 	

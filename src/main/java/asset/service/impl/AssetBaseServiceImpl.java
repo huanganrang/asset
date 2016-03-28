@@ -272,6 +272,18 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 		return baseDao.executeHql(hql.toString());
 	}
 	
+	 @Override
+		public int updateAssetStatusById(Integer assetId, String status)
+				throws Exception {
+	    	if(null == assetId || assetId.intValue() == 0){
+				throw new IllegalArgumentException("param error");
+			}
+	    	StringBuilder hql = new StringBuilder("update AssetBaseInfo set assetDeviceStatus = '"+status+"'");
+			hql.append(" where assetId =" + assetId);
+			return baseDao.executeHql(hql.toString());
+		}
+
+	
 	
 	private String updateSql(AssetBaseInfo base){
 		StringBuilder sb = new StringBuilder();
@@ -320,6 +332,7 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 		return baseDao.executeHql(hql.toString());
 	}
     
+   
 
 
 
@@ -431,5 +444,7 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 		baseExtDao.save(extInfo);
 	}
 
+
+	
 
 }

@@ -147,6 +147,15 @@ public interface AssetBaseServiceI {
 	
 	
 	/**
+	 * 根据ID更新设备状态
+	 * @param base
+	 * @return
+	 * @throws Exception
+	 */
+	int updateAssetStatusById(Integer assetId,String status) throws Exception;
+	
+	
+	/**
 	 * 根据ID更新扩展信息
 	 * @param base
 	 * @return
