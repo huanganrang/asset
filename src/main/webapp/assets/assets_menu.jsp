@@ -123,13 +123,6 @@
 										操作日志
 									</a>
 								</li>
-
-								<li>
-									<a href="dropzone.html">
-										<i class="icon-double-angle-right"></i>
-										资产分析
-									</a>
-								</li>
 							</ul>
 						</li>
 
