@@ -71,7 +71,7 @@ public class JbAssetsController extends BaseController {
 	 */
 	@RequestMapping("/download")
 	public void download(JbAssets jbAssets, PageHelper ph,String downloadFields,HttpServletResponse response) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, IOException{
-		DataGrid dg = dataGrid(jbAssets,ph);		
+		DataGrid dg = dataGrid(jbAssets,ph);	 	
 		downloadFields = downloadFields.replace("&quot;", "\"");
 		downloadFields = downloadFields.substring(1,downloadFields.length()-1);
 		List<Colum> colums = JSON.parseArray(downloadFields, Colum.class);

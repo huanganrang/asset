@@ -33,5 +33,11 @@ public class TwoDimensionCodeUtil {
 
         return resultFile;
     }
+    
+    public static void main(String[] args) {
+    	 /*生成二维码测试开始*/
+        TwoDimensionCodeUtil twoDimensionCodeUtil = new TwoDimensionCodeUtil();
+        twoDimensionCodeUtil.createCode(400, 400, "1", "/Users/yanghui", "new", "png");
+	}
 
 }
