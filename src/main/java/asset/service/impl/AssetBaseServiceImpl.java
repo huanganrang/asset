@@ -52,9 +52,17 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 	public AssetBaseInfo getAssetBaseInfo(Integer id) throws Exception {
 		Map<String, Object> params = new HashMap<String,Object>();
 		params.put("id",id);
-		return baseDao.get(" from AssetBaseInfo where asset_id = :id",params);
+		return baseDao.get(" from AssetBaseInfo where assetId = :id",params);
 	}
 
+	
+	@Override
+	public AssetBaseInfo getAssetBaseInfoByItNumber(String itNumber)
+			throws Exception {
+		Map<String, Object> params = new HashMap<String,Object>();
+		params.put("assetItNumber",itNumber);
+		return baseDao.get(" from AssetBaseInfo where assetItNumber = :assetItNumber",params);
+	}
 
 	@Override
 	public List<AssetExtInfo> getAssetExtInfo(Integer id) throws Exception {
@@ -217,10 +225,8 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 				//需要判断是否是基本表的属性
 				hql.append(" and t."+key+" like '%"+value+"%' ");
 			}
-			list = baseDao.find(hql + orderHql(ph), null, ph.getPage(), ph.getRows());
-		}else{
-			list = baseDao.find(hql + orderHql(ph), null, ph.getPage(), ph.getRows());
 		}
+		list = baseDao.find(hql + orderHql(ph), null, ph.getPage(), ph.getRows());
 		long s2 = System.currentTimeMillis();
 		System.out.println(s2-s1+"ms");
 		
@@ -443,6 +449,9 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 	public void addExtInfo(AssetExtInfo extInfo) {
 		baseExtDao.save(extInfo);
 	}
+
+
+	
 
 
 	

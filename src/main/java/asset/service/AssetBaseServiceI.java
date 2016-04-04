@@ -28,6 +28,15 @@ public interface AssetBaseServiceI {
 	AssetBaseInfo getAssetBaseInfo(Integer id) throws Exception;
 	
 	
+	/**
+	 * 根据ID获取资产基本信息
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	AssetBaseInfo getAssetBaseInfoByItNumber(String itNumber) throws Exception;
+	
+	
 	
 	public List<AssetExtInfo> getAssetExtInfo(List<Integer> ids) throws Exception;
 	/**

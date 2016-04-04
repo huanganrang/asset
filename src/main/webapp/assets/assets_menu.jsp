@@ -72,7 +72,7 @@
 								</li>
 								
 								<li>
-									<a href="jqgrid.html">
+									<a href="${pageContext.request.contextPath}/account/toaccount">
 										<i class="icon-double-angle-right"></i>
 										对账
 									</a>
@@ -86,7 +86,7 @@
 								</li>
 								
 								<li>
-									<a href="jqgrid.html">
+									<a href="${pageContext.request.contextPath}/allocation/toallocation">
 										<i class="icon-double-angle-right"></i>
 										调拨
 									</a>
