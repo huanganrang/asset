@@ -50,7 +50,7 @@
 </li>
 <li><img src="images/Ledger management icon-1.png"/><a href="javascript:window.location='demo/about.html'">台账管理</a></li>
 <li><img src="images/Ledger report icon -1.png"/><a href="javascript:window.location='demo/about-2.html'">台账报表</a></li>
-<li><img src="images/System management icon-1.png"/><a href="javascript:window.location='demo/user_management.html'">系统管理</a></li>
+<li><img src="images/System management icon-1.png"/><a href="javascript:window.location='demo/user_management.jsp'">系统管理</a></li>
 <li><img src="images/System configuration icon .png" /><a href="#">系统组态</a></li>
 <li><img src="images/head-portrait.png" /><a href="#">金榜智能</a></li>
 </ul>
