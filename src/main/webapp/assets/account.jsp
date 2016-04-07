@@ -121,7 +121,7 @@
 									        	var rootpath = $("#rootpath").val();
 									        	$("#file_upload").uploadify({
 											        // 指定swf文件
-											        'swf': '/assets/js/uploadify/uploadify.swf',
+											        'swf': rootpath+'/assets/js/uploadify/uploadify.swf',
 											        'fileObjName':'file',
 											        // 后台处理的页面
 											         'uploader':rootpath+'/account/upload',

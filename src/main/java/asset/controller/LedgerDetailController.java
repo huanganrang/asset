@@ -23,6 +23,7 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -81,7 +82,7 @@ public class LedgerDetailController {
 			}
 			Map<String, String> dicMap = assetDicService.getAssetDicMap(100);
 			if(dicMap.containsKey(ownership)){
-				String value = dicMap.get(ownership);
+				Integer value = Integer.parseInt(dicMap.get(ownership))+1;
 				return ownership+value;
 			}else{
 				AssetDic dic = new AssetDic();
@@ -351,7 +352,8 @@ public class LedgerDetailController {
 	@RequestMapping("/data")
 	@ResponseBody
 	public DataGrid ledgerData(HttpServletRequest request, PageHelper ph) {
-		
+		StopWatch watch = new StopWatch();
+		watch.start();
 		DataGrid dataGrid = new DataGrid();
 		List<AssetInfo> assetList = null;
 		try {
@@ -381,6 +383,8 @@ public class LedgerDetailController {
 			}else{
 				assetList = assetBaseService.getAssetList(baseMap,ph);	
 			}
+			watch.stop();
+			watch.start();
 			if(null != assetList && assetList.size() > 0){
 				JSONArray rows = new JSONArray();
 				for(AssetInfo asset:assetList){
@@ -409,8 +413,10 @@ public class LedgerDetailController {
 					
 				}else{
 					dataGrid.setTotal(assetBaseService.countAsset(baseMap));	
+					watch.stop();
 				}
-				
+				System.out.println(watch.prettyPrint());
+				System.out.println(JSON.toJSONString(dataGrid));
 				return dataGrid;
 			}
 		} catch (Exception e) {
