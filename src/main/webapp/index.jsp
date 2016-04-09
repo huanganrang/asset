@@ -45,8 +45,7 @@
         <li><a href="#">上下架工单</a></li>
     </ul>
 
-	<img src="images/Device management -1.png"/><a <a href="javascript:window.location='demo/Attributes.html'">设备管理</a>
-	
+	<img src="images/Device management -1.png"/><a href="javascript:window.location='demo/Attributes.html'">设备管理</a>
 </li>
 <li><img src="images/Ledger management icon-1.png"/><a href="javascript:window.location='demo/about.html'">台账管理</a></li>
 <li><img src="images/Ledger report icon -1.png"/><a href="javascript:window.location='demo/about-2.html'">台账报表</a></li>

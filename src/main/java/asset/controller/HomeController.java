@@ -17,10 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class HomeController {
 
+	 @RequestMapping("/index")
+	 public String index(HttpServletRequest request, PageHelper ph) {
+	        return "assets/index";
+	 }
+	
 	
 	 @RequestMapping("/home")
 	 public String home(HttpServletRequest request, PageHelper ph) {
-	        return "/home";
+	        return "home";
 	 }
 	 
 }

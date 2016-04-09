@@ -58,7 +58,7 @@ $(function(){
 	$("#submit").click(function(){
 		var returnUrl = "${returnUrl}";
 		if(returnUrl == ""){
-			returnUrl = "${pageContext.request.contextPath}/home";
+			returnUrl = "${pageContext.request.contextPath}/index";
 		}
 		$("#msg").hide();
 		var data = "name="+$("#name").val()+"&pwd="+$("#pwd").val();
