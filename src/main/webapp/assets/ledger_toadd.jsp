@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@include file="/assets/common.jsp"%>
 	<input type="hidden" id="columns" value="${columns}"/>
 								  <table id="dg"  style="width:700px;height:450px">
 								  <tr>
