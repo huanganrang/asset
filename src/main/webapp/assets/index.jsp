@@ -192,20 +192,21 @@ ul.nav li i {
 						</li>
 
 						<li>
-							<a href="javascript:void(0)" src="${pageContext.request.contextPath}/userController/manager">
+								<a href="#" class="dropdown-toggle">
 								<i class=" icon-desktop"></i>
 								<span >系统管理</span>
+								<b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
 								<li>
-									<a href="#">
+									<a href="javascript:void(0)" src="${pageContext.request.contextPath}/system/system">
 										<i class="icon-double-angle-right"></i>
 										用户管理
 									</a>
 								</li>
 
 								<li>
-									<a href="#">
+									<a href="javascript:void(0)" src="${pageContext.request.contextPath}/system/roleManager">
 										<i class="icon-double-angle-right"></i>
 										角色管理
 									</a>
