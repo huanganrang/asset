@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@include file="/assets/common.jsp"%>
 
 								   <table id="pg" class="easyui-propertygrid" style="width:700px" data-options="
 						                url:'${pageContext.request.contextPath}/ledger/pro?assetId=${assetId }',
