@@ -2,9 +2,10 @@
     pageEncoding="UTF-8"%>
     <%@include file="/assets/common.jsp"%>
 		<input type="hidden" id="company" value='${company}'/>
-    
+    <div style="height:420px">
 								 <table id="dg"   style="width:700px;height:450px">
 							   	 </table>
+							   	 </div>
 							     <div id="tb" style="padding:2px 5px;">
 							        <input class="easyui-searchbox" id="searchInput"
 										data-options="prompt:'',searcher:doSearch"
@@ -21,6 +22,7 @@
 								            	url:rootpath+'/allocation/data',
 								                pagination: true,
 								                fitColumns: true,
+								                fit:true,
 								                rownumbers: true,
 								                columns: [[
 								                           	  /* { field: 'ck', checkbox:true}, */

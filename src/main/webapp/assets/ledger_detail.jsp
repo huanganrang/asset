@@ -7,8 +7,10 @@
 								<!-- PAGE CONTENT BEGINS -->
 								<div class="hr32"></div>
 								  <input type="hidden" id="columns" value="${columns}"/>
-								  <table id="dg"  style="width:700px;height:450px">
+								  <div style="height:420px">
+								  <table id="dg" style="width:700px;height:450px">
 								  </table>
+								  </div>
 								  </div>
 								  </div>
 								  </div>
@@ -16,19 +18,16 @@
 								    <script type="text/javascript">
 									    var toolbar = [{
 								            text:'高级',
-								            iconCls:'icon-pencil',
 								            handler:function(){
 								            	location.href="${pageContext.request.contextPath}/ledger/toHigh";
 								            }
 								        },{
 								            text:'新增',
-								            iconCls:'icon-pencil',
 								            handler:function(){
 								            	location.href="${pageContext.request.contextPath}/ledger/toAdd";
 								            }
 								        },'-',{
 								            text:'导出',
-								            iconCls:'icon-pencil',
 								            handler:function(){alert('save')}
 								        }];
 								        $(function(){
@@ -39,6 +38,7 @@
 								                remoteFilter: true,
 								                columns:eval($("#columns").val()),
 								                fitColumns: true,
+								                fit:true,
 								                rownumbers: true,
 								                toolbar:toolbar,
 								                onDblClickRow: function(index,row){

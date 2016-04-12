@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@include file="/assets/common.jsp"%>
-								  <table id="dg"   style="width:700px;height:450px">
+ <div style="height:420px">
+								  <table id="dg">
 							        <thead>
 							            <tr>
 							            	<th data-options="field:'ck',checkbox:true"></th>
@@ -14,6 +15,7 @@
 							            </tr>
 							        </thead>
 							    </table>
+							    </div>
 							     <div id="dlg" class="easyui-dialog" title="出库填写" style="width:400px;height:300px;padding:10px"
 						            data-options="
 						                iconCls: 'icon-save',
@@ -82,6 +84,7 @@
 								                pagination: true,
 								                remoteFilter: true,
 								                fitColumns: true,
+								                fit:true,
 								                rownumbers: true,
 								                toolbar:toolbar
 								            });

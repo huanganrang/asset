@@ -76,21 +76,21 @@ ul.nav li i {
 					<ul class="nav nav-list">
 						<li class="active">
 							<a href="javascript:void(0)" src="${pageContext.request.contextPath}/home">
-								<i class="icon-dashboard"></i>
+								<i class="icon-search"></i>
 								<span > 搜索 </span>
 							</a>
 						</li>
 
 						<li>
-							<a href="typography.html">
-								<i class="icon-text-width"></i>
+							<a href="#">
+								<i class="icon-bar-chart"></i>
 								<span > 上下架 </span>
 							</a>
 						</li>
 
 						<li>
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-desktop"></i>
+								<i class="icon-cogs"></i>
 								<span > 设备管理 </span>
 
 								<b class="arrow icon-angle-down"></b>
@@ -98,14 +98,14 @@ ul.nav li i {
 
 							<ul class="submenu">
 								<li>
-									<a href="elements.html">
+									<a href="#">
 										<i class="icon-double-angle-right"></i>
 										模拟方案
 									</a>
 								</li>
 
 								<li>
-									<a href="buttons.html">
+									<a href="#">
 										<i class="icon-double-angle-right"></i>
 										上下架工单
 									</a>
@@ -115,7 +115,7 @@ ul.nav li i {
 
 						<li>
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-list"></i>
+								<i class="icon-dashboard"></i>
 								<span> 台账管理 </span>
 
 								<b class="arrow icon-angle-down"></b>
@@ -161,7 +161,7 @@ ul.nav li i {
 
 						<li>
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-edit"></i>
+								<i class="icon-group"></i>
 								<span> 系统报表 </span>
 
 								<b class="arrow icon-angle-down"></b>
@@ -169,21 +169,21 @@ ul.nav li i {
 
 							<ul class="submenu">
 								<li>
-									<a href="form-elements.html">
+									<a href="#">
 										<i class="icon-double-angle-right"></i>
 										历史事件
 									</a>
 								</li>
 
 								<li>
-									<a href="form-wizard.html">
+									<a href="#">
 										<i class="icon-double-angle-right"></i>
 										系统日志
 									</a>
 								</li>
 
 								<li>
-									<a href="wysiwyg.html">
+									<a href="#">
 										<i class="icon-double-angle-right"></i>
 										操作日志
 									</a>
@@ -193,19 +193,19 @@ ul.nav li i {
 
 						<li>
 							<a href="javascript:void(0)" src="${pageContext.request.contextPath}/userController/manager">
-								<i class="icon-list-alt"></i>
+								<i class=" icon-desktop"></i>
 								<span >系统管理</span>
 							</a>
 							<ul class="submenu">
 								<li>
-									<a href="form-elements.html">
+									<a href="#">
 										<i class="icon-double-angle-right"></i>
 										用户管理
 									</a>
 								</li>
 
 								<li>
-									<a href="form-wizard.html">
+									<a href="#">
 										<i class="icon-double-angle-right"></i>
 										角色管理
 									</a>
@@ -216,7 +216,7 @@ ul.nav li i {
 						<li>
 						
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-list"></i>
+								<i class="icon-cog"></i>
 								<span> 系统组态 </span>
 								<b class="arrow icon-angle-down"></b>
 							</a>
@@ -229,7 +229,7 @@ ul.nav li i {
 								</li>
 
 								<li>
-									<a href="form-wizard.html">
+									<a href="#">
 										<i class="icon-double-angle-right"></i>
 										机房维护
 									</a>

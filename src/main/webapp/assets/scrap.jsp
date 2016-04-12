@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/assets/common.jsp"%>
-								  <table id="dg"   style="width:700px;height:450px">
+<div style="height:420px">
+								  <table id="dg" >
 							        <thead>
 							            <tr>
 							            	<th data-options="field:'ck',checkbox:true"></th>
@@ -16,6 +17,7 @@
 							            </tr>
 							        </thead>
 							    </table>
+							    </div>
 							    <div id="tb" style="padding:2px 5px;">
 							        待报废设备超过: 
 							        <select class="easyui-combobox" panelHeight="auto" id="yearSelect" style="width:100px">
@@ -43,6 +45,7 @@
 								            	url:rootpath+'/scrap/data',
 								                pagination: true,
 								                fitColumns: true,
+								                fit:true,
 								                rownumbers: true,
 								                toolbar:'#tb'
 								            });
