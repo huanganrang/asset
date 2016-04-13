@@ -15,23 +15,10 @@
 </head>
 
 <body>
-<header>
- <h1></h1>
- <ul>
-        <li><img src="${pageContext.request.contextPath}/images/System switch-1.png"/></li>
-        <li><img src="${pageContext.request.contextPath}/images/Alarm-2.png"/></li>
-    	<li>华鑫证券资产管理系统</li>
-        <li><img src="${pageContext.request.contextPath}/images/search-top1.png"/></li>
- </ul>
-</header>
 <main>   
   <article>
-  	<ul class="list">
-            <li style="border-bottom:2px solid #f60;font: 16px/40px '微软雅黑';"> <a href="${pageContext.request.contextPath}/system/system">用户管理</a></li>
-            <li style="border-bottom:2px solid #f60;font: 16px/40px '微软雅黑';"><a  href="${pageContext.request.contextPath}/system/roleManager">角色管理</a></li>
-    </ul>
      <div class="tablebox-role" style="display:block;">
-		    <ul class="tablist">
+		    <ul class="tablist2">
 		    	<li><a href="#"></a></li>
 		        <li><a href="#">1/7</a></li>
 		        <li><a href="#"></a></li>
@@ -159,7 +146,7 @@
     	<input type="hidden" id="delUserId" name="delUserId" />
         <ul>
         	<li>
-            	<a href="#">您是否删除当前用户？</a>
+            	<a href="#">您是否删除当前角色？</a>
                
             </li>
             <li><input id="btn_user_del" type="button" value="确定" /></li>

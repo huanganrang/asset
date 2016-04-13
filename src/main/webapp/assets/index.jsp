@@ -253,7 +253,7 @@ ul.nav li i {
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								<div class="hr32"></div>	
-								<iframe id="mainFrame" frameborder='0' width='100%' height='500px' src="${pageContext.request.contextPath}/home"></iframe>	
+								<iframe id="mainFrame" frameborder='0' width='100%' height='500px'  scrolling="no" src="${pageContext.request.contextPath}/home"></iframe>	
 							</div>
 		</div>
 

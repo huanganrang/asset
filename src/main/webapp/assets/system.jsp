@@ -17,12 +17,6 @@
 <body>
 <main>   
   <article>
-  	<ul class="list">
-            <li style="border-bottom:2px solid #f60;font: 16px/40px '微软雅黑';"> <a href="${pageContext.request.contextPath}/system/system">用户管理</a></li>
-            <li style="border-bottom:2px solid #f60;font: 16px/40px '微软雅黑';"><a  href="${pageContext.request.contextPath}/system/roleManager">角色管理</a></li>
-    </ul>
-   
-    	
        
 <!--      以下是用户管理--> 
         <div class="tablebox-user">
@@ -129,9 +123,9 @@
 	    	<p>用户授权<a class="clos"></a></p>
 	        <ul class="max">
 	        	<li class="popup-user-number">
-	            	<a style="width:25%; font:16px/30px '黑体'; color:#999; padding:0; letter-spacing:1em; 
+	            	<a style="width:25%; font:12px/30px '黑体'; color:#999; padding:0; letter-spacing:1em; 
 	            			  border-right:1px solid #999;
-							  height:30px; display:inline-block;" href="#">编号</a>
+							  height:25px; display:inline-block;" href="#">编号</a>
                 	<input id="auditUserId" type="text"/>
 	            </li>
 	            <li>

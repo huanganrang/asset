@@ -142,26 +142,27 @@ $(document).ready(function(){
 							$(".popup .popup-add-role").show();
 							$(".popup .popup-add-editor").hide();
 							$(".popup .popup-role-authorization").hide();
-						
+							$(".popup .popup-ask").hide();
 							})
 					
 						table2.next().click(function(){
-							var checkUser = $("#userList").find("tbody :checked");
+							var checkUser = $("#roleList").find("tbody :checked");
 					        if(checkUser.size() == 1){
-					            $("#userId").val(checkUser.val());
-					            checkUser.parent().parent().each(function(){
-					                $("#editUserName").val($(this).children().eq(1).text());
-					                $("#editPassword").val($(this).children().eq(2).text());
-					            });
+//					            $("#userId").val(checkUser.val());
+//					            checkUser.parent().parent().each(function(){
+//					                $("#editUserName").val($(this).children().eq(1).text());
+//					                $("#editPassword").val($(this).children().eq(2).text());
+//					            });
 					            $(".popup").show();
 								$(".popup .popup-add-role").hide();
 								$(".popup .popup-add-editor").show();
 								$(".popup .popup-role-authorization").hide();
+								$(".popup .popup-ask").hide();
 					        }else if(checkUser.size() < 1){
-					            alert("请选择一个用户！");
+					            alert("请选择一个角色！");
 					            return false;
 					        }else {
-					            alert("只能选择一个用户！");
+					            alert("只能选择一个角色！");
 					            return false;
 					        }
 						
@@ -173,8 +174,28 @@ $(document).ready(function(){
 							$(".popup .popup-add-role").hide();
 							$(".popup .popup-add-editor").hide();
 							$(".popup .popup-role-authorization").show();
-						
+							$(".popup .popup-ask").hide();
 							})
+							
+						table2.next().next().next().click(function(){
+						var checkUser = $("#roleList").find("tbody :checked");
+				        if(checkUser.size() >= 1){
+				            //$("#auditUserId").val(checkUser.val());
+//				            checkUser.parent().parent().each(function(){
+//				                $("#editUserName").val($(this).children().eq(1).text());
+//				                $("#editPassword").val($(this).children().eq(2).text());
+//				            });
+				            $(".popup").show();
+				            $(".popup .popup-add-role").hide();
+							$(".popup .popup-add-editor").hide();
+							$(".popup .popup-role-authorization").hide();
+							$(".popup .popup-ask").show();
+				        }else {
+				            alert("请选择一个角色！");
+				            return false;
+				        }
+					
+					})
 					
 					
 					
