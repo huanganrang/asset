@@ -3,8 +3,7 @@
 <%@include file="/assets/common.jsp"%>
 					<input type="hidden" id = "cate"  value = "${cate }"/>
 					<input type="hidden" id = "type"  value = "${type }"/>
-
-								   <table id="pg" class="easyui-propertygrid" style="width:700px" data-options="
+								   <table id="pg" class="easyui-propertygrid" style="width:700px;height:480px" data-options="
 						                url:'${pageContext.request.contextPath}/ledger/addPro?cate='+$('#cate').val()+'&type='+$('#type').val(),
 						                method:'get',
 						                showGroup:false,
@@ -13,9 +12,6 @@
 						                scrollbarSize:0
 						            "></table>
 								<!-- PAGE CONTENT ENDS -->
-							
-		
-		
 								    <script type="text/javascript">
 									    var toolbar = [{
 								            text:'选择图片',

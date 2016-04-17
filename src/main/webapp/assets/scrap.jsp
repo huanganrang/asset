@@ -31,8 +31,8 @@
 							        <a href="#" class="easyui-linkbutton" id="searchBtn" iconCls="icon-search">查询</a>
 							        
 							        <a href="#" class="easyui-linkbutton" id="saveBtn" iconCls="icon-save">保存</a>
-							        <a href="#" class="easyui-linkbutton" iconCls="icon-undo">导出</a>
-							        <a href="#" class="easyui-linkbutton" iconCls="icon-print">打印</a>
+							        <a href="#" class="easyui-linkbutton" iconCls="icon-undo" id="exportBtn">导出</a>
+							        <a href="#" class="easyui-linkbutton" iconCls="icon-print" id="printBtn">打印</a>
 							        <a href="#" class="easyui-linkbutton" id="scrapBtn" iconCls="icon-pencil">报废</a>
 							        
 							    </div>
@@ -73,6 +73,13 @@
  												saveStatus("待报废");
 								            });
  											
+ 											$("#exportBtn").click(function(){
+ 												Export('asset', $('#dg'));
+								            });
+ 											
+ 											$("#printBtn").click(function(){
+ 												 CreateFormPage("打印",$("#dg"));
+								            });
  											
  											 $("#scrapBtn").click(function(){
  												saveStatus("报废");

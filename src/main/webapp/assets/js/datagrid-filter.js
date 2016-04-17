@@ -369,6 +369,9 @@
 		ff.each(function(){
 			var name = $(this).attr('name');
 			var col = dg.datagrid('getColumnOption', name);
+			if(col.hidden){
+				return;
+			}
 			var cc = $(this).closest('div.datagrid-filter-c');
 			var btn = cc.find('a.datagrid-filter-btn');
 			var cell = tr.find('td[field="'+name+'"] .datagrid-cell');
@@ -393,6 +396,7 @@
 			});
 			return w;
 		}
+		
 	}
 	
 	function getFilterComponent(target, field){
@@ -694,7 +698,7 @@
 		};
 		
 		initCss();
-		createFilter(true);
+//		createFilter(true);
 		createFilter();
 		if (opts.fitColumns){
 			setTimeout(function(){
@@ -782,9 +786,13 @@
 					div = $('<div class="datagrid-filter-c"></div>').appendTo(td);
 					var filter = opts.filters[fopts.type];
 					var input = filter.init(div, fopts.options||{});
-					input.addClass('datagrid-filter').attr('name', field);
-					input[0].filter = filter;
-					input[0].menu = createFilterButton(div, fopts.op);
+					//input.addClass('datagrid-filter').attr('name', field);
+					
+					var input_tmp = input[0];
+					input_tmp.setAttribute('class',input_tmp.className += ' datagrid-filter');
+					input.attr('name', field);
+					input_tmp.filter = filter;
+					input_tmp.menu = createFilterButton(div, fopts.op);
 					if (fopts.options){
 						if (fopts.options.onInit){
 							fopts.options.onInit.call(input[0], target);

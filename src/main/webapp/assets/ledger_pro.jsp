@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@include file="/assets/common.jsp"%>
 
-								   <table id="pg" class="easyui-propertygrid" style="width:700px" data-options="
+								   <table id="pg" class="easyui-propertygrid" style="width:700px;height:450px" data-options="
 						                url:'${pageContext.request.contextPath}/ledger/pro?assetId=${assetId }',
 						                method:'get',
 						                showGroup:false,

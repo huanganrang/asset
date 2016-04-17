@@ -1,13 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@include file="/assets/common.jsp"%>
-    <input type="hidden" id="columns" value="${columns}"/>
-					<div class="page-content">
-						<div class="row">
-							<div class="col-xs-12">
-								<!-- PAGE CONTENT BEGINS -->
-								<div class="hr32"></div>
-								<div id="nav-search" style="margin-left:300px;">
+    							<input type="hidden" id="columns" value="${columns}"/>
+								<div id="nav-search" style="margin-left:300px" >
 										<span class="input-icon">
 											<input type="text" style="width: 400px" id="key" name="key" class="nav-search-input" value="${key}" />
 											<i class="icon-search nav-search-icon"></i>
@@ -15,16 +10,22 @@
 										<input type="button" id="to-search" value="搜索"/>
 										<input type="button" id="to-high" value="高级"/>
 								</div>
-
-								<div class="hr hr32 hr-dotted"></div>
-								<table id="dg" style="width:700px;height:450px"></table>
-								<!-- PAGE CONTENT ENDS -->
-							</div><!-- /.col -->
-						</div><!-- /.row -->
-		</div><!-- /.page-content -->
+								 <div id="tableDiv" style="height:420px;margin-top:30px">
+								<table id="dg" style="width:700px;height:420px"></table>
+								</div>
 		<script type="text/javascript">
+		 var toolbar = [{
+	            text:'导出',
+	            handler:function(){
+	            	Export('asset', $('#dg'));
+	            }
+	        },'-',{
+	            text:'打印',
+	            handler:function(){
+	            	 CreateFormPage("打印",$("#dg")); 
+	            }
+	        }];
         $(function(){
-        	var rootpath = $("#rootpath").val();
         	var key=$("#key").val();
         	var columns = $("#columns").val();
             $('#dg').datagrid({
@@ -32,7 +33,9 @@
             	columns:eval($("#columns").val()),
                 method: 'get',
                 fitColumns: false,
+                fit:true,
                 rownumbers:true,
+                toolbar:toolbar,
                 scrollbarSize:18,
                 singleSelect: true,
                 pagination:true,

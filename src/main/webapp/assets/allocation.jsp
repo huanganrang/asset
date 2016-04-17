@@ -10,8 +10,8 @@
 							        <input class="easyui-searchbox" id="searchInput"
 										data-options="prompt:'',searcher:doSearch"
 										style="width: 100px"></input>
-							        <a href="#" class="easyui-linkbutton" iconCls="icon-undo">导出</a>
-							        <a href="#" class="easyui-linkbutton" iconCls="icon-print">打印</a>
+							        <a href="#" class="easyui-linkbutton"  id="exportBtn" iconCls="icon-undo">导出</a>
+							        <a href="#" class="easyui-linkbutton" id="printBtn" iconCls="icon-print">打印</a>
 							        <a href="#" class="easyui-linkbutton" id="alloBtn" iconCls="icon-pencil">调度</a>
 							    </div>
 								    <script type="text/javascript">
@@ -37,6 +37,14 @@
 								                /* checkOnSelect:false, */
 								                toolbar:'#tb',
 								                onClickCell: onClickCell
+								            });
+								            
+								            $("#exportBtn").click(function(){
+ 												Export('asset', $('#dg'));
+								            });
+ 											
+ 											$("#printBtn").click(function(){
+ 												 CreateFormPage("打印",$("#dg"));
 								            });
 								            
 								            $("#alloBtn").click(allocation);
@@ -88,6 +96,10 @@
 								            var rows = $('#dg').datagrid('getChanges');
 								            for(var i=0; i<rows.length; i++){
 								            		ss += rows[i].asset_id + ':' + rows[i].allocation_company + ',';
+								            }
+								            if(ss == ""){
+								            	$.messager.alert("提示","请输入设备去向");
+								            	return false;
 								            }
 								           $.ajax({
 								    			url:"${pageContext.request.contextPath}/allocation/allocation",

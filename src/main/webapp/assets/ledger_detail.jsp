@@ -8,7 +8,7 @@
 								<div class="hr32"></div>
 								  <input type="hidden" id="columns" value="${columns}"/>
 								  <div style="height:420px">
-								  <table id="dg" style="width:700px;height:450px">
+								  <table id="dg" style="width:700px;height:420px">
 								  </table>
 								  </div>
 								  </div>
@@ -21,14 +21,21 @@
 								            handler:function(){
 								            	location.href="${pageContext.request.contextPath}/ledger/toHigh";
 								            }
-								        },{
+								        },'-',{
 								            text:'新增',
 								            handler:function(){
 								            	location.href="${pageContext.request.contextPath}/ledger/toAdd";
 								            }
 								        },'-',{
 								            text:'导出',
-								            handler:function(){alert('save')}
+								            handler:function(){
+								            	Export('asset', $('#dg'));
+								            }
+								        },'-',{
+								            text:'打印',
+								            handler:function(){
+								            	 CreateFormPage("打印",$("#dg"));
+								            }
 								        }];
 								        $(function(){
 								        	var rootpath = $("#rootpath").val();
@@ -37,7 +44,7 @@
 								                pagination: true,
 								                remoteFilter: true,
 								                columns:eval($("#columns").val()),
-								                fitColumns: true,
+								                fitColumns: false,
 								                fit:true,
 								                rownumbers: true,
 								                toolbar:toolbar,
@@ -70,6 +77,7 @@
 								                        });
 								                    } else {
 								                        $('#dg').datagrid('showColumn', item.name);
+								                        $('#dg').datagrid('resizeFilter',item.name);
 								                        cmenu.menu('setIcon', {
 								                            target: item.target,
 								                            iconCls: 'icon-ok'
