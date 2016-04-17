@@ -37,7 +37,7 @@ ul.nav li i {
 }
 .navbar-header{
 	float: left;
-	width:800px;
+	width:500px;
 }
 .navbar-header h4{
 	float:left;
@@ -53,7 +53,7 @@ ul.nav li i {
 		<div class="navbar navbar-default" id="navbar">
 			<div class="navbar-container" id="navbar-container">
 				<div class="navbar-header pull-left" style="width:190px;height:45px;background-color:#ed6c44">
-					<a href="#" class="navbar-brand" style="width:86px;height:36px;background:url(images/logo.png) no-repeat;margin:5px 10px 0px 50px">
+					<a href="#" class="navbar-brand" style="width:86px;height:36px;background:url(${pageContext.request.contextPath}/assets/images/logo.png) no-repeat;margin:5px 10px 0px 50px">
 					</a><!-- /.brand -->
 				</div><!-- /.navbar-header -->
 

@@ -70,7 +70,7 @@
         		if(attrids.length > 1){
         			attrids = attrids.substring(0,attrids.length-1);
         		}
-        		location.href="${pageContext.request.contextPath}/asset/ledger?baseids="+baseids+"&attrids="+attrids;
+        		location.href=rootpath+"/ledger/detail?baseids="+baseids+"&attrids="+attrids;
         	});
         	
         });

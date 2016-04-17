@@ -91,7 +91,7 @@ public class AccountController {
 	        	
 	        	//写文件
 	        	Properties properties = PropertiesLoaderUtils.loadAllProperties("config.properties");
-				String file = properties.getProperty("count.file.path");
+				String file = properties.getProperty("count.file.path","uploadfiles");
 				String suffix = name.substring(name.lastIndexOf("."));
 				name = name.substring(0,name.lastIndexOf("."));
 				Date date = new Date();
@@ -114,7 +114,7 @@ public class AccountController {
 	public void download(HttpServletRequest request,HttpServletResponse response) throws Exception{
 		String fileName = request.getParameter("fileName");
 		Properties properties = PropertiesLoaderUtils.loadAllProperties("config.properties");
-		String file = properties.getProperty("count.file.path");
+		String file = properties.getProperty("count.file.path","uploadfiles");
 		String mimetype = "application/x-msdownload";
 		response.setContentType(mimetype);
 		String inlineType = "attachment"; // 是否内联附件

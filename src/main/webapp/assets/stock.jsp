@@ -71,11 +71,14 @@
 								            text:'打印',
 								            iconCls:'icon-pencil',
 								            handler:function(){
+								            	 CreateFormPage("打印",$("#dg")); 
 								            }
 								        },'-',{
 								            text:'导出',
 								            iconCls:'icon-pencil',
-								            handler:function(){alert('save')}
+								            handler:function(){
+								            	Export('asset', $('#dg'));
+								            }
 								        }];
 								        $(function(){
 								        	var rootpath = $("#rootpath").val();

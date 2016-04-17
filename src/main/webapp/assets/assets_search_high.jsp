@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/assets/common.jsp"%>
+<input type="hidden" id="columns" value="${columns}"/>
 								<div id="nav-search" style="margin-left:300px;">
 										<span class="input-icon">
 											<input type="text" style="width: 400px" id="key" name="key" class="nav-search-input" value="${key}" placeholder="" />
