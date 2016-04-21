@@ -7,6 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>华鑫资产管理系统</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/style/index.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/index.js" />
 <%@include file="/assets/common.jsp"%>
 <style type="text/css">
 .menu-text {
@@ -74,18 +76,31 @@
 </style>
 </head>
 <body>
-		<div class="navbar navbar-default" id="navbar">
+		<header class="navbar navbar-default" id="navbar">
 			<div class="navbar-container" id="navbar-container">
-				<div class="navbar-header pull-left" style="width:190px;height:45px;background-color:#ed6c44">
-					<a href="#" class="navbar-brand" style="width:86px;height:36px;background:url(${pageContext.request.contextPath}/assets/images/logo.png) no-repeat;margin:5px 10px 0px 50px">
+				<div class="navbar-header pull-left" style="width:190px;height:70px;background-color:#ed6c44">
+					<a href="#" class="navbar-brand" style="width:86px;height:50px;background:url(${pageContext.request.contextPath}/assets/images/logo.png) no-repeat 40% 60%;margin:5px 10px 0px 50px">
 					</a><!-- /.brand -->
 				</div><!-- /.navbar-header -->
-
-				<div class="navbar-header pull-right" role="navigation">
-					<h4>华鑫证券资产管理系统</h4>
-				</div><!-- /.navbar-header -->
+				
+			
+					 <ul class="list">
+				 	<li>
+				    	<div class="listmin">
+				        	<a>环境监控系统</a>
+				            <a>运维管理系统</a>
+				            <a>能源管理系统</a>
+				        </div>
+				    </li>
+				    <li><a href="#"></a></li>
+				    <li>华鑫证券资产管理系统</li>
+				    <li><input/></li>
+				    <li></li>
+				    
+				 </ul>
+				
 			</div><!-- /.container -->
-		</div>
+		</header>
 
 		<div class="main-container" id="main-container">
 			<script type="text/javascript">
@@ -291,6 +306,19 @@
 			</a>
 		</div><!-- /.main-container -->
 		<script type="text/javascript">
+		$(document).ready(function(){
+			var g=$(".list li:nth-child(4)");
+			g.click(function(){
+				if($(this).children().css("display")=="block"){
+					$(this).children().css({"display":"none"});
+					} else {
+						$(this).children().css({"display":"block"});
+						}
+				
+				
+				});
+		})
+			
 		$(function(){
 			$(".nav-list a").click(function(){
 				//$("#mainFrame").src=;
