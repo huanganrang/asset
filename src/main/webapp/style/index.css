@@ -5,7 +5,8 @@ header{width:100%; margin:0 auto; height:70px;}
 
 h1{width:12%; height:50px; background:#ed6c44 url(../images/logo.png) no-repeat 40% 50%; padding-top:20px; padding-left:5%; float:left;}
 header .list{width:83%; height:70px; float:left; position:relative; background:#ffffff; }
-header .list li:nth-child(1){width:34px; height:34px; position:absolute; top:20px; left:-20px; transform:translate(0,0);
+header .list li{list-style-type:none;}
+header .list li:nth-child(1){width:34px; height:34px; position:absolute; top:20px; left:-42px; transform:translate(0,0);
  background:url(../images/System%20switch-1.png) no-repeat;}
 header .list li:nth-child(2){width:34px; height:34px; position:absolute; top:20px; left:30px;
 background:url(../images/Alarm-1.png) no-repeat;}
