@@ -14,7 +14,7 @@
 								  </div>
 								  </div>
 								  </div>
-								    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/datagrid-filter.js"></script>
+								    <%-- <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/datagrid-filter.js"></script> --%>
 								    <script type="text/javascript">
 									    var toolbar = [{
 								            text:'高级',
@@ -62,7 +62,7 @@
 								                    });
 								                }
 								            });
-								        	dg.datagrid('enableFilter');
+								        /* 	dg.datagrid('enableFilter'); */
 								        });
 								        var cmenu;
 								        function createColumnMenu(){

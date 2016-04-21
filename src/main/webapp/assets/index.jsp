@@ -11,41 +11,65 @@
 <style type="text/css">
 .menu-text {
     float: none;
-    padding-left: 0px;
+    padding-left: 10px;
 }
-ul.nav li i {
-	width: 45px;
-	background:rgba(255,255,255,0.2);
+.nav-list>li>a {
+    display: block;
+    height: 38px;
+    line-height: 36px;
+    padding: 0 16px 0 0px;
 }
-.navbar {
-    background: #ffffff;
+
+.nav-list>li>a:hover {
+   color: #ED6C44;
 }
-.skin-1 .navbar {
-    background: #ffffff;
+.skin-1 .nav-list>li.open>a, .skin-1 .nav-list>li.open>a:hover {
+    color: #D07053;
+    background-color: #222a2d;
+}
+
+.nav-list>li:hover:before {
+    display: inline-block;
+    content: "";
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    max-width: 0;
+    overflow: hidden;
+    border-left: 3px solid #ED6C44;
+    }
+.menu-span{
+			width: 41px;
+			height: 37px;
+			line-height: 37px;
+			display: inline-block;
+			vertical-align: middle;
 }
 .navbar-container {
     padding-left: 0px;
 }
-.nav-list>li:hover>a {
-    background-color: #414b51;
-    color: #e1eaf1;
+.menu-search{
+			background: url("assets/images/search.png") #414b51 center center no-repeat;
 }
-.nav-list>li>a {
-    background-color: #414b51;
-    color: #e1eaf1;
-
+.menu-ledger{
+			background: url("assets/images/ledger.png") #414b51 center center no-repeat;
 }
-.navbar-header{
-	float: left;
-	width:500px;
+.menu-manage{
+			background: url("assets/images/manage.png") #414b51 center center no-repeat;
 }
-.navbar-header h4{
-	float:left;
-	width:200px;
-	text-align: center;
-	vertical-align: middle;
-	height: 25px;
-	line-height: 25px;
+.menu-report{
+			background: url("assets/images/report.png") #414b51 center center no-repeat;
+}
+.menu-system{
+			background: url("assets/images/system.png") #414b51 center center no-repeat;
+}
+.menu-updown{
+			background: url("assets/images/updown.png") #414b51 center center no-repeat;
+}
+.menu-zutai{
+			background: url("assets/images/zutai.png") #414b51 center center no-repeat;
 }
 </style>
 </head>
@@ -67,31 +91,30 @@ ul.nav li i {
 			<script type="text/javascript">
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-
 			<div class="main-container-inner">
-				<div class="sidebar" id="sidebar">
+			<div class="sidebar" id="sidebar">
 					<script type="text/javascript">
 						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
 					</script>
 					<ul class="nav nav-list">
-						<li class="active">
+						<li>
 							<a href="javascript:void(0)" src="${pageContext.request.contextPath}/home">
-								<i class="icon-search"></i>
-								<span > 搜索 </span>
+								<span class="menu-span menu-search"></span>
+								<span class="menu-text"> 搜索 </span>
 							</a>
 						</li>
 
 						<li>
 							<a href="#">
-								<i class="icon-bar-chart"></i>
-								<span > 上下架 </span>
+								<span class="menu-span menu-updown"></span>
+								<span class="menu-text"> 上下架 </span>
 							</a>
 						</li>
 
 						<li>
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-cogs"></i>
-								<span > 设备管理 </span>
+								<span class="menu-span menu-manage"></span>
+								<span class="menu-text"> 设备管理 </span>
 
 								<b class="arrow icon-angle-down"></b>
 							</a>
@@ -115,8 +138,8 @@ ul.nav li i {
 
 						<li>
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-dashboard"></i>
-								<span> 台账管理 </span>
+								<span class="menu-span menu-ledger"></span>
+								<span class="menu-text"> 台账管理 </span>
 
 								<b class="arrow icon-angle-down"></b>
 							</a>
@@ -161,8 +184,8 @@ ul.nav li i {
 
 						<li>
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-group"></i>
-								<span> 系统报表 </span>
+								<span class="menu-span menu-report"></span>
+								<span class="menu-text"> 系统报表 </span>
 
 								<b class="arrow icon-angle-down"></b>
 							</a>
@@ -193,8 +216,8 @@ ul.nav li i {
 
 						<li>
 								<a href="#" class="dropdown-toggle">
-								<i class=" icon-desktop"></i>
-								<span >系统管理</span>
+								<span class="menu-span menu-system"></span>
+								<span class="menu-text">系统管理</span>
 								<b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
@@ -217,8 +240,8 @@ ul.nav li i {
 						<li>
 						
 							<a href="#" class="dropdown-toggle">
-								<i class="icon-cog"></i>
-								<span> 系统组态 </span>
+								<span class="menu-span menu-zutai"></span>
+								<span class="menu-text"> 系统组态 </span>
 								<b class="arrow icon-angle-down"></b>
 							</a>
 							<ul class="submenu">
@@ -277,8 +300,8 @@ ul.nav li i {
 				}
 			})
 			
-			$("body").addClass("skin-1");
-			$(".ace-nav > li.grey").addClass("dark");
+			 $("body").addClass("skin-1"); 
+			 $(".ace-nav > li.grey").addClass("dark"); 
 			
 		});
 		</script>
