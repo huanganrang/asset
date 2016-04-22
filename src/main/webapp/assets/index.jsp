@@ -113,7 +113,7 @@
 					</script>
 					<ul class="nav nav-list">
 						<li>
-							<a href="javascript:void(0)" src="${pageContext.request.contextPath}/home">
+							<a href="javascript:void(0)" src="${pageContext.request.contextPath}/asset/searchHome">
 								<span class="menu-span menu-search"></span>
 								<span class="menu-text"> 搜索 </span>
 							</a>

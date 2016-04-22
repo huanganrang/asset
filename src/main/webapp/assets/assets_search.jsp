@@ -39,6 +39,9 @@
                 scrollbarSize:18,
                 singleSelect: true,
                 pagination:true,
+                onDblClickRow: function(index,row){
+                	location.href=rootpath+"/ledger/property/"+row.assetId;
+                },
                 onHeaderContextMenu: function(e, field){
                     e.preventDefault();
                     if (!cmenu){
