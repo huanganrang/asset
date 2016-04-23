@@ -31,7 +31,7 @@
         	
         	var columns = $("#columns").val();
         	var columnsArray = columns.split(",");
-        	$("#base").find("input").not(".selectAll").each(function(){
+        	$(".easyui-accordion").find("input").not(".selectAll").each(function(){
         		var i = columnsArray.length;
         	    while (i--) {
         	       if (columnsArray[i] === $(this).val()) {

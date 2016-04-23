@@ -1,13 +1,19 @@
 package asset.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import jb.pageModel.DataGrid;
 import jb.pageModel.PageHelper;
+import jb.util.Constants;
+import jb.util.CookieUtils;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -39,9 +45,25 @@ public class AssetController {
 	@Autowired
 	private AssetDicServiceI assetDicService;
 	
-	private void setColumns(HttpServletRequest request){
+	private void setColumns(HttpServletRequest request,HttpServletResponse response){
 		String baseids = request.getParameter("baseids");
 		String attrids = request.getParameter("attrids");
+		try {
+			if(StringUtils.isNotBlank(baseids)){
+					CookieUtils.saveCookie(response, Constants.column_base, URLEncoder.encode(baseids,"utf-8"));
+			}else{
+				baseids = URLDecoder.decode(CookieUtils.getCookie(request,  Constants.column_base),"utf-8");
+			}
+			if(StringUtils.isNotBlank(attrids)){
+					CookieUtils.saveCookie(response, Constants.column_ext, URLEncoder.encode(attrids,"utf-8"));
+			}else{
+				attrids = URLDecoder.decode(CookieUtils.getCookie(request,  Constants.column_ext),"utf-8");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+				
 		StringBuilder columns = new StringBuilder("[[");
 		try {
 		
@@ -60,8 +82,6 @@ public class AssetController {
 				}
 			}
 			
-			//默认情况 显示所有的基本信息
-//			if(columns.length() == 2){
 			Map<String,String> dicMap = assetDicService.getAssetDicMap(1);
 			//默认选中的属性
 			if(StringUtils.isBlank(baseids)){
@@ -86,7 +106,9 @@ public class AssetController {
 					}
 					columns.append(column);
 			}
-			request.setAttribute("columns", columns.deleteCharAt(columns.length()-1)+"]]");
+			String column = columns.deleteCharAt(columns.length()-1)+"]]";
+			request.setAttribute("columns", column);
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,10 +116,15 @@ public class AssetController {
 	}
 	
 	
+	@RequestMapping("/searchHome")
+	public String searchHome(HttpServletRequest request) {
+		return "assets/search";
+	}
+	
 	@RequestMapping("/tosearch")
-	public String tosearch(HttpServletRequest request) {
+	public String tosearch(HttpServletRequest request,HttpServletResponse response) {
 		request.setAttribute("key", request.getParameter("key"));
-		setColumns(request);
+		setColumns(request,response);
 		return "assets/assets_search";
 	}
 	
@@ -108,10 +135,19 @@ public class AssetController {
 			//默认属性
 			Map<String,String> baseAttrMap = assetDicService.getAssetDicMap(1);
 			request.setAttribute("baseAttrMap", baseAttrMap);
-			
-			//默认选中的属性
-			Properties properties = PropertiesLoaderUtils.loadAllProperties("config.properties");
-			String columns = properties.getProperty("search.result.columns");
+			String columns = "";
+			String base = CookieUtils.getCookie(request, Constants.column_base);
+			String ext = CookieUtils.getCookie(request, Constants.column_ext);
+			if(StringUtils.isBlank(base) && StringUtils.isBlank(ext)){
+				//默认选中的属性
+				Properties properties = PropertiesLoaderUtils.loadAllProperties("config.properties");
+				columns = properties.getProperty("search.result.columns");
+			}else{
+				columns = URLDecoder.decode(base,"utf-8");
+				if(StringUtils.isNotBlank(ext)){
+					columns =columns+","+URLDecoder.decode(ext,"utf-8");
+				}
+			}
 			request.setAttribute("columns", columns);
 			
 			//其他属性

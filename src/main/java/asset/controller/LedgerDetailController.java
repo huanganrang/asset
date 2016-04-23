@@ -1,5 +1,8 @@
 package asset.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,10 +13,13 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import jb.pageModel.DataGrid;
 import jb.pageModel.Json;
 import jb.pageModel.PageHelper;
+import jb.util.Constants;
+import jb.util.CookieUtils;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -54,8 +60,8 @@ public class LedgerDetailController {
 
 	
 	@RequestMapping("/detail")
-	public String toasset(HttpServletRequest request) {
-		setColumns(request);
+	public String toasset(HttpServletRequest request,HttpServletResponse response) {
+		setColumns(request,response);
 		return "/assets/ledger_detail";
 	}
 	
@@ -235,9 +241,23 @@ public class LedgerDetailController {
 		return dataGrid;
 	}
 	
-	private void setColumns(HttpServletRequest request){
+	private void setColumns(HttpServletRequest request,HttpServletResponse response){
 		String baseids = request.getParameter("baseids");
 		String attrids = request.getParameter("attrids");
+		try {
+		if(StringUtils.isNotBlank(baseids)){
+				CookieUtils.saveCookie(response, Constants.column_base, URLEncoder.encode(baseids,"utf-8"));
+		}else{
+			baseids = URLDecoder.decode(CookieUtils.getCookie(request,  Constants.column_base),"utf-8");
+		}
+		if(StringUtils.isNotBlank(attrids)){
+				CookieUtils.saveCookie(response, Constants.column_ext, URLEncoder.encode(attrids,"utf-8"));
+		}else{
+			attrids = URLDecoder.decode(CookieUtils.getCookie(request,  Constants.column_ext),"utf-8");
+		}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		StringBuilder columns = new StringBuilder("[[");
 		try {
 		
@@ -352,8 +372,6 @@ public class LedgerDetailController {
 	@RequestMapping("/data")
 	@ResponseBody
 	public DataGrid ledgerData(HttpServletRequest request, PageHelper ph) {
-		StopWatch watch = new StopWatch();
-		watch.start();
 		DataGrid dataGrid = new DataGrid();
 		List<AssetInfo> assetList = null;
 		try {
@@ -383,8 +401,6 @@ public class LedgerDetailController {
 			}else{
 				assetList = assetBaseService.getAssetList(baseMap,ph);	
 			}
-			watch.stop();
-			watch.start();
 			if(null != assetList && assetList.size() > 0){
 				JSONArray rows = new JSONArray();
 				for(AssetInfo asset:assetList){
@@ -413,10 +429,7 @@ public class LedgerDetailController {
 					
 				}else{
 					dataGrid.setTotal(assetBaseService.countAsset(baseMap));	
-					watch.stop();
 				}
-				System.out.println(watch.prettyPrint());
-				System.out.println(JSON.toJSONString(dataGrid));
 				return dataGrid;
 			}
 		} catch (Exception e) {
@@ -433,10 +446,19 @@ public class LedgerDetailController {
 			//默认属性
 			Map<String,String> baseAttrMap = assetDicService.getAssetDicMap(1);
 			request.setAttribute("baseAttrMap", baseAttrMap);
-			
-			//默认选中的属性
-			Properties properties = PropertiesLoaderUtils.loadAllProperties("config.properties");
-			String columns = properties.getProperty("search.result.columns");
+			String columns = "";
+			String base = CookieUtils.getCookie(request, Constants.column_base);
+			String ext = CookieUtils.getCookie(request, Constants.column_ext);
+			if(StringUtils.isBlank(base) && StringUtils.isBlank(ext)){
+				//默认选中的属性
+				Properties properties = PropertiesLoaderUtils.loadAllProperties("config.properties");
+				columns = properties.getProperty("search.result.columns");
+			}else{
+				columns = URLDecoder.decode(base,"utf-8");
+				if(StringUtils.isNotBlank(ext)){
+					columns =columns+","+URLDecoder.decode(ext,"utf-8");
+				}
+			}
 			request.setAttribute("columns", columns);
 			
 			//其他属性

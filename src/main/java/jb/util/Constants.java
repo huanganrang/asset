@@ -8,6 +8,11 @@ import java.text.SimpleDateFormat;
  */
 public interface Constants {
 	
+	
+	public static final String domain = "assets.huaxin.com";
+	
+	public static final String column_base = "column_base";
+	public static final String column_ext = "column_ext";
 	/**
 	 * 系统发布环境：正式、开发、测试
 	 */
