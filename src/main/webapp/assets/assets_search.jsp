@@ -2,13 +2,11 @@
     pageEncoding="UTF-8"%>
     <%@include file="/assets/common.jsp"%>
     							<input type="hidden" id="columns" value="${columns}"/>
-								<div id="nav-search" style="margin-left:300px" >
-										<span class="input-icon">
-											<input type="text" style="width: 400px" id="key" name="key" class="nav-search-input" value="${key}" />
-											<i class="icon-search nav-search-icon"></i>
-										</span>
-										<input type="button" id="to-search" value="搜索"/>
-										<input type="button" id="to-high" value="高级"/>
+								<div id="nav-search" style="top: 80px; left: 6%; width: 100%;" >
+										<input type="text" style="height: 50px;width: 75%; background: #fff url(${pageContext.request.contextPath}/images/Search-2.png) no-repeat; padding-left: 50px;" id="key" name="key" value="${key}" class="nav-search-input" />
+										<input type="button" id="to-search" style=" width: 5%; height: 50px;border: none; border-radius: 2px;background: #b47e43;" value="搜索"/>
+										<input type="button" id="to-high" style="width: 5%; height: 50px;border: none; border-radius: 2px;background: #b47e43;" value="高级"/>
+										<p style="display: inline-block; width: 5%;"><img src="${pageContext.request.contextPath}/images/Graphic-lists-the-Convert-button.png"/></p>
 								</div>
 								 <div id="tableDiv" style="height:420px;margin-top:30px">
 								<table id="dg" style="width:700px;height:420px"></table>
