@@ -30,12 +30,20 @@
 								            var rows = $('#pg').propertygrid('getRows');
 								            for(var i=0; i<rows.length; i++){
 								            	if("base" == rows[i].flag){
+								            		if(rows[i].key == "assetName" && $.trim(rows[i].value) == ""){
+								            			$.messager.alert("警告","设备名称不能为空");
+								            			return false;
+								            		}
 								                	b += rows[i].key + ':' + rows[i].value + ',';
 								            	}
 								            	if("ext" == rows[i].flag){
 								            		e += rows[i].key + ':' + rows[i].name + ':' + rows[i].value + ',';
 								            	}
 								            }
+								            $.messager.progress({
+								                title:'请等待',
+								                msg:'加载中...'
+								           });
 								        	 $.ajax({
 								    			url:"${pageContext.request.contextPath}/ledger/save",
 								    			type:"post",
@@ -43,9 +51,12 @@
 								    			dataType:"json",
 								    			cache:false,
 								    			success:function(response){
+								    				$.messager.progress('close');
 								    				$.messager.alert("提示","新增成功");
+								    				$('#pg').propertygrid('reload');
 								    			},
 								    			error:function(e){
+								    				$.messager.progress('close');
 								    				$.messager.alert("提示","新增失败，请稍后再试或联系管理员");
 								    			}
 								    		});

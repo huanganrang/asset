@@ -1,6 +1,5 @@
 package asset.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Calendar;
@@ -29,7 +28,6 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,6 +40,7 @@ import asset.model.AssetInfo;
 import asset.service.AssetBaseServiceI;
 import asset.service.AssetDicServiceI;
 
+import com.alibaba.druid.support.json.JSONParser;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -202,6 +201,14 @@ public class LedgerDetailController {
 				}else{
 					if(name.contains("日期")){
 						json.put("editor", "datebox");
+					}
+					if(name.equals("设备名称")){
+					    JSONObject typeEditor = new JSONObject();
+					    typeEditor.put("type", "validatebox");
+					    JSONObject opJson = new JSONObject();
+					    opJson.put("required", true);
+					    typeEditor.put("options", opJson);
+						json.put("editor", typeEditor);
 					}else{
 						json.put("editor", "text");
 					}
