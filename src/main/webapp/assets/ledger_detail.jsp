@@ -51,11 +51,31 @@
 								                onDblClickRow: function(index,row){
 								                	location.href=rootpath+"/ledger/property/"+row.assetId;
 								                },
-								                onHeaderContextMenu: function(e, field){
+								                onHeaderContextMenu: function(e, currfield){
+
 								                    e.preventDefault();
 								                    if (!cmenu){
-								                        createColumnMenu();
+								                        createColumnMenu(currfield);
+								                    }else{
+								                    	/*将当前元素除外，所有置空*/
+								                    	$("#cmenu").find(".menu-item").each(function(){
+								                    		  var title = $(this).find(".menu-text").text();
+								                    		  var col = $('#dg').datagrid('getColumnOption', currfield);
+								                    		  if(title ==col.title){
+									                          	  cmenu.menu('setIcon', {
+									                          		 target: $(this)[0],
+									                                 iconCls: 'icon-ok'
+									                              });
+								                              }else{
+								                            	  cmenu.menu('setIcon', {
+								 	                          		 target: $(this)[0],
+								 	                                 iconCls: 'icon-empty'
+								 	                              });
+								                              }
+								                    		
+								                    	});
 								                    }
+								                    
 								                    cmenu.menu('show', {
 								                        left:e.pageX,
 								                        top:e.pageY
@@ -65,35 +85,55 @@
 								        /* 	dg.datagrid('enableFilter'); */
 								        });
 								        var cmenu;
-								        function createColumnMenu(){
-								            cmenu = $('<div style="position:absolute; height:400px; overflow:auto"/>').appendTo('body');
+								        function createColumnMenu(currfield){
+								            cmenu = $('<div id="cmenu" style="position:absolute; height:400px; overflow:auto"/>').appendTo('body');
 								            cmenu.menu({
-								                onClick: function(item){
-								                    if (item.iconCls == 'icon-ok'){
-								                        $('#dg').datagrid('hideColumn', item.name);
-								                        cmenu.menu('setIcon', {
-								                            target: item.target,
-								                            iconCls: 'icon-empty'
-								                        });
-								                    } else {
-								                        $('#dg').datagrid('showColumn', item.name);
-								                        $('#dg').datagrid('resizeFilter',item.name);
-								                        cmenu.menu('setIcon', {
-								                            target: item.target,
-								                            iconCls: 'icon-ok'
-								                        });
-								                    }
+								            	onClick: function(item){
+								                	/*将所有选中的元素置空，隐藏*/
+								                	$("#cmenu").find(".menu-item").each(function(){
+								                		var itemEl = $(this)[0];  // the menu item element
+								                		var itemOther = $('#cmenu').menu('getItem', itemEl);
+								                		if (itemOther.iconCls == 'icon-ok' && item.name != itemOther.name){
+								                            $('#dg').datagrid('hideColumn', itemOther.name);
+								                            cmenu.menu('setIcon', {
+								                                target: itemEl,
+								                                iconCls: 'icon-empty'
+								                            });
+								                        }
+								                	});
+								               	 if (item.iconCls == 'icon-ok'){
+							                         $('#dg').datagrid('hideColumn', item.name);
+							                         cmenu.menu('setIcon', {
+							                             target: item.target,
+							                             iconCls: 'icon-empty'
+							                         });
+							                     } else {
+							                         $('#dg').datagrid('showColumn', item.name);
+							                         cmenu.menu('setIcon', {
+							                             target: item.target,
+							                             iconCls: 'icon-ok'
+							                         });
+							                     }
 								                }
 								            });
 								            var fields = $('#dg').datagrid('getColumnFields');
 								            for(var i=0; i<fields.length; i++){
 								                var field = fields[i];
 								                var col = $('#dg').datagrid('getColumnOption', field);
-								                cmenu.menu('appendItem', {
-								                    text: col.title,
-								                    name: field,
-								                    iconCls: 'icon-ok'
-								                });
+								                if(currfield == field){
+								                 	cmenu.menu('appendItem', {
+								                        text: col.title,
+								                        name: field,
+								                        iconCls: 'icon-ok'
+								                    });
+								                }else{
+								                 	cmenu.menu('appendItem', {
+								                        text: col.title,
+								                        name: field,
+								                        iconCls: 'icon-empty'
+								                    });
+								                }
+								              
 								            }
 								        }
 								    </script>
