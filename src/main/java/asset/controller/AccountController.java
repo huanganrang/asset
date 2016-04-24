@@ -95,7 +95,7 @@ public class AccountController {
 				String suffix = name.substring(name.lastIndexOf("."));
 				name = name.substring(0,name.lastIndexOf("."));
 				Date date = new Date();
-				String fileName = file+File.separator+date.getTime()+suffix;
+				String fileName = request.getSession().getServletContext().getRealPath("/")+File.separator+date.getTime()+suffix;
 	        	reader.writeExcel(rows, fileName);
 	        	j.setMsg(date.getTime()+suffix);
 	        	
@@ -127,7 +127,7 @@ public class AccountController {
 			// 循环取出流中的数据
 	        byte[] b = new byte[100];
 	        int len;
-	        InputStream inStream = new FileInputStream(new File(file+File.separator+fileName));
+	        InputStream inStream = new FileInputStream(new File(request.getSession().getServletContext().getRealPath("/")+File.separator+fileName));
             while ((len = inStream.read(b)) > 0)
                 response.getOutputStream().write(b, 0, len);
             inStream.close();

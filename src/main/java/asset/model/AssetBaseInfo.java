@@ -51,9 +51,9 @@ public class AssetBaseInfo implements java.io.Serializable {
 	private String assetReduceMethod;
 	private String assetRemark2;
 	private String assetBeginDate;
-	private String assetReserve1;
-	private String assetReserve2;
-	private String assetReserve3;
+	private String assetReserve1; //设备小类
+	private String assetReserve2; //所属系统
+	private String assetReserve3; //上传图片
 	private Date assetAddTime;
 	private String assetAddUser;
 	private Date assetModifyTime;
