@@ -8,7 +8,7 @@
 										<input type="button" id="to-high" style="width: 5%; height: 50px;border: none; border-radius: 2px;background: #b47e43;" value="高级"/>
 										<p style="display: inline-block; width: 5%;"><img src="${pageContext.request.contextPath}/images/Graphic-lists-the-Convert-button.png"/></p>
 								</div>
-								 <div id="tableDiv" style="height:420px;margin-top:5px">
+								<div id="tableDiv" style="height:420px;margin-top:30px">
 								<table id="dg" style="width:700px;height:420px"></table>
 								</div>
 		<script type="text/javascript">
