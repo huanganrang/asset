@@ -4,23 +4,27 @@ body,html{height:100%; margin:0;}
 header{width:100%; margin:0 auto; height:70px;}
 
 h1{width:12%; height:50px; background:#ed6c44 url(../images/logo.png) no-repeat 40% 50%; padding-top:20px; padding-left:5%; float:left;}
-header .list{width:83%; height:70px; float:left; position:relative; background:#ffffff; }
+header .list{ float:left; background:#ffffff; height:34px;line-height:34px;}
 header .list li{list-style-type:none;}
-header .list li:nth-child(1){width:34px; height:34px; position:absolute; top:20px; left:-42px; transform:translate(0,0);
- background:url(../images/System%20switch-1.png) no-repeat;}
-header .list li:nth-child(2){width:34px; height:34px; position:absolute; top:20px; left:30px;
-background:url(../images/Alarm-1.png) no-repeat;}
+header .list li:nth-child(1){width:34px; position:absolute; height:34px; top:20px;left:172px; background:url(../images/System%20switch-1.png) no-repeat;}
+header .list li:nth-child(2){width:34px; height:34px;margin-top:20px; margin-left:40px; background:url(../images/Alarm-1.png) no-repeat;}
 header .list li:nth-child(3){height:34px; position:absolute; top:20px; left:40%; font:16px/34px "黑体";}
-header .list li:nth-child(4){width:34px; height:34px; position:absolute; top:20px; right:80px;
-background:url(../images/search-top1.png) no-repeat;}
+header .list li:nth-child(4){width:34px; height:34px; position:absolute; top:20px; right:80px;background:url(../images/search-top1.png) no-repeat;}
 header .list li:nth-child(4)>input{display:none; width:180px; height:34px; border-radius:17px; background:#f0f4f6 url(../images/search-top1.png)150px 1px no-repeat;
 position:absolute; left:-150px; border:1px solid #f0f4f6;}
 header .list li:nth-child(5){display:none; width:34px; height:34px; position:absolute; top:20px; right:10px;
 background:url(../images/Graphic-lists-the-Convert-button1.png) no-repeat;}
 
-header .listmin{width:1000%; height:30px; border:1px s0lid #F00; position:absolute; top:0; left:0px; z-index:80; color:#7a7979;
-background:#e4e6e7; border-radius:17px; font-size:0; padding:3px 0; display:none;}
-header .listmin>a{width:22%; height:28px; font:12px/34px "黑体"; padding:0 4%; display:inline-block; border-right:1px solid #d0cece;}
+header .listmin{width:1000%; height:34px; border:1px s0lid #F00; position:absolute; top:0; left:0px; z-index:80; color:#7a7979;
+background:#e4e6e7; border-radius:17px; font-size:0;  display:none;}
+header .listmin>a{
+    height: 25px;
+    font: 12px/34px "黑体";
+    cursor:pointer;
+    padding: 0 4%;
+    text-decoration:none;
+    display: inline-block;
+    border-right: 1px solid #d0cece;}
 main{width:100%; height:100%; margin:0 auto; background:#e5e9eb;}
 header .listmin>a:nth-child(1){padding-left:10%;}
 

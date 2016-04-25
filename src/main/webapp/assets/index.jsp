@@ -52,6 +52,10 @@
 .navbar-container {
     padding-left: 0px;
 }
+
+.navbar {
+    background: #ffffff;
+}
 .menu-search{
 			background: url("assets/images/search.png") #414b51 center center no-repeat;
 }
@@ -84,7 +88,7 @@
 				</div><!-- /.navbar-header -->
 				
 			
-					 <ul class="list">
+					<ul class="list">
 				 	<li>
 				    	<div class="listmin">
 				        	<a>环境监控系统</a>
@@ -306,19 +310,6 @@
 			</a>
 		</div><!-- /.main-container -->
 		<script type="text/javascript">
-		$(document).ready(function(){
-			var g=$(".list li:nth-child(4)");
-			g.click(function(){
-				if($(this).children().css("display")=="block"){
-					$(this).children().css({"display":"none"});
-					} else {
-						$(this).children().css({"display":"block"});
-						}
-				
-				
-				});
-		})
-			
 		$(function(){
 			$(".nav-list a").click(function(){
 				//$("#mainFrame").src=;
@@ -327,6 +318,27 @@
 					$("#mainFrame").attr("src",src);
 				}
 			})
+			
+			var g=$(".list li:nth-child(4)");
+			g.click(function(){
+				if($(this).children().css("display")=="block"){
+					$(this).children().css({"display":"none"});
+					} else {
+						$(this).children().css({"display":"block"});
+						}
+			});
+			
+			var sm = $(".list li:nth-child(1)")
+			 var oppen = false
+			sm.click(function(){
+					 if (oppen) {
+							 oppen = false;
+							 $(this).children().hide();
+						 } else {
+							 oppen = true;
+						 	 $(this).children().show();
+						};
+						})
 			
 			 $("body").addClass("skin-1"); 
 			 $(".ace-nav > li.grey").addClass("dark"); 
