@@ -11,6 +11,8 @@ position:relative;}
 .textbox2 dl dt input{}
 .textbox2 dl input{margin:0 6%;border:1px solid #999; -webkit-border-radius:50%; width:10px; height:10px;}
 .textbox2 dl dt input{ height:10px; width:10px;}
+.textbox2 dl dd:last-child{width:20px; height:20px; background:url(${pageContext.request.contextPath}/images/1-3.png) no-repeat; 
+position:absolute; top:5px; right:5px;}
 </style>
 <input type="hidden" id="columns" value="${columns}"/>
 								<!-- 
@@ -32,25 +34,61 @@ position:relative;}
 								 <div class="textbox2">
 								 		<dl class="listmax" >
 								        <dt style="background: #edf2f5;"><input type="checkbox" class="selectAll"/>默认属性</dt>
-								         <c:forEach items="${baseAttrMap}" var="baseAttr" >
-						            		<dd><input type="checkbox" name="default" value="${baseAttr.key}"/>${baseAttr.value }</dd>
+								         <c:forEach items="${baseAttrMap}" var="baseAttr" varStatus="status">
+									         	<c:if test="${status.index>0&&status.index%4==0}">
+	   												<dd style="display:none"></dd>
+	       										</c:if>
+							            		<dd <c:if test="${status.index>3}">style="display: none" </c:if> >
+							            		<input type="checkbox" name="default" value="${baseAttr.key}"/>${baseAttr.value }</dd>
 						            	</c:forEach>
+						            	<dd onClick="showNav(0)"></dd>
 								       </dl>
 								       
-								 		<c:forEach items="${attrMap}" var="mymap" >
+								 		<c:forEach items="${attrMap}" var="mymap" varStatus="status0">
 								 		<dl class="listmax" >
 								 		<dt style="background: #edf2f5;"><input type="checkbox" class="selectAll"/>${mymap.key}</dt>
-						            	 <c:forEach items="${mymap.value}" var="attr" >
-						            	 	<dd><input type="checkbox" name="${mymap.key}" value="${attr.attrId}"/>${attr.attrName}</dd>
-						            	</c:forEach>
+							            	 <c:forEach items="${mymap.value}" var="attr" varStatus="status">
+							            	    <c:if test="${status.index>0&&status.index%4==0}">
+		   												<dd style="display:none"></dd>
+		       									</c:if>
+							            	 	<dd <c:if test="${status.index>3}">style="display: none" </c:if> >
+							            	 		<input type="checkbox" name="${mymap.key}"  value="${attr.attrId}"/>${attr.attrName}</dd>
+							            	</c:forEach>
+						            	    <dd onClick="showNav(${status0.index+1})"></dd>
 						            	</dl>
 								        </c:forEach>
 								    </div>
 								
 		<!-- PAGE CONTENT ENDS -->
 		<script type="text/javascript">
+		function showNav(o){
+			if($("dl:eq(" + o + ") dd:last-child").css('background-image').indexOf('1-3.png')>-1)
+			{
+				$("dl:eq(" + o + ") dd:gt(3)").css("display", "inline-block");
+				$("dl:eq(" + o + ") dd:last-child").css("background","url(${pageContext.request.contextPath}/images/1-4.png) no-repeat");
+			}else
+			{
+				$("dl:eq(" + o + ") dd:gt(3)").css("display", "none");
+				$("dl:eq(" + o + ") dd:last-child").css("display", "inline-block");
+				$("dl:eq(" + o + ") dd:last-child").css("background","url(${pageContext.request.contextPath}/images/1-3.png) no-repeat");
+				//$("dl dd:last-child").css("background","background:url(images/1-3.png) no-repeat");
+			}
+		 //var obj=document.getElementById("div"+o);
+		}
         $(function(){
-        	
+        	/*$(".textbox2 dl dd:last-child").click(function(o){
+        		alert($(this).parent().children("dl dd:eq(5)").css.display);
+        		if($(this).parent().children("dl dd:eq(5)").css.display="none")
+        		{
+        			//$("dl:eq(" + o + ") dd:gt(3)").css( "display", "inline-block" );
+        			$(this).parent("dd:gt(3)").css( "display", "inline-block" );
+        			//$("dl dd:last-child").css("background","url(images/1-3-1.png) no-repeat");
+        		}else
+        		{
+        			$("dl dd:gt(3)").css( "display", "none" );
+        			//$("dl dd:last-child").css("background","background:url(images/1-3.png) no-repeat");
+        		}
+        	});*/
         	var columns = $("#columns").val();
         	var columnsArray = columns.split(",");
         	$(".easyui-accordion").find("input").not(".selectAll").each(function(){
