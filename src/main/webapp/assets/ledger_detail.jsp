@@ -1,12 +1,67 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/assets/common.jsp"%>
+<style type="text/css">
+	.datagrid .datagrid-pager  {
+			display: none;
+	}
+	.datagrid-toolbar {
+			display: none;
+	}
+	.datagrid-pager {
+			display: none;
+	}
+	.panel-header
+	{
+	 display: none;
+	}
+	.datagrid-header
+	{
+		height:80px;
+	}
+ 	 .tablist{width:100%; height:50px; }
+	 .tablist>li{padding:0 1%; height:80%; float:left; background:#FFF; border-radius:2px; margin-top:0.4%; position:relative;}
+
+	 .tablist>li:nth-child(1), .tablist li:nth-child(3){width:2%;}
+	 .tablist a{font:16px/40px "黑体"; color:#666;text-decoration: none;}
+	 .tablist>li:nth-child(1){margin-left:1%;}
+	 .tablist>li:nth-child(2), .tablist li:nth-child(3){margin-left:0.5%;}
+	 .tablist>li:nth-child(4){margin-left:50%; margin-right:1%; padding-left:30px;}
+ 	ul, ol {
+		list-style: none;
+	}
+	a{
+		text-decoration: none;
+	}
+	 
+		
+</style>
 				<div class="page-content">
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								<div class="hr32"></div>
 								  <input type="hidden" id="columns" value="${columns}"/>
+								  <div style="margin:20px 0;">
+										<ul class="tablist">
+								        	<li><a id="btn_prev" href="#" ><</a> </li>
+								            <li><a id="pageindex">1/7</a></li>
+								            <li><a id="btn_next" href="#">> </a></li>
+								            <li><a href="${pageContext.request.contextPath}/ledger/toHigh">高级</a></li>
+								            <li><a href="${pageContext.request.contextPath}/ledger/toAdd">新增</a></li>
+								            <li><a href="#">导入</a></li>
+								            <li><a href="#" onClick="Export('asset', $('#dg'))">导出</a></li>
+								            <li><a href="#">标签</a>
+								            	<!--<ul class="tablistmin">
+								                	<li>全部</li>
+								                    <li>当前</li>
+								                    <li>变更</li>
+								                </ul>-->
+								            </li>
+								            <li><a href="#" onClick="CreateFormPage('打印',$('#dg'));">打印</a></li>
+								            
+								        </ul>
+								  </div>
 								  <div style="height:420px">
 								  <table id="dg" style="width:700px;height:420px">
 								  </table>
