@@ -1,22 +1,28 @@
 package jb.controller;
 
-import com.alibaba.fastjson.JSON;
-import jb.pageModel.*;
+import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import jb.pageModel.DataGrid;
+import jb.pageModel.Json;
+import jb.pageModel.PageHelper;
+import jb.pageModel.SessionInfo;
+import jb.pageModel.User;
 import jb.service.ResourceServiceI;
 import jb.service.RoleServiceI;
 import jb.service.UserServiceI;
 import jb.util.ConfigUtil;
-import jb.util.IpUtil;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.UUID;
+import com.alibaba.fastjson.JSON;
 
 /**
  * 用户控制器
@@ -116,11 +122,11 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/manager")
 	public String manager(HttpServletRequest request, User user, PageHelper ph) {
-		DataGrid dataGrid = userService.dataGrid(user, ph);
-		List userRoles = roleService.allTree();
-		List userList = dataGrid.getRows();
-		request.setAttribute("userList", userList);
-		request.setAttribute("userRoles", userRoles);
+//		DataGrid dataGrid = userService.dataGrid(user, ph);
+//		List userRoles = roleService.allTree();
+//		List userList = dataGrid.getRows();
+//		request.setAttribute("userList", userList);
+//		request.setAttribute("userRoles", userRoles);
 		return "/assets/user";
 	}
 

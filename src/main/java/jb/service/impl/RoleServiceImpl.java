@@ -13,6 +13,8 @@ import jb.dao.UserDaoI;
 import jb.model.Tresource;
 import jb.model.Trole;
 import jb.model.Tuser;
+import jb.pageModel.DataGrid;
+import jb.pageModel.PageHelper;
 import jb.pageModel.Role;
 import jb.pageModel.SessionInfo;
 import jb.pageModel.Tree;
@@ -123,16 +125,18 @@ public class RoleServiceImpl implements RoleServiceI {
 	}
 
 	@Override
-	public List<Role> treeGrid(SessionInfo sessionInfo) {
+	public DataGrid treeGrid(SessionInfo sessionInfo) {
+		DataGrid dg = new DataGrid();
 		List<Role> rl = new ArrayList<Role>();
 		List<Trole> tl = null;
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (sessionInfo != null) {
 			params.put("userId", sessionInfo.getId());// 查自己有权限的角色
 			tl = roleDao.find("select distinct t from Trole t left join fetch t.tresources resource join fetch t.tusers user where user.id = :userId order by t.seq", params);
-		} else {
-			tl = roleDao.find("select distinct t from Trole t left join fetch t.tresources resource order by t.seq");
-		}
+		} 
+//		else {
+//			tl = roleDao.find("select distinct t from Trole t left join fetch t.tresources resource order by t.seq");
+//		}
 		if (tl != null && tl.size() > 0) {
 			for (Trole t : tl) {
 				Role r = new Role();
@@ -163,7 +167,9 @@ public class RoleServiceImpl implements RoleServiceI {
 				rl.add(r);
 			}
 		}
-		return rl;
+		dg.setRows(rl);
+		dg.setTotal(Long.valueOf(rl.size()+""));
+		return dg;
 	}
 
 	@Override

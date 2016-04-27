@@ -104,19 +104,19 @@ public class RoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping("/treeGrid")
-	//@ResponseBody
-	//public List<Role> treeGrid(HttpSession session) {
-	//	SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
-	//	return roleService.treeGrid(sessionInfo);
-	//}
-	public String treeGrid(HttpServletRequest request, HttpSession session) {
+	@ResponseBody
+	public DataGrid treeGrid(HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
-		List<Role> userRoleList = roleService.treeGrid(sessionInfo);
-		List<Resource> resourceList = resourceService.treeGrid(sessionInfo);
-		request.setAttribute("userRoleList", userRoleList);
-		request.setAttribute("resourceList", resourceList);
-		return "/assets/rolemanager";
+		return roleService.treeGrid(sessionInfo);
 	}
+//	public String treeGrid(HttpServletRequest request, HttpSession session) {
+//		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
+//		List<Role> userRoleList = roleService.treeGrid(sessionInfo);
+//		List<Resource> resourceList = resourceService.treeGrid(sessionInfo);
+//		request.setAttribute("userRoleList", userRoleList);
+//		request.setAttribute("resourceList", resourceList);
+//		return "/assets/rolemanager";
+//	}
 
 	/**
 	 * 角色树(只能看到自己拥有的角色)

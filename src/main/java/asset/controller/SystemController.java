@@ -1,14 +1,11 @@
 package asset.controller;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import jb.pageModel.DataGrid;
-import jb.pageModel.Json;
 import jb.pageModel.PageHelper;
 import jb.pageModel.Resource;
 import jb.pageModel.Role;
@@ -19,24 +16,9 @@ import jb.service.RoleServiceI;
 import jb.service.UserServiceI;
 import jb.util.ConfigUtil;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import asset.model.AllocationInfo;
-import asset.model.AssetAllocation;
-import asset.model.AssetDic;
-import asset.service.AllocationService;
-import asset.service.AssetBaseServiceI;
-import asset.service.AssetDicServiceI;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 
 /**
  * 系统管理Controller
@@ -89,12 +71,12 @@ public class SystemController {
 	 */
 	@RequestMapping("/system")
 	public String system(HttpServletRequest request, User user, PageHelper ph) {
-		DataGrid dataGrid = userService.dataGrid(user, ph);
-		List userRoles = roleService.allTree();
-		List userList = dataGrid.getRows();
-		request.setAttribute("userList", userList);
-		request.setAttribute("userRoles", userRoles);
-		return "/assets/system";
+//		DataGrid dataGrid = userService.dataGrid(user, ph);
+//		List userRoles = roleService.allTree();
+//		List userList = dataGrid.getRows();
+//		request.setAttribute("userList", userList);
+//		request.setAttribute("userRoles", userRoles);
+		return "/assets/user";
 	}
 	
 	/**
@@ -104,11 +86,11 @@ public class SystemController {
 	 */
 	@RequestMapping("/roleManager")
 	public String treeGrid(HttpServletRequest request, HttpSession session) {
-		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
-		List<Role> userRoleList = roleService.treeGrid(sessionInfo);
-		List<Resource> resourceList = resourceService.treeGrid(sessionInfo);
-		request.setAttribute("userRoleList", userRoleList);
-		request.setAttribute("resourceList", resourceList);
+//		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
+//		List<Role> userRoleList = roleService.treeGrid(sessionInfo);
+//		List<Resource> resourceList = resourceService.treeGrid(sessionInfo);
+//		request.setAttribute("userRoleList", userRoleList);
+//		request.setAttribute("resourceList", resourceList);
 		return "/assets/systemRole";
 	}
 

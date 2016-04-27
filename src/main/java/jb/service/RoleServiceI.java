@@ -2,6 +2,7 @@ package jb.service;
 
 import java.util.List;
 
+import jb.pageModel.DataGrid;
 import jb.pageModel.Role;
 import jb.pageModel.SessionInfo;
 import jb.pageModel.Tree;
@@ -42,7 +43,7 @@ public interface RoleServiceI {
 	 * 
 	 * @return
 	 */
-	public List<Role> treeGrid(SessionInfo sessionInfo);
+	public DataGrid treeGrid(SessionInfo sessionInfo);
 
 	/**
 	 * 删除角色

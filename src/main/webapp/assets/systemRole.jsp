@@ -1,259 +1,273 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>系统管理</title>
-    <link href="${pageContext.request.contextPath}/style/reset.css" rel="stylesheet" type="text/css" />
-    <link href="${pageContext.request.contextPath}/style/about.css" rel="stylesheet" type="text/css" />
-	<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jquery.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/html5.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/user.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/js/jquery-2.0.3.min.js"></script>
-
-</head>
-
-<body>
-<main>   
-  <article>
-     <div class="tablebox-role" style="display:block;">
-		    <ul class="tablist2">
-		    	<li><a href="#"></a></li>
-		        <li><a href="#">1/7</a></li>
-		        <li><a href="#"></a></li>
-		        <li><a href="#">添加</a></li>
-		        <li><a href="#">编辑</a></li>
-		        <li><a href="#">批量授权</a></li>
-		        <li><a href="#">批量删除</a></li>            
-		    </ul>
-		     <table>
-		    <tr>
-		     <td><input type="checkbox"/></td>
-		     <td>角色名称</td>
-		     <td>排序</td>
-		     <td>上级角色</td>	
-		     <td>拥有资源</td>
-		     <td>备注</td>
-		   </tr>
-		   </table>
-		   <div class="tablebox2">
-		    <table id="roleList">
-		           <c:forEach var="content" items="${userRoleList}">
-		             <tr>
-		       	<td><input type="checkbox" value="${content.id}" /></td>
-		  		    <td>${content.name}</td>
-		              <td>${content.seq}</td>
-		                 <td>${content.pname}</td>
-		                 <td>${content.resourceNames}</td>
-		                 <td>${content.remark}</td>
-		      	</tr>
-		           </c:forEach>
-			       </table>
-		
-  	</div>
-</div>
-  </article>
-</main>
-<div class="popup">
-	<div class="popup-add" >
-	 
-    	<p>添加用户<a class="clos"></a></p>
-        <ul>
-               <li>
-               <a href="#">编号</a>
-               <input id="addUserId" type="text"/>
-            	</li>
-            <li>
-               <a href="#">登录名称</a>
-               <input id="addUserName" name="addUserName"  type="text"/>
-            </li>
-            <li>
-               <a href="#">密码</a>
-               <input id="addPassword" name="addPassword" type="password" />
-            </li>
-            <li><input id="btn_user_add" type="button" value="添加" /></li>
-        </ul>
-    </div>
-    
-    <div class="popup-edit">
-    	<p>编辑用户<a class="clos"></a></p>
-        <ul>
-        	<li>
-            	<a href="#">编号</a>
-               <input id="editUserId" type="text"/>
-            </li>
-            <li>
-            	<a href="#">登录名称</a>
-               <input id="editUserName" name="editUserName" type="text"/>
-            </li>
-            <li>
-            	<a href="#">密码</a>
-               <input id="editPassword" name="editPassword" type="password" />
-            </li>
-            <li><input id="btn_user_edit" type="button" value="添加" /></li>
-        </ul>
-    </div>
-    
-    <!--  
-    <div class="popup-user">
-    	<p>用户授权<a class="clos"></a></p>
-    	<input type="hidden" id="ids" name="ids" />
-        <ul>
-        	<li>
-            	<a href="#">编号</a>
-                <input type="text"/>
-            </li>
-            <li>
-            	<a href="#">用户角色</a>
-                 <select id="userRoleList" style="font-size:16px;">
-			        <c:forEach var="content" items="${userRoles}">
-			             <option value="${content.id}">${content.text}</option>
-			        </c:forEach>
-	    		 </select>
-            </li>
-            
-            <li><input id="btn_user_audit" type="button" value="添加" /></li>
-        </ul>
-    </div>
-    -->
-    <!--    以下是用户授权-->    
-	 <div class="popup-user">
-	    	<p>用户授权<a class="clos"></a></p>
-	        <ul class="max">
-	        	<li class="popup-user-number">
-	            	<a style="width:25%; font:16px/30px '黑体'; color:#999; padding:0; letter-spacing:1em; 
-	            			  border-right:1px solid #999;
-							  height:30px; display:inline-block;" href="#">编号</a>
-                	<input id="auditUserId" type="text"/>
-	            </li>
-	            <li>
-	            	<ul class="min">
-	            		<c:forEach var="content" items="${userRoles}">
-	                	<li><input type="checkbox" value="${content.id}"/><a href="#">${content.text}</a></li>
-			        	</c:forEach>
-	               	</ul>
-	            </li>
-	            <li><input id="btn_user_audit" type="button" value="添加" /></li>
-	        </ul>
-	
-	</div>
-    
-    
-    
-<div class="popup-ask">
-    	<p>删除用户<a class="clos"></a></p>
-    	<input type="hidden" id="delUserId" name="delUserId" />
-        <ul>
-        	<li>
-            	<a href="#">您是否删除当前角色？</a>
-               
-            </li>
-            <li><input id="btn_user_del" type="button" value="确定" /></li>
-            <li><input id="btn_user_del_cancel" type="button" value="取消" /></li>
-        </ul>
-    </div>
-<!--      以下是角色管理弹出框--> 
-
-<div class="popup-add-role">
-    	<p>添加角色<a class="clos"></a></p>
-        <ul>
-        	<li>
-            	<a href="#">编号</a>
-               <input type="text"/>
-            </li>
-            <li>
-            	<a href="#">角色名称</a>
-               <input type="text"/>
-            </li>
-            <li>
-            	<a href="#">排序</a>
-               <input type="text" />
-            </li>
-            <li>
-            	<a href="#">上级角色</a>
-               <input type="text" />
-            </li>
-            <li>
-            	<a href="#">备注：</a>
-               <input type="text" />
-            </li>
-            <li><input type="button" value="添加" /></li>
-        </ul>
-    </div>
-<!--    以下是角色编辑-->
-  <div class="popup-add-editor">
-    	<p>角色编辑<a class="clos"></a></p>
-        <ul>
-        	<li>
-            	<a href="#">编号</a>
-               <input type="text"/>
-            </li>
-            <li>
-            	<a href="#">角色名称</a>
-               <input type="text"/>
-            </li>
-            <li>
-            	<a href="#">排序</a>
-               <input type="text" />
-            </li>
-            <li>
-            	<a href="#">上级角色</a>
-               <input type="text" />
-            </li>
-            <li>
-            	<a href="#">备注：</a>
-               <input type="text" />
-            </li>
-            <li><input type="button" value="添加" /></li>
-        </ul>
-    </div>
-<!--    以下是角色授权-->    
- <div class="popup-role-authorization">
-    	<p>角色授权<a class="clos"></a></p>
-        <ul class="max">
-        	<li>
-            	<input type="checkbox"/>
-            	<a href="#">超管角色可以访问的资源</a>
-            </li>
-            <li>
-            	<ul class="min">
-                	<li><input type="checkbox"/><a href="#">系统管理</a>
-                            <ul class="mins">
-                                <li><input type="checkbox"/><a href="#">资源管理</a></li>
-                                <li><input type="checkbox"/><a href="#">功能菜单</a></li>
-                   			 </ul>
-                    
-                    </li>
-               		<li><input type="checkbox"/><a href="#">角色名称</a>
-                    		<ul class="mins">
-                                <li><input type="checkbox"/><a href="#">资源管理</a></li>
-                                <li><input type="checkbox"/><a href="#">功能菜单</a></li>
-                   			 </ul>
-                    </li>
-                    <li><input type="checkbox"/><a href="#">角色名称</a>
-                    		<ul class="mins">
-                                <li><input type="checkbox"/><a href="#">资源管理</a></li>
-                                <li><input type="checkbox"/><a href="#">功能菜单</a></li>
-                   			 </ul>
-                    </li>
-                    <li><input type="checkbox"/><a href="#">角色名称</a>
-                    		<ul class="mins">
-                                <li><input type="checkbox"/><a href="#">资源管理</a></li>
-                                <li><input type="checkbox"/><a href="#">功能菜单</a></li>
-                   			 </ul>
-                    </li>
-               	</ul>
-                
-            </li>
-            
-            
-            <li><input type="button" value="添加" /></li>
-        </ul>
-    </div>
-
-</div>
-
-</main>
-</body>
-</html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+ <%@include file="/assets/common.jsp"%>
+ <div style="height:420px">
+								  <table id="dg">
+							        <thead>
+							            <tr>
+							            	<th data-options="field:'ck',checkbox:true"></th>
+							            	<!-- <th data-options="field:'assetId',hidden:true"></th> -->
+							                <th data-options="field:'name',width:60">角色名称</th>
+							                <th data-options="field:'seq',width:20">排序</th>
+							                <th data-options="field:'pname',width:20,align:'right'">上级角色</th>
+							                <th data-options="field:'resourceIds',width:180,align:'right',formatter:formatResource" >拥有资源</th>
+							                <th data-options="field:'remark',width:20,align:'right'">备注</th>
+							            </tr>
+							        </thead>
+							    </table>
+							    </div>
+							     <div id="dlg" class="easyui-dialog" title="添加角色" style="width:400px;height:200px;padding:10px"
+						            data-options="
+						                iconCls: 'icon-save',
+						                buttons: [{
+						                    text:'添加',
+						                    iconCls:'icon-ok',
+						                    handler:function(){
+						                      addRole();
+						                    }
+						                },{
+						                    text:'取消',
+						                    handler:function(){
+						                       $('#dlg').dialog('close')
+						                    }
+						                }]
+						            ">
+						      		<table>
+						      		<tr>
+						      		<td>角色名称</td>
+						      		<td>
+						      		<input id="nameInput"/>
+						      		</td>
+						      		</tr>
+						      		<tr>
+						      		<td>排序</td>
+						      		<td>
+						      		<input id="seqInput"/>
+						      		</td>
+						      		</tr>
+						      		<tr>
+						      		<td >上级角色</td>
+						      		<td><select id="pid"
+											style="width: 140px; height: 29px;"></select></td>
+						      		</tr>
+						      		
+						      		<tr>
+						      		<td >备注</td>
+						      		<td><textarea id="remark" rows="" cols="" class="span5"></textarea></td>
+						      		</tr>
+						      		</table>
+						    </div>
+						    
+						    
+						    <div id="dlg1" class="easyui-dialog" title="编辑角色" style="width:600px;height:300px;padding:10px"
+						            data-options="
+						                iconCls: 'icon-save',
+						                buttons: [{
+						                    text:'提交',
+						                    iconCls:'icon-ok',
+						                    handler:function(){
+						                      editRole();
+						                    }
+						                },{
+						                    text:'取消',
+						                    handler:function(){
+						                       $('#dlg1').dialog('close')
+						                    }
+						                }]
+						            ">
+						      		<table>
+						      		<tr>
+						      		<td>角色名称</td>
+						      		<td>
+						      		<input id="nameInput1"/>
+						      		<input id="idInput" type="hidden"/>
+						      		</td>
+						      		</tr>
+						      		<tr>
+						      		<td>排序</td>
+						      		<td>
+						      		<input id="seqInput1"/>
+						      		</td>
+						      		</tr>
+						      		<tr>
+						      		<td >上级角色</td>
+						      		<td><select id="pid1"
+											style="width: 140px; height: 29px;"></select></td>
+						      		</tr>
+						      		
+						      		<tr>
+						      		<td >备注</td>
+						      		<td><textarea id="remark1" rows="" cols="" class="span5"></textarea></td>
+						      		</tr>
+						      		</table>
+						    </div>
+								    <script type="text/javascript">
+								    var toolbar = [{
+							            text:'添加',
+							            iconCls:'icon-pencil',
+							            handler:function(){
+							            	$('#dlg').dialog('open');
+							            }
+							        },'-',{
+							            text:'编辑',
+							            iconCls:'icon-pencil',
+							            handler:function(){
+							            	var rows = $('#dg').datagrid('getSelections');
+							            	if(rows.length < 0){
+							            		$.messager.alert("提示","请先选择一个角色");
+							            	}else{
+							            		$("#idInput").val(rows[0].id);
+							            		$("#nameInput1").val(rows[0].name);
+							            		$("#seqInput1").val(rows[0].seq);
+							            		$("#remark1").val(rows[0].remark);
+							            		$('#dlg1').dialog('open');
+							            	}
+							            	
+							            }
+							        },{
+							            text:'删除',
+							            iconCls:'icon-pencil',
+							            handler:function(){
+							            	 var rows = $('#dg').datagrid('getSelections');
+							            	 if(rows.length < 0){
+								            		$.messager.alert("提示","请先选择一个角色");
+								            }else{
+								            	$.messager.confirm('询问', '您是否要删除当前角色?', function(r){
+								                    if (r){
+								                    	  var id = rows[0].id;
+												          $.messager.progress({
+												              title:'请等待',
+												              msg:'加载中...'
+												         });
+												     	var url = rootpath+"/roleController/delete";
+												          $.ajax({
+												    			url:url,
+												    			type:"post",
+												    			data:"id="+id,
+												    			dataType:"json",
+												    			cache:false,
+												    			success:function(response){
+												    				if(response.success){
+													    				$.messager.progress('close');
+													    				$('#dg').datagrid('reload');
+												    				}
+												    			},
+												    			error:function(e){
+												    				$.messager.progress('close');
+												    				$.messager.alert("提示","操作失败，请稍后再试或联系管理员");
+												    			}
+												    		});
+								                    }
+								                });
+								            }
+							            }
+							        }];
+								        $(function(){
+								        	var rootpath = $("#rootpath").val();
+								            var dg = $('#dg').datagrid({
+								            	url:rootpath+'/roleController/treeGrid',
+								                pagination: true,
+								                toolbar:toolbar,
+								                fitColumns: true,
+								                fit:true,
+								                rownumbers: true
+								            });
+								            
+								            $('#pid').combotree({
+								    			url : rootpath+'/roleController/allTree',
+								    			parentField : 'pid',
+								    			lines : true,
+								    			panelHeight : 'auto',
+								    			value : '${role.pid}',
+								    			onLoadSuccess : function() {
+								    			}
+								    		});
+								            
+								            $('#pid1').combotree({
+								    			url : rootpath+'/roleController/allTree',
+								    			parentField : 'pid',
+								    			lines : true,
+								    			panelHeight : 'auto',
+								    			value : '${role.pid}',
+								    			onLoadSuccess : function() {
+								    			}
+								    		});
+								            
+								            $('#dlg').dialog('close');
+								            $('#dlg1').dialog('close');
+								        });
+								        
+								        function addRole(){
+								          var nameInput = $("#nameInput").val();
+								          var seqInput = $("#seqInput").val();
+								          var pid = $("#pid").combotree('getValue');
+								          var remark = $("#remark").val();
+								          $.messager.progress({
+								              title:'请等待',
+								              msg:'加载中...'
+								         });
+								     	var url = rootpath+"/roleController/add";
+								          $.ajax({
+								    			url:url,
+								    			type:"post",
+								    			data:"name="+nameInput+"&seq="+seqInput+"&pid="+pid+"&remark="+remark,
+								    			dataType:"json",
+								    			cache:false,
+								    			success:function(response){
+								    				if(response.success){
+									    				$.messager.progress('close');
+									    				$('#dlg').dialog('close');
+									    				$('#dg').datagrid('reload');
+								    				}else{
+								    					$.messager.progress('close');
+									    				$.messager.alert("提示",response.msg);
+								    				}
+								    			},
+								    			error:function(e){
+								    				$.messager.progress('close');
+								    				$.messager.alert("提示","操作失败，请稍后再试或联系管理员");
+								    				$('#dlg').dialog('close');
+								    			}
+								    		});
+								        }
+								        
+								        
+								        function editRole(){
+									          var nameInput = $("#nameInput1").val();
+									          var seqInput = $("#seqInput1").val();
+									          var pid = $("#pid1").combotree('getValue')
+									          var remark = $("#remark1").val();
+									          var id = $("#idInput").val();
+									          $.messager.progress({
+									              title:'请等待',
+									              msg:'加载中...'
+									         });
+									      	var url = rootpath+"/roleController/edit";
+									          $.ajax({
+									    			url:url,
+									    			type:"post",
+									    			data:"name="+nameInput+"&seq="+seqInput+"&pid="+pid+"&remark="+remark+"&id="+id,
+									    			dataType:"json",
+									    			cache:false,
+									    			success:function(response){
+									    				$.messager.progress('close');
+									    				$('#dlg1').dialog('close');
+									    				$('#dg').datagrid('reload');
+									    			},
+									    			error:function(e){
+									    				$.messager.progress('close');
+									    				$.messager.alert("提示","操作失败，请稍后再试或联系管理员");
+									    				$('#dlg1').dialog('close');
+									    			}
+									    		});
+									        }
+								        
+								        
+								        function formatResource(val,row){
+								        	if (val) {
+												return row.resourceNames;
+											}
+											return '';
+								        }
+								    </script>
+								<!-- PAGE CONTENT ENDS -->
