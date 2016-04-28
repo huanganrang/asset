@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@include file="/assets/common.jsp"%>
-
+								  <input type="hidden" id = "assetId"  value = "${assetId }"/>
 								   <table id="pg" class="easyui-propertygrid" style="width:700px;height:450px" data-options="
 						                url:'${pageContext.request.contextPath}/ledger/pro?assetId=${assetId }',
 						                method:'get',
