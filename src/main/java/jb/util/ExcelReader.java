@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.NumberUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -17,6 +19,8 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import asset.model.AssetBaseInfo;
 
 public class ExcelReader {
 	
@@ -127,6 +131,123 @@ public class ExcelReader {
 //	        }
 	        return list;
 	    }
+	    
+	    public List<AssetBaseInfo> readXlsx2BaseInfo(InputStream is) throws IOException {
+	        XSSFWorkbook xssfWorkbook = new XSSFWorkbook(is);
+	        List<AssetBaseInfo> list = new ArrayList<AssetBaseInfo>();
+	        // Read the Sheet
+//	        for (int numSheet = 0; numSheet < xssfWorkbook.getNumberOfSheets(); numSheet++) {
+	            XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(0);
+	            if (xssfSheet == null) {
+//	                continue;
+	            	throw new IllegalArgumentException("param error");
+	            }
+	            // Read the Row
+	            for (int rowNum = 2; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
+	                XSSFRow xssfRow = xssfSheet.getRow(rowNum);
+	                if (xssfRow != null) {
+	                	AssetBaseInfo baseInfo = new AssetBaseInfo();
+	                	baseInfo.setAssetCate("台式机");
+	                	baseInfo.setAssetStockStatus("入库");
+	                	baseInfo.setAssetBusiness("");
+	                	baseInfo.setAssetType("");
+	                	XSSFCell seq = xssfRow.getCell(0);
+	                	XSSFCell cardNo = xssfRow.getCell(1);
+	                    XSSFCell assetNumber = xssfRow.getCell(2);
+	                    if(!NumberUtils.isDigits(getValue(seq)) 
+	                    		|| !NumberUtils.isDigits(getValue(cardNo))
+	                    		|| !NumberUtils.isDigits(getValue(assetNumber))){
+	                    	continue;
+	                    }
+	                   
+	                    XSSFCell assetArriveDate = xssfRow.getCell(12);
+	                    if(null == assetArriveDate){
+	                    	continue;
+	                    }
+	                    String arriveDate = getValue(assetArriveDate);
+	                    if(StringUtils.isBlank(arriveDate)){
+	                    	continue;
+	                    }
+	                    
+	                    XSSFCell assetItNumber = xssfRow.getCell(4);
+	                    XSSFCell assetName = xssfRow.getCell(3);
+	                    XSSFCell assetModel = xssfRow.getCell(5);
+	                    
+	                    baseInfo.setAssetNumber(getValue(assetNumber));
+	                    baseInfo.setAssetItNumber(getValue(assetItNumber));
+	                    baseInfo.setAssetName(getValue(assetName));
+	                    baseInfo.setAssetModel(getValue(assetModel));
+//	                    baseInfo.setAssetDeviceLocation(assetDeviceLocation);
+//	                    baseInfo.setAssetReserve2();
+//	                    baseInfo.setAssetUser(assetUser);
+	                    baseInfo.setAssetArriveDate(arriveDate);
+//	                    baseInfo.setAssetBornDate(assetBornDate);
+//	                    baseInfo.setAssetRepairDate(assetRepairDate);
+	                    list.add(baseInfo);
+	                }
+	            }
+//	        }
+	        return list;
+	    }
+	    
+	    public List<AssetBaseInfo> readXls2BaseInfo(InputStream is) throws IOException {
+	        HSSFWorkbook hssfWorkbook = new HSSFWorkbook(is);
+	        List<AssetBaseInfo> list = new ArrayList<AssetBaseInfo>();
+	        // Read the Sheet
+//	        for (int numSheet = 0; numSheet < hssfWorkbook.getNumberOfSheets(); numSheet++) {
+	            HSSFSheet hssfSheet = hssfWorkbook.getSheetAt(0);
+	            if (hssfSheet == null) {
+//	                continue;
+	            	throw new IllegalArgumentException("param error");
+	            }
+	            // Read the Row
+	            for (int rowNum = 2; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
+	                HSSFRow hssfRow = hssfSheet.getRow(rowNum);
+	                if (hssfRow != null) {
+	                	AssetBaseInfo baseInfo = new AssetBaseInfo();
+	                	baseInfo.setAssetCate("台式机");
+	                	baseInfo.setAssetStockStatus("入库");
+	                	baseInfo.setAssetBusiness("");
+	                	baseInfo.setAssetType("");
+	                    HSSFCell assetNumber = hssfRow.getCell(2);
+	                    HSSFCell seq = hssfRow.getCell(0);
+	                    HSSFCell cardNo = hssfRow.getCell(1);
+	                    if(!NumberUtils.isNumber(getValue(seq)) 
+	                    		|| !NumberUtils.isNumber(getValue(cardNo))
+	                    		|| !NumberUtils.isNumber(getValue(assetNumber))){
+	                    	continue;
+	                    }
+	                    HSSFCell assetArriveDate = hssfRow.getCell(12);
+	                    if(null == assetArriveDate){
+	                    	continue;
+	                    }
+	                    String arriveDate = getValue(assetArriveDate);
+	                    if(StringUtils.isBlank(arriveDate)){
+	                    	continue;
+	                    }
+	                    HSSFCell assetItNumber = hssfRow.getCell(4);
+	                    HSSFCell assetName = hssfRow.getCell(3);
+	                    HSSFCell assetModel = hssfRow.getCell(5);
+	                    
+	                    baseInfo.setAssetNumber(getValue(assetNumber));
+	                    baseInfo.setAssetItNumber(getValue(assetItNumber));
+	                    baseInfo.setAssetName(getValue(assetName));
+	                    baseInfo.setAssetModel(getValue(assetModel));
+	                    
+//	                    baseInfo.setAssetDeviceLocation(assetDeviceLocation);
+//	                    baseInfo.setAssetReserve2();
+//	                    baseInfo.setAssetUser(assetUser);
+	                    //入库日期
+	                    baseInfo.setAssetArriveDate(arriveDate);
+//	                    baseInfo.setAssetBornDate(assetBornDate);
+//	                    baseInfo.setAssetRepairDate(assetRepairDate);
+	                    list.add(baseInfo);
+	                }
+	            }
+//	        }
+	        return list;
+	    }
+
 
 	    @SuppressWarnings("static-access")
 	    private String getValue(XSSFCell xssfRow) {
@@ -149,4 +270,5 @@ public class ExcelReader {
 	            return String.valueOf(hssfCell.getStringCellValue());
 	        }
 	    }
+	    
 }
