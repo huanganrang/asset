@@ -194,8 +194,10 @@
 										        	var data = jQuery.parseJSON(response);
 										        	if(data.success){
 										        		$.messager.alert("提示","导入成功");
+										        		$('#dlg').dialog('close');
 										        		$('#dg').datagrid('reload');
 										        	}else{
+										        		$('#dlg').dialog('close');
 										        		$.messager.alert("错误",data.msg);
 										        	}
 										        }
