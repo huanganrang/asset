@@ -4,7 +4,7 @@
 					<input type="hidden" id = "cate"  value = "${cate }"/>
 					<input type="hidden" id = "type"  value = "${type }"/>
 								   <table id="pg" class="easyui-propertygrid" style="width:700px;height:480px" data-options="
-						                url:'${pageContext.request.contextPath}/ledger/addPro?cate='+$('#cate').val()+'&type='+$('#type').val(),
+						                url:'${pageContext.request.contextPath}/ledger/addPro?cate=${cate }&type=${type }',
 						                method:'get',
 						                showGroup:false,
 						                showHeader:false,

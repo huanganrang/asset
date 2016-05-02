@@ -17,6 +17,14 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/ace-skins.min.css" />
 <link href="${pageContext.request.contextPath}/jslib/jquery-easyui-1.3.6/themes/default/easyui.css" rel="stylesheet" />
 
+<style type="text/css">
+.page-content {
+    background: #e5e9eb;
+    margin: 0;
+    padding: 0px 20px 24px;
+}
+</style>
+
 <script src="${pageContext.request.contextPath}/assets/js/ace-extra.min.js"></script>
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -60,6 +68,17 @@
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
 var rootpath = $("#rootpath").val();
+$(function(){
+	
+	$(".tab").click(function(){
+		if($(this).hasClass("current")){
+			return;
+		}
+		$("#mainFrame",parent.document.body).attr("src",rootpath+$(this).attr("data"))	
+	});
+});
+
+
 
 function getRows(datagrid) {
     // 载入内容

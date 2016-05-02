@@ -1,5 +1,6 @@
 package asset.controller;
 
+import java.io.InputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Calendar;
@@ -19,6 +20,7 @@ import jb.pageModel.Json;
 import jb.pageModel.PageHelper;
 import jb.util.Constants;
 import jb.util.CookieUtils;
+import jb.util.ExcelReader;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
@@ -31,6 +33,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import asset.model.AssetAttr;
 import asset.model.AssetBaseInfo;
@@ -198,9 +202,7 @@ public class LedgerDetailController {
 					json.put("editor", typeEditor);
 					value = cateValue;
 				}else{
-					if(name.contains("日期")){
-						json.put("editor", "datebox");
-					}
+					
 					if(name.equals("设备名称")){
 					    JSONObject typeEditor = new JSONObject();
 					    typeEditor.put("type", "validatebox");
@@ -208,6 +210,8 @@ public class LedgerDetailController {
 					    opJson.put("required", true);
 					    typeEditor.put("options", opJson);
 						json.put("editor", typeEditor);
+					}else if(name.contains("日期")){
+						json.put("editor", "datebox");
 					}else{
 						json.put("editor", "text");
 					}
@@ -330,7 +334,9 @@ public class LedgerDetailController {
 				json.put("value", value);
 				json.put("key", key);
 				json.put("flag", "base");
-				json.put("editor", "text");
+				if(!"assetItNumber".equals(key)){
+					json.put("editor", "text");
+				}
 				resultArray.add(json);
 			}
 		}
@@ -375,6 +381,40 @@ public class LedgerDetailController {
 		return dataGrid;
 	}
 	
+	
+	@RequestMapping("/import")
+	@ResponseBody
+	public Json importLedger(HttpServletRequest request) {
+		Json j = new Json();
+		try {
+			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+	        MultipartFile multipartFile = multipartRequest.getFile("file");
+	        String name = multipartFile.getOriginalFilename();
+	        InputStream inputStream = multipartFile.getInputStream();
+	        ExcelReader reader = new ExcelReader();
+	        List<AssetBaseInfo> assetList = null;
+	        if(name.endsWith("xls")){
+	        	assetList = reader.readXls2BaseInfo(inputStream);
+	        }else{
+	        	assetList = reader.readXls2BaseInfo(inputStream);
+	        }
+	        
+	        if(CollectionUtils.isNotEmpty(assetList)){
+	        	for(AssetBaseInfo baseinfo:assetList){
+	        		baseinfo.setAssetType("");
+	        		assetBaseService.add(baseinfo);        		
+	        	}
+	        }
+	       
+			j.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			j.setSuccess(false);
+			j.setMsg("出错了");
+		} 
+		return j;
+	}
+	
 	@RequestMapping("/data")
 	@ResponseBody
 	public DataGrid ledgerData(HttpServletRequest request, PageHelper ph) {
@@ -384,6 +424,12 @@ public class LedgerDetailController {
 			
 			String rulesStr = request.getParameter("filterRules");
 			HashMap<String,String> baseMap = new HashMap<String,String>();
+			
+			String checkNumber = request.getParameter("checkNumber");
+			if(StringUtils.isNotBlank(checkNumber)){
+				baseMap.put("checkNumber", checkNumber);
+			}
+			
 			HashMap<String,String> extMap = new HashMap<String,String>();
 			if(StringUtils.isNotBlank(rulesStr)){
 				JSONArray rules = JSONArray.parseArray(rulesStr);
@@ -562,7 +608,7 @@ public class LedgerDetailController {
 				if(StringUtils.isEmpty(baseInfo.getAssetStockStatus())){
 					baseInfo.setAssetStockStatus("入库");
 				}
-				baseInfo.setAssetArriveDate(DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-DD"));
+				baseInfo.setAssetArriveDate(DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd"));
 				Integer assetId = assetBaseService.add(baseInfo);
 				
 				//扩展信息

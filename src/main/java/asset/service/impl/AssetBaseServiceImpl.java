@@ -221,9 +221,13 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 		if(null != paramMap && paramMap.size() > 0){
 			for(Map.Entry<String, String> entry:paramMap.entrySet()){
 				String key = entry.getKey();
-				String value = entry.getValue();
-				//需要判断是否是基本表的属性
-				hql.append(" and t."+key+" like '%"+value+"%' ");
+				if("checkNumber".equals(key)){
+					hql.append(" and t.assetNumber is not null and t.assetNumber != ''");
+				}else{
+					String value = entry.getValue();
+					//需要判断是否是基本表的属性
+					hql.append(" and t."+key+" like '%"+value+"%' ");
+				}
 			}
 		}
 		list = baseDao.find(hql + orderHql(ph), null, ph.getPage(), ph.getRows());
@@ -258,9 +262,13 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 		if(null != paramMap && paramMap.size() > 0){
 			for(Map.Entry<String, String> entry:paramMap.entrySet()){
 				String key = entry.getKey();
-				String value = entry.getValue();
-				//需要判断是否是基本表的属性
-				hql.append(" and t."+key+" like '%"+value+"%' ");
+				if("checkNumber".equals(key)){
+					hql.append(" and t.assetNumber is not null and t.assetNumber != ''");
+				}else{
+					String value = entry.getValue();
+					//需要判断是否是基本表的属性
+					hql.append(" and t."+key+" like '%"+value+"%' ");
+				}
 			}
 		}
 		return baseDao.count(hql.toString());

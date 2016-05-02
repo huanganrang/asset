@@ -77,6 +77,7 @@
 .menu-zutai{
 			background: url("assets/images/zutai.png") #414b51 center center no-repeat;
 }
+
 </style>
 </head>
 <body>
@@ -294,7 +295,6 @@
 					<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
-								<div class="hr32"></div>	
 								<iframe id="mainFrame" frameborder='0' width='100%' height='500px'  scrolling="no" src="${pageContext.request.contextPath}/home"></iframe>	
 							</div>
 		</div>
