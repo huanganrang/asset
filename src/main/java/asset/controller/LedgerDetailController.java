@@ -91,14 +91,21 @@ public class LedgerDetailController {
 			Map<String, String> dicMap = assetDicService.getAssetDicMap(100);
 			if(dicMap.containsKey(ownership)){
 				Integer value = Integer.parseInt(dicMap.get(ownership))+1;
-				return ownership+value;
+				String init = value.toString();
+				StringBuilder sb = new StringBuilder();
+				if(init.length()<8){
+					for(int i = 0;i<8-init.length();i++){
+						 sb.append("0");
+					}
+				}
+				return ownership+sb.toString()+value;
 			}else{
 				AssetDic dic = new AssetDic();
 				dic.setDicKey(ownership);
 				dic.setDicValue("1");
 				dic.setDicType(100);
 				assetDicService.saveOrUpdate(dic);
-				return ownership + "1";
+				return ownership + "00000001";
 			}
 		
 		} catch (Exception e) {
@@ -190,7 +197,15 @@ public class LedgerDetailController {
 				String name = dicMap.get(key);
 				JSONObject json = new JSONObject();
 				if("assetItNumber".equals(key)){
-					value = "A" + (Integer.parseInt(itNumberMap.get("A"))+1);
+					
+					String init = Integer.parseInt(itNumberMap.get("A"))+1+"";
+					StringBuilder sb = new StringBuilder();
+					if(init.length()<8){
+						for(int i = 0;i<8-init.length();i++){
+							 sb.append("0");
+						}
+					}
+					value = "A" + sb.toString() + init;
 				}else if("assetType".equals(key)){
 					JSONObject typeEditor = new JSONObject();
 					typeEditor.put("type", "combobox");
