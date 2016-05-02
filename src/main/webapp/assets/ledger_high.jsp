@@ -23,7 +23,7 @@ position:absolute; top:5px; right:5px;}
 
 								<div class="hr hr32 hr-dotted"></div>
 								 <div class="textbox2">
-								 		<dl class="listmax" >
+								 		<dl  id="base" class="base" >
 								        <dt style="background: #edf2f5;"><input type="checkbox" class="selectAll"/>默认属性</dt>
 								         <c:forEach items="${baseAttrMap}" var="baseAttr" varStatus="status">
 									         	<c:if test="${status.index>0&&status.index%4==0}">
@@ -36,7 +36,7 @@ position:absolute; top:5px; right:5px;}
 								       </dl>
 								       
 								 		<c:forEach items="${attrMap}" var="mymap" varStatus="status0">
-								 		<dl class="listmax" >
+								 		<dl  class="ext" >
 								 		<dt style="background: #edf2f5;"><input type="checkbox" class="selectAll"/>${mymap.key}</dt>
 							            	 <c:forEach items="${mymap.value}" var="attr" varStatus="status">
 							            	    <c:if test="${status.index>0&&status.index%4==0}">

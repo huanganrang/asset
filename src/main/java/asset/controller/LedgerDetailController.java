@@ -64,6 +64,32 @@ public class LedgerDetailController {
 	@RequestMapping("/detail")
 	public String toasset(HttpServletRequest request,HttpServletResponse response) {
 		setColumns(request,response);
+		try {
+			//默认属性
+			Map<String,String> baseAttrMap = assetDicService.getAssetDicMap(1);
+			request.setAttribute("baseAttrMap", baseAttrMap);
+			String columns = "";
+			String base = CookieUtils.getCookie(request, Constants.column_base);
+			String ext = CookieUtils.getCookie(request, Constants.column_ext);
+			if(StringUtils.isBlank(base) && StringUtils.isBlank(ext)){
+				//默认选中的属性
+				Properties properties = PropertiesLoaderUtils.loadAllProperties("config.properties");
+				columns = properties.getProperty("search.result.columns");
+			}else{
+				columns = URLDecoder.decode(base,"utf-8");
+				if(StringUtils.isNotBlank(ext)){
+					columns =columns+","+URLDecoder.decode(ext,"utf-8");
+				}
+			}
+			request.setAttribute("hcolumns", columns);
+			
+			//其他属性
+			Map<String, List<AssetAttr>> attrByCate = assetBaseService.getAllAttrByCate();
+			request.setAttribute("attrMap", attrByCate);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "/assets/ledger_detail";
 	}
 	

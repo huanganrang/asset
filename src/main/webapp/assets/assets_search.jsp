@@ -1,136 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@include file="/assets/common.jsp"%>
-    							<input type="hidden" id="columns" value="${columns}"/>
-								<div id="nav-search" style="top: 80px; left: 6%; width: 100%;" >
-										<input type="text" style="height: 50px;width: 75%; background: #fff url(${pageContext.request.contextPath}/images/Search-2.png) no-repeat; padding-left: 50px;" id="key" name="key" value="${key}" class="nav-search-input" />
-										<input type="button" id="to-search" style=" width: 5%; height: 50px;border: none; border-radius: 2px;background: #b47e43;" value="搜索"/>
-										<input type="button" id="to-high" style="width: 5%; height: 50px;border: none; border-radius: 2px;background: #b47e43;" value="高级"/>
-										<p style="display: inline-block; width: 5%;"><img src="${pageContext.request.contextPath}/images/Graphic-lists-the-Convert-button.png"/></p>
-								</div>
-								<div id="tableDiv" style="height:420px;margin-top:30px">
-								<table id="dg" style="width:700px;height:420px"></table>
-								</div>
-		<script type="text/javascript">
-		 var toolbar = [{
-	            text:'导出',
-	            handler:function(){
-	            	Export('asset', $('#dg'));
-	            }
-	        },'-',{
-	            text:'打印',
-	            handler:function(){
-	            	 CreateFormPage("打印",$("#dg")); 
-	            }
-	        }];
-        $(function(){
-        	var key=$("#key").val();
-        	var columns = $("#columns").val();
-            $('#dg').datagrid({
-            	url:rootpath+'/asset/search?key='+key,
-            	columns:eval($("#columns").val()),
-                method: 'get',
-                fitColumns: false,
-                fit:true,
-                rownumbers:true,
-                toolbar:toolbar,
-                scrollbarSize:18,
-                singleSelect: true,
-                pagination:true,
-                onDblClickRow: function(index,row){
-                	location.href=rootpath+"/ledger/property/"+row.assetId;
-                },
-                onHeaderContextMenu: function(e, currfield){
-                    e.preventDefault();
-                    if (!cmenu){
-                        createColumnMenu(currfield);
-                    }else{
-                    	/*将当前元素除外，所有置空*/
-                    	$("#cmenu").find(".menu-item").each(function(){
-                    		  var title = $(this).find(".menu-text").text();
-                    		  var col = $('#dg').datagrid('getColumnOption', currfield);
-                    		  if(title ==col.title){
-	                          	  cmenu.menu('setIcon', {
-	                          		 target: $(this)[0],
-	                                 iconCls: 'icon-ok'
-	                              });
-                              }else{
-                            	  cmenu.menu('setIcon', {
- 	                          		 target: $(this)[0],
- 	                                 iconCls: 'icon-empty'
- 	                              });
-                              }
-                    		
-                    	});
-                    }
-                    
-                    cmenu.menu('show', {
-                        left:e.pageX,
-                        top:e.pageY
-                    });
-                }
-            });
-        	
-        	 $("#to-search").click(function(){
- 				if($("#to-search").val() != ""){
- 					location.href="${pageContext.request.contextPath}/asset/tosearch?key="+$("#key").val();
- 				}
- 			});
-        	 $("#to-high").click(function(){
-  					location.href="${pageContext.request.contextPath}/asset/tohigh?key="+$("#key").val();
-  			});
-        });
-        var cmenu;
-        function createColumnMenu(currfield){
-            cmenu = $('<div id="cmenu" style="position:absolute; height:350px;overflow:auto"/>').appendTo('body');
-            cmenu.menu({
-                onClick: function(item){
-                	/*将所有选中的元素置空，隐藏*/
-                	$("#cmenu").find(".menu-item").each(function(){
-                		var itemEl = $(this)[0];  // the menu item element
-                		var itemOther = $('#cmenu').menu('getItem', itemEl);
-                		if (itemOther.iconCls == 'icon-ok' && item.name != itemOther.name){
-                            $('#dg').datagrid('hideColumn', itemOther.name);
-                            cmenu.menu('setIcon', {
-                                target: itemEl,
-                                iconCls: 'icon-empty'
-                            });
-                        }
-                	});
-                	
-                	 if (item.iconCls == 'icon-ok'){
-                         $('#dg').datagrid('hideColumn', item.name);
-                         cmenu.menu('setIcon', {
-                             target: item.target,
-                             iconCls: 'icon-empty'
-                         });
-                     } else {
-                         $('#dg').datagrid('showColumn', item.name);
-                         cmenu.menu('setIcon', {
-                             target: item.target,
-                             iconCls: 'icon-ok'
-                         });
-                     }
-                }
-            });
-            var fields = $('#dg').datagrid('getColumnFields');
-            for(var i=0; i<fields.length; i++){
-                var field = fields[i];
-                var col = $('#dg').datagrid('getColumnOption', field);
-                if(currfield == field){
-                 	cmenu.menu('appendItem', {
-                        text: col.title,
-                        name: field,
-                        iconCls: 'icon-ok'
-                    });
-                }else{
-                 	cmenu.menu('appendItem', {
-                        text: col.title,
-                        name: field,
-                        iconCls: 'icon-empty'
-                    });
-                }
-              
-            }
-        }
-    </script>
+    <script src="${pageContext.request.contextPath}/jslib/search.js"></script>
+<style type="text/css">
+.textbox2{display:none;width:95%; background:#dad7d7; overflow-y: scroll; height:80%; box-shadow:0 1px 2px #666; position:fixed; top:90px;
+left:5%;}
+.textbox2 dl{width:98%; background:#ededed; margin:10px auto; font-size:0;  background:#fff;
+position:relative;}
+.textbox2 dl dt,dd{width:20%; display:inline-block; font:15px/20px "黑体"; color:#999;}
+.textbox2 dl dt{background:#edf2f5;}
+.textbox2 dl dt input{}
+.textbox2 dl input{margin:0 6%;border:1px solid #999; -webkit-border-radius:50%; width:10px; height:10px;}
+.textbox2 dl dt input{ height:10px; width:10px;}
+.textbox2 dl dd:last-child{width:20px; height:20px; background:url(${pageContext.request.contextPath}/images/1-3.png) no-repeat; 
+position:absolute; top:5px; right:5px;}
+.textbox2 p{width:100%; height:10%; background:#79c8ff url(${pageContext.request.contextPath}/images/key.png)3% 50% no-repeat; padding-left:8%;
+font:16px/50px "黑体"; color:#fff; vertical-align:top;}
+.textbox2 p .clos{width:20px; height:20px; background:url(${pageContext.request.contextPath}/images/close1.png) no-repeat; display:inline-block;margin-left: 93%;}
+.high-submit {width: 100%;  margin: 0 0 1% 0; position: relative; }
+.high-submit input {width: 10%; height: 10%;text-align: center;letter-spacing: 0.5em;background: #f5f5f5;
+font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
+</style>
+<input type="hidden" id="columns" value="${columns}"/>
+<input type="hidden" id="hcolumns" value="${hcolumns}"/>
+<div id="nav-search" style="top: 80px; left: 6%; width: 100%;" >
+	<input type="text" style="height: 50px;width: 75%; background: #fff url(${pageContext.request.contextPath}/images/Search-2.png) no-repeat; padding-left: 50px;" id="key" name="key" value="${key}" class="nav-search-input" />
+	<input type="button" id="to-search" style=" width: 5%; height: 50px;border: none; border-radius: 2px;background: #b47e43;" value="搜索"/>
+	<input type="button" id="to-high" style="width: 5%; height: 50px;border: none; border-radius: 2px;background: #b47e43;" value="高级"/>
+	<p style="display: inline-block; width: 5%;"><img src="${pageContext.request.contextPath}/images/Graphic-lists-the-Convert-button.png"/></p>
+</div>
+<div id="tableDiv" style="height:420px;margin-top:30px">
+<table id="dg" style="width:700px;height:420px"></table>
+</div>
+ <div class="textbox2">
+ 		<p>高级<a class="clos"></a></p>
+ 		<dl id="base" class="base">
+        <dt style="background: #edf2f5;"><input type="checkbox" class="selectAll" />默认属性</dt>
+        	<c:forEach items="${baseAttrMap}" var="baseAttr" varStatus="status">
+         	<c:if test="${status.index>0&&status.index%4==0}">
+				<dd style="display:none"></dd>
+									</c:if>
+          		<dd <c:if test="${status.index>3}">style="display: none" </c:if> >
+          		<input type="checkbox" name="default" value="${baseAttr.key}"/>${baseAttr.value }</dd>
+         	</c:forEach>
+         	<dd onClick="showNav(0)"></dd>
+        </dl>
+      
+		<c:forEach items="${attrMap}" var="mymap" varStatus="status0">
+		<dl class="ext" >
+			<dt style="background: #edf2f5;"><input type="checkbox" class="selectAll"/>${mymap.key}</dt>
+	          	<c:forEach items="${mymap.value}" var="attr" varStatus="status">
+	          	    <c:if test="${status.index>0&&status.index%4==0}">
+									<dd style="display:none"></dd>
+										</c:if>
+	          	 	<dd <c:if test="${status.index>3}">style="display: none" </c:if> >
+	          	 		<input type="checkbox" name="${mymap.key}"  value="${attr.attrId}"/>${attr.attrName}</dd>
+	          	</c:forEach>
+	         	    <dd onClick="showNav(${status0.index+1})"></dd>
+         	</dl>
+       </c:forEach>
+       <div class="high-submit">
+			<input id="btn_hconfirm" type="button" value="确定" /> <input id="btn_hcancel" type="button" value="取消" />
+        </div>
+   </div>
