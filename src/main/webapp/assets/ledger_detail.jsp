@@ -16,7 +16,7 @@
 	 .tablist a{font-size: 13px;color:#666;text-decoration: none;}
 	 .tablist>li:nth-child(1){margin-left:1%;}
 	 .tablist>li:nth-child(2), .tablist li:nth-child(3){margin-left:0.5%;}
-	 .tablist>li:nth-child(5){margin-left:50%; margin-right:1%;}
+	 .tablist>li:nth-child(5){margin-left:40%; margin-right:1%; padding-left:30px;}
 	 
 	 #tag_a{
 	     width:40px;
