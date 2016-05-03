@@ -2,10 +2,35 @@
     pageEncoding="UTF-8"%>
     <%@include file="/assets/common.jsp"%>
 		<input type="hidden" id="company" value='${company}'/>
-    <div style="height:420px">
+   								 <div style="height:420px">
 								 <table id="dg"   style="width:700px;height:450px">
 							   	 </table>
 							   	 </div>
+							   	 <div id="dlg" class="easyui-dialog" title="新增设备去向" style="width:300px;height:150px;padding:10px"
+						            data-options="
+						                iconCls: 'icon-save',
+						                buttons: [{
+						                    text:'添加',
+						                    iconCls:'icon-ok',
+						                    handler:function(){
+						                      addCompany();
+						                    }
+						                },{
+						                    text:'取消',
+						                    handler:function(){
+						                       $('#dlg').dialog('close')
+						                    }
+						                }]
+						            ">
+						      		<table>
+						      		<tr>
+						      		<td>设备去向</td>
+						      		<td>
+						      		<input id="companyInput"/>
+						      		</td>
+						      		</tr>
+						      		</table>
+						    </div>
 							     <div id="tb" style="padding:2px 5px;">
 							        <input class="easyui-searchbox" id="searchInput"
 										data-options="prompt:'',searcher:doSearch"
@@ -36,6 +61,12 @@
 								                          ]],
 								                /* checkOnSelect:false, */
 								                toolbar:'#tb',
+								                onHeaderContextMenu: function(e, currfield){
+								                    e.preventDefault();
+								                  	if(currfield == "allocation_company"){
+								                  		 $('#dlg').dialog('open');
+								                  	}
+								                },
 								                onClickCell: onClickCell
 								            });
 								            
@@ -48,6 +79,8 @@
 								            });
 								            
 								            $("#alloBtn").click(allocation);
+								            
+								            $('#dlg').dialog('close');
 								        });
 								        
 								        
@@ -101,6 +134,10 @@
 								            	$.messager.alert("提示","请输入设备去向");
 								            	return false;
 								            }
+								            $.messager.progress({
+									              title:'请等待',
+									              msg:'加载中...'
+									         });
 								           $.ajax({
 								    			url:"${pageContext.request.contextPath}/allocation/allocation",
 								    			type:"post",
@@ -108,14 +145,47 @@
 								    			dataType:"json",
 								    			cache:false,
 								    			success:function(response){
+								    				$.messager.progress('close');
 								    				$.messager.alert("提示","调拨成功");
 								    				$('#dg').datagrid('reload');
 								    			},
 								    			error:function(e){
+								    				$.messager.progress('close');
 								    				$.messager.alert("提示","调拨失败，请稍后再试或联系管理员");
 								    			}
 								    		});
 								        } 
+								        
+								        function addCompany(){
+								        	var company = $("#companyInput").val();
+								        	  $.messager.progress({
+									              title:'请等待',
+									              msg:'加载中...'
+									         });
+								        	$.ajax({
+								    			url:"${pageContext.request.contextPath}/allocation/addCompany",
+								    			type:"post",
+								    			data:"company="+company,
+								    			dataType:"json",
+								    			cache:false,
+								    			success:function(response){
+								    				$.messager.progress('close');
+								    				$('#dlg').dialog('close');
+								    				if(response.success){
+								    					$("#mainFrame",parent.document.body).attr('src', $("#mainFrame",parent.document.body).attr('src'));
+									    				$.messager.alert("提示","添加成功");
+								    				}else{
+									    				$.messager.alert("提示","添加失败，请稍后再试或联系管理员");
+								    				}
+								    			},
+								    			error:function(e){
+								    				$.messager.progress('close');
+								    				$('#dlg').dialog('close');
+								    				$.messager.alert("提示","添加失败，请稍后再试或联系管理员");
+								    			}
+								    		});
+								        	
+								        }
 								        
 								        function doSearch(value){
 							            	//为loadGrid()添加参数  

@@ -125,4 +125,33 @@ public class AllocationController {
 		} 
 		return j;
 	}
+	
+	
+	@RequestMapping("/addCompany")
+	@ResponseBody
+	public Json addCompany(HttpServletRequest request) {
+		
+		Json j = new Json();
+		try {
+			String company = request.getParameter("company");
+			if(StringUtils.isBlank(company)){
+				throw new IllegalArgumentException("param error");
+			}
+		
+			AssetDic dic = new AssetDic();
+			dic.setDicType(102);
+			dic.setDicKey(company);
+			dic.setDicValue(company);
+			dicService.saveOrUpdate(dic);
+			
+			
+			List<AssetDic> dicList = dicService.getAssetDic(102);
+			j.setObj(JSONArray.parseArray(JSON.toJSONString(dicList)));
+			j.setSuccess(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			j.setSuccess(false);
+		} 
+		return j;
+	}
 }

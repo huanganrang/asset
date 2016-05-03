@@ -66,7 +66,7 @@ public class ScrapController {
 			
 			String yearsStr = request.getParameter("years");
 			String endDateStr = request.getParameter("endDate");
-			String format = "yyyy-MM-dd HH:mm:ss";
+			String format = "yyyy-MM-dd";
 			if(StringUtils.isBlank(yearsStr)){
 				 yearsStr = "1";
 			}
