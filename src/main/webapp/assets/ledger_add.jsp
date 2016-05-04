@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/assets/common.jsp"%>
+
 					<input type="hidden" id = "cate"  value = "${cate }"/>
 					<input type="hidden" id = "type"  value = "${type }"/>
 								   <table id="pg" class="easyui-propertygrid" style="width:700px;height:480px" data-options="
@@ -13,6 +14,21 @@
 						            "></table>
 								<!-- PAGE CONTENT ENDS -->
 								    <script type="text/javascript">
+								    
+								    $.extend($.fn.datagrid.defaults.editors, {
+								    	datebox: {//datetimebox就是你要自定义editor的名称
+								            init: function(container,options){
+								                var input = $('<input class="easyuidatebox">').appendTo(container);
+								                return input.datebox();
+								            },
+								            getValue: function(target){
+								                return $(target).parent().find('input.combo-value').val();
+								           },
+								            setValue: function(target, value){
+								                $(target).datebox("setValue",value);
+								            }
+								        }
+								   });
 									    var toolbar = [{
 								            text:'选择图片',
 								            iconCls:'icon-search',
@@ -65,8 +81,8 @@
 									    $(function(){
 									    	$('#pg').propertygrid({
 									    		onBeginEdit:function(index,row){
+									    			var opts = $('#pg').datagrid('getEditors', index); 
 									    			if(index == 0 || index == 3){
-										    			var opts = $('#pg').datagrid('getEditors', index); 
 										    			opts[0].target.combobox({
 											    			onSelect: function(newValue){
 													    			if(newValue.dicType == 101){
