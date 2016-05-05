@@ -143,7 +143,7 @@ public class ExcelReader {
 	            	throw new IllegalArgumentException("param error");
 	            }
 	            // Read the Row
-	            for (int rowNum = 2; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
+	            for (int rowNum = 3; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
 	                XSSFRow xssfRow = xssfSheet.getRow(rowNum);
 	                if (xssfRow != null) {
 	                	AssetBaseInfo baseInfo = new AssetBaseInfo();
@@ -151,14 +151,19 @@ public class ExcelReader {
 	                	baseInfo.setAssetStockStatus("入库");
 	                	baseInfo.setAssetBusiness("");
 	                	baseInfo.setAssetType("");
-	                	XSSFCell seq = xssfRow.getCell(0);
-	                	XSSFCell cardNo = xssfRow.getCell(1);
+	                	//类别
+	                	XSSFCell cate = xssfRow.getCell(1);
+	                	//型号
+	                	XSSFCell assetModel = xssfRow.getCell(2);
+	                	//出厂编号
+	                	XSSFCell assetSerial = xssfRow.getCell(3);
+	                	//生产期
 	                    XSSFCell assetNumber = xssfRow.getCell(2);
-	                    if(!NumberUtils.isDigits(getValue(seq)) 
-	                    		|| !NumberUtils.isDigits(getValue(cardNo))
-	                    		|| !NumberUtils.isDigits(getValue(assetNumber))){
-	                    	continue;
-	                    }
+//	                    if(!NumberUtils.isDigits(getValue(seq)) 
+//	                    		|| !NumberUtils.isDigits(getValue(cardNo))
+//	                    		|| !NumberUtils.isDigits(getValue(assetNumber))){
+//	                    	continue;
+//	                    }
 	                   
 	                    XSSFCell assetArriveDate = xssfRow.getCell(12);
 	                    if(null == assetArriveDate){
@@ -171,7 +176,7 @@ public class ExcelReader {
 	                    
 	                    XSSFCell assetItNumber = xssfRow.getCell(4);
 	                    XSSFCell assetName = xssfRow.getCell(3);
-	                    XSSFCell assetModel = xssfRow.getCell(5);
+	                 
 	                    
 	                    baseInfo.setAssetNumber(getValue(assetNumber));
 	                    baseInfo.setAssetItNumber(getValue(assetItNumber));

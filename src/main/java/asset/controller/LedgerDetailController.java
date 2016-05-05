@@ -437,7 +437,7 @@ public class LedgerDetailController {
 	        if(name.endsWith("xls")){
 	        	assetList = reader.readXls2BaseInfo(inputStream);
 	        }else{
-	        	assetList = reader.readXls2BaseInfo(inputStream);
+	        	assetList = reader.readXlsx2BaseInfo(inputStream);
 	        }
 	        
 	        if(CollectionUtils.isNotEmpty(assetList)){
