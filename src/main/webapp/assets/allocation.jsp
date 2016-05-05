@@ -1,7 +1,100 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@include file="/assets/common.jsp"%>
-		<input type="hidden" id="company" value='${company}'/>
+<%@include file="/assets/common.jsp"%>
+<style>
+	.datagrid .datagrid-pager  {
+			display: none;
+	}
+	.datagrid-pager {
+			display: none;
+	}
+ 	 .tablist{width:100%; height:30px;}
+	 .tablist>li{padding:0 1%; height:30px;line-height:30px;vertical-align: middle;float:left; background:#FFF; border-radius:2px; position:relative;}
+
+	 .tablist>li:nth-child(1), .tablist li:nth-child(3){width:2%;}
+	 .tablist a{font-size: 13px;color:#666;text-decoration: none;}
+	 .tablist>li:nth-child(1){margin-left:1%;}
+	 .tablist>li:nth-child(2), .tablist li:nth-child(3){margin-left:0.5%;}
+	 .tablist>li:nth-child(4){margin-left:1%; background: #e5e9eb;}
+	 .tablist>li:nth-child(5){margin-left:40%; margin-right:1%; padding-left:30px;}
+	 
+	 #tag_a{
+	     width:40px;
+	     margin-left:10px;
+	     background: url("../assets/images/tag.png") #ffffff center center no-repeat;
+	     cursor: pointer;
+	 }
+ 	ul, ol {
+		list-style: none;
+		margin:0;
+	}
+	a{
+		text-decoration: none;
+	}
+	
+	#tabs{
+		height:40px;
+		width: 100%;
+		border-bottom:1px solid #ccc;
+	}
+	#tabs .tab{
+	    float:left;
+		height: 40px;
+		width:100px;
+		text-align: center;
+		line-height: 40px;
+		vertical-align: middle;
+		cursor: pointer;
+	}
+	
+	.separator {
+    float: left;
+    height: 30px;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #fff;
+    margin: 5px 1px;
+}
+
+.current {
+    border-bottom: 2px solid #ed6c44;
+}
+</style>
+<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								  <div id="tabs">
+									  <div class="tab current" data="/ledger/detail">台账管理</div>
+									  <div class="separator"></div>
+									  <div class="tab" data="/stock/tostock">库存</div>
+									  <div class="separator"></div>
+									  <div class="tab" data="/account/toaccount">对账</div>
+									  <div class="separator"></div>
+									  <div class="tab" data="/scrap/toscrap">报废表</div>
+								  </div>
+								  <input type="hidden" id="company" value='${company}'/>
+								  <div style="margin:20 0 10 0;">
+										<ul class="tablist">
+								        	<li><a id="btn_prev" href="#" ><</a> </li>
+								            <li><a id="pageindex">0/0</a></li>
+								            <li><a id="btn_next" href="#">> </a></li>
+								            <li> <input class="easyui-searchbox" id="searchInput"
+										data-options="prompt:'',searcher:doSearch"
+										style="width: 100%;"></input></li>
+								            <li><a href="#" id="exportBtn" iconCls="icon-undo">导出</a></li>
+								            <li><a href="#" id="printBtn"  iconCls="icon-print">打印</a></li>
+								            <li><a href="#" id="alloBtn" iconCls="icon-pencil">调拨</a></li>
+								        </ul>
+								  </div>
+								<!-- 
+								<div id="tb" style="padding:2px 5px;">
+							        <input class="easyui-searchbox" id="searchInput"
+										data-options="prompt:'',searcher:doSearch"
+										style="width: 100px"></input>
+							        <a href="#" class="easyui-linkbutton"  id="exportBtn" iconCls="icon-undo">导出</a>
+							        <a href="#" class="easyui-linkbutton" id="printBtn" iconCls="icon-print">打印</a>
+							        <a href="#" class="easyui-linkbutton" id="alloBtn" iconCls="icon-pencil">调拨</a>
+							    </div> -->
    								 <div style="height:420px">
 								 <table id="dg"   style="width:700px;height:450px">
 							   	 </table>
@@ -30,19 +123,41 @@
 						      		</td>
 						      		</tr>
 						      		</table>
-						    </div>
-							     <div id="tb" style="padding:2px 5px;">
-							        <input class="easyui-searchbox" id="searchInput"
-										data-options="prompt:'',searcher:doSearch"
-										style="width: 100px"></input>
-							        <a href="#" class="easyui-linkbutton"  id="exportBtn" iconCls="icon-undo">导出</a>
-							        <a href="#" class="easyui-linkbutton" id="printBtn" iconCls="icon-print">打印</a>
-							        <a href="#" class="easyui-linkbutton" id="alloBtn" iconCls="icon-pencil">调度</a>
-							    </div>
+						    	</div>
+				    		 </div>
+						  </div>
 								    <script type="text/javascript">
-									    var Company = eval($("#company").val());
 								        $(function(){
+								            var Company = eval($("#company").val());
+								  		      
 								        	var rootpath = $("#rootpath").val();
+								        	//全局变量
+											var pagenumber = 1;
+											var totalpage  = 1;
+											 
+										    //注意先后顺序
+											var pager = $('#dg').datagrid().datagrid('getPager');	// get the pager of datagrid
+								
+								        	//next page button
+								            $('#btn_next').bind('click', function(){
+
+												if(pagenumber < totalpage)
+												{
+													pager.pagination('select', ++pagenumber);
+													
+												}
+												   
+											});
+									   		//previous page button
+											$('#btn_prev').bind('click', function(){
+													
+												if(pagenumber >1)
+												{
+													 pager.pagination('select', --pagenumber);
+													 
+												}
+												   
+											});
 								            var dg = $('#dg').datagrid({
 								            	url:rootpath+'/allocation/data',
 								                pagination: true,
@@ -60,7 +175,14 @@
 								                              { field: 'allocation_date', title: '调拨时间'}, 
 								                          ]],
 								                /* checkOnSelect:false, */
-								                toolbar:'#tb',
+								               // toolbar:'#tb',
+								               	onLoadSuccess:function(data)
+												{
+								              		var total = pager.pagination('options')['total'];
+													var pagesize = pager.pagination('options')['pageSize'];
+													totalpage = Math.ceil(total/pagesize);
+													$('#pageindex').text(pagenumber+'/'+totalpage);
+												},
 								                onHeaderContextMenu: function(e, currfield){
 								                    e.preventDefault();
 								                  	if(currfield == "allocation_company"){
@@ -82,9 +204,7 @@
 								            
 								            $('#dlg').dialog('close');
 								        });
-								        
-								        
-								        $.extend($.fn.datagrid.methods, {
+								         $.extend($.fn.datagrid.methods, {
 											editCell: function(jq,param){
 												return jq.each(function(){
 													var opts = $(this).datagrid('options');
