@@ -90,13 +90,39 @@
 								        function saveStatus(status){
 								            var ss = [];
 								            var rows = $('#dg').datagrid('getSelections');
+								            if(rows.length < 1){
+								            	$.messager.alert("提示","请先选择一条数据");
+								            }
 								            for(var i=0; i<rows.length; i++){
 								                var row = rows[i];
+								                if(status == "报废" && row.assetDeviceStatus != "待报废"){
+								                	$.messager.alert("提示","报废前，请先保存数据");
+								                	return;
+								                }
+								                
+								                if(status == "报废" && row.assetDeviceStatus == "报废"){
+								                	$.messager.alert("提示","该数据已被报废");
+								                	return;
+								                }
+								                
+								                if(status == "待报废" && row.assetDeviceStatus == "待报废"){
+								                	$.messager.alert("提示","该数据已在待报废状态");
+								                	return;
+								                }
+								                
+								                if(status == "待报废" && row.assetDeviceStatus == "报废"){
+								                	$.messager.alert("提示","已报废的数据，不能再被保存");
+								                	return;
+								                }
+								                
 								                if((status == "待报废" && row.assetDeviceStatus == "")
 								                		|| (status == "报废" && row.assetDeviceStatus == "待报废")){
 								               	 ss.push(row.assetId);
 								                }
 								            }
+								          if(ss.length < 1){
+								        	  $.messager.alert("提示","请确认你的报废流程");
+								          }
 								          var assetIds = ss.join(',');
 								          
 								          $.ajax({

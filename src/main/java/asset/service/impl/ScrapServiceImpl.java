@@ -47,7 +47,7 @@ public class ScrapServiceImpl implements ScrapService {
 			throw new IllegalArgumentException("param error");
 		}
 		
-		hql.append(" and t.assetUseDate != '' and  t.assetUseDate < '" + endDate+"'");
+		hql.append(" and t.assetBeginDate != '' and  t.assetBeginDate < '" + endDate+"'");
 		List<AssetBaseInfo> list = baseDao.find(hql + orderHql(ph), null, ph.getPage(), ph.getRows());
 		return list;
 	}
@@ -63,7 +63,7 @@ public class ScrapServiceImpl implements ScrapService {
 			throw new IllegalArgumentException("param error");
 		}
 		
-		hql.append(" and t.assetUseDate < '" + endDate+"'");
+		hql.append(" and t.assetBeginDate < '" + endDate+"'");
 		return baseDao.count(hql.toString());
 	}
 }
