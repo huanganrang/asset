@@ -2,12 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@include file="/assets/common.jsp"%>
 <style>
-	.datagrid .datagrid-pager  {
+	 .datagrid .datagrid-pager  {
 			display: none;
 	}
 	.datagrid-pager {
 			display: none;
-	}
+	} 
  	 .tablist{width:100%; height:30px;}
 	 .tablist>li{padding:0 1%; height:30px;line-height:30px;vertical-align: middle;float:left; background:#FFF; border-radius:2px; position:relative;}
 
@@ -64,13 +64,15 @@
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								  <div id="tabs">
-									  <div class="tab current" data="/ledger/detail">台账管理</div>
+									  <div class="tab" data="/ledger/detail">台账管理</div>
 									  <div class="separator"></div>
 									  <div class="tab" data="/stock/tostock">库存</div>
 									  <div class="separator"></div>
 									  <div class="tab" data="/account/toaccount">对账</div>
 									  <div class="separator"></div>
 									  <div class="tab" data="/scrap/toscrap">报废表</div>
+									  <div class="separator"></div>
+									  <div class="tab current" >调拨</div>
 								  </div>
 								  <input type="hidden" id="company" value='${company}'/>
 								  <div style="margin:20 0 10 0;">
@@ -126,6 +128,7 @@
 						    	</div>
 				    		 </div>
 						  </div>
+						  </div>
 								    <script type="text/javascript">
 								        $(function(){
 								            var Company = eval($("#company").val());
@@ -135,29 +138,6 @@
 											var pagenumber = 1;
 											var totalpage  = 1;
 											 
-										    //注意先后顺序
-											var pager = $('#dg').datagrid().datagrid('getPager');	// get the pager of datagrid
-								
-								        	//next page button
-								            $('#btn_next').bind('click', function(){
-
-												if(pagenumber < totalpage)
-												{
-													pager.pagination('select', ++pagenumber);
-													
-												}
-												   
-											});
-									   		//previous page button
-											$('#btn_prev').bind('click', function(){
-													
-												if(pagenumber >1)
-												{
-													 pager.pagination('select', --pagenumber);
-													 
-												}
-												   
-											});
 								            var dg = $('#dg').datagrid({
 								            	url:rootpath+'/allocation/data',
 								                pagination: true,
@@ -178,10 +158,24 @@
 								               // toolbar:'#tb',
 								               	onLoadSuccess:function(data)
 												{
-								              		var total = pager.pagination('options')['total'];
-													var pagesize = pager.pagination('options')['pageSize'];
+								               	 //注意先后顺序
+													var p =$('#dg').datagrid('getPager'); 
+								               		var total = data.total;
+													var pagesize = p.pagination('options').pageSize;
 													totalpage = Math.ceil(total/pagesize);
 													$('#pageindex').text(pagenumber+'/'+totalpage);
+													
+													  $('#btn_next').unbind().bind('click', function(){
+														  if(pagenumber < totalpage){
+														  		p.pagination('select', ++pagenumber);
+														  }
+													  });
+													  $('#btn_prev').unbind().bind('click', function(){
+													  if(pagenumber >1){
+														  console.log(pagenumber)
+													  	   p.pagination('select', --pagenumber);
+													  }
+													  });
 												},
 								                onHeaderContextMenu: function(e, currfield){
 								                    e.preventDefault();
