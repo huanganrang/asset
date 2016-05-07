@@ -42,7 +42,7 @@ a{
 .page2 aside>a{width:12%; font:14px/50px "黑体"; color:#666; text-align:center; display:inline-block;}
 .page2 aside>a:nth-child(1){background:#FFF;}
 .page2 .billpage{width:70%; height:52%; border:1px solid #ccc; position:absolute; top:30%; left:15%; border-radius:5px;}
-.page2 .billpage>ul{position:absolute; top:30%; left:5%;}
+.page2 .billpage>ul{position:absolute; top:30%; left:10%;}
 .page2 .billpage>ul li{display:inline-block; font:14px/20px "黑体"; color:#666;}
 .page2 .billpage>ul li:nth-child(2) input{height:30px; border-radius:5px; background:#e9e9e9;}
 .page2 .billpage>ul li:nth-child(3) input{height:30px; background:#50c14e; width:60px; border-radius:5px; color:#fff;}
@@ -59,13 +59,15 @@ left:50%; bottom:-100%; color:#fff;}
 	<div class="col-xs-12">
 	    <!-- PAGE CONTENT BEGINS -->
 		<div id="tabs">
-		  <div class="tab current" data="/ledger/detail">台账管理</div>
+		  <div class="tab" data="/ledger/detail">台账管理</div>
 		  <div class="separator"></div>
 		  <div class="tab" data="/stock/tostock">库存</div>
 		  <div class="separator"></div>
-		  <div class="tab" data="/account/toaccount">对账</div>
+		  <div class="tab current" data="/account/toaccount">对账</div>
 		  <div class="separator"></div>
 		  <div class="tab" data="/scrap/toscrap">报废表</div>
+		  <div class="separator"></div>
+		  <div class="tab" data="/allocation/toallocation">调拨</div>
 		</div>
  <input type="hidden" id="company" value='${company}'/>
  <div style="height:420px">

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/assets/common.jsp"%>
-<script src="${pageContext.request.contextPath}/jslib/search.js"></script>
+
 <style type="text/css">
 	.datagrid .datagrid-pager  {
 			display: none;
@@ -11,11 +11,10 @@
 	}
  	 .tablist{width:100%; height:30px;}
 	 .tablist>li{padding:0 1%; height:30px;line-height:30px;vertical-align: middle;float:left; background:#FFF; border-radius:2px; position:relative;}
-
-	 .tablist>li:nth-child(1), .tablist li:nth-child(3){width:2%;}
+	 .tablist>li:nth-child(1) {background: #FFF url(../images/4-1.png)50% 50% no-repeat;}
+	 .tablist>li:nth-child(2){margin-left:1%; line-height:30px; background:#fff; padding:0 2%;}
+	 .tablist>li:nth-child(3) {margin-left:1%; background: #FFF url(../images/4-2.png)50% 50% no-repeat;}
 	 .tablist a{font-size: 13px;color:#666;text-decoration: none;}
-	 .tablist>li:nth-child(1){margin-left:1%;}
-	 .tablist>li:nth-child(2), .tablist li:nth-child(3){margin-left:0.5%;}
 	 .tablist>li:nth-child(5){margin-left:40%; margin-right:1%; padding-left:30px;}
 	 
 	 #tag_a{
@@ -90,13 +89,16 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								  <div class="tab" data="/account/toaccount">对账</div>
 								  <div class="separator"></div>
 								  <div class="tab" data="/scrap/toscrap">报废表</div>
+								  <div class="separator"></div>
+								  <div class="tab" data="/allocation/toallocation">调拨</div>
 								  </div>
 								  <input type="hidden" id="columns" value="${columns}"/>
+								  <input type="hidden" id="hcolumns" value="${hcolumns}"/>
 								  <div style="margin:20 0 10 0;">
 										<ul class="tablist">
-								        	<li><a id="btn_prev" href="#" ><</a> </li>
-								            <li><a id="pageindex">1/7</a></li>
-								            <li><a id="btn_next" href="#">> </a></li>
+								        	<li><a id="btn_prev" href="#" > </a> </li>
+								            <li><a id="pageindex">0/0</a></li>
+								            <li><a id="btn_next" href="#"> </a></li>
 								            <li id="tag_a"></li>
 								            <li><a id="to-high">高级</a></li>
 								            <li><a href="${pageContext.request.contextPath}/ledger/toAdd">新增</a></li>
@@ -165,7 +167,10 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								    <%-- <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/datagrid-filter.js"></script> --%>
 								    <script type="text/javascript">
 								        $(function(){
-								        	
+								        	//全局变量
+											var pagenumber = 1;
+											var totalpage  = 1;
+											
 								        	$('#dlg').dialog('close');
 								        	var rootpath = $("#rootpath").val();
 								        	
@@ -181,6 +186,27 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								        	    //重新加载datagrid的数据  
 								        	    $("#dg").datagrid('reload');  
 								        	});
+								        	//next page button
+								            $('#btn_next').bind('click', function(){
+
+												if(pagenumber < totalpage)
+												{
+													pager.pagination('select', ++pagenumber);
+													
+												}
+												   
+											});
+									   		//previous page button
+											$('#btn_prev').bind('click', function(){
+													
+												if(pagenumber >1)
+												{
+													 pager.pagination('select', --pagenumber);
+													 
+												}
+												   
+											});
+
 								            var dg = $('#dg').datagrid({
 								            	url:rootpath+'/ledger/data',
 								                pagination: true,
@@ -189,6 +215,13 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								                fitColumns: false,
 								                fit:true,
 								                rownumbers: true,
+												onLoadSuccess:function(data)
+												{
+													var total = pager.pagination('options')['total'];
+													var pagesize = pager.pagination('options')['pageSize'];
+													totalpage = Math.ceil(total/pagesize);
+													$('#pageindex').text(pagenumber+'/'+totalpage);
+												},
 								                onDblClickRow: function(index,row){
 								                	location.href=rootpath+"/ledger/property/"+row.assetId;
 								                },
@@ -223,6 +256,8 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								                    });
 								                }
 								            });
+											//注意先后顺序
+										var pager = $('#dg').datagrid().datagrid('getPager');	// get the pager of datagrid
 								        /* 	dg.datagrid('enableFilter'); */
 								        
 								            $("#file_import").uploadify({
