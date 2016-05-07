@@ -299,12 +299,20 @@ public class LedgerDetailController {
 		if(StringUtils.isNotBlank(baseids)){
 				CookieUtils.saveCookie(response, Constants.column_base, URLEncoder.encode(baseids,"utf-8"));
 		}else{
-			baseids = URLDecoder.decode(CookieUtils.getCookie(request,  Constants.column_base),"utf-8");
+			String cookieStr = CookieUtils.getCookie(request,  Constants.column_base);
+			if(cookieStr!=null)
+			{
+				baseids = URLDecoder.decode(cookieStr,"utf-8");
+			}
 		}
 		if(StringUtils.isNotBlank(attrids)){
 				CookieUtils.saveCookie(response, Constants.column_ext, URLEncoder.encode(attrids,"utf-8"));
 		}else{
-			attrids = URLDecoder.decode(CookieUtils.getCookie(request,  Constants.column_ext),"utf-8");
+			String attridsStr = CookieUtils.getCookie(request,  Constants.column_ext);
+			if(attridsStr!=null)
+			{
+				baseids = URLDecoder.decode(attridsStr,"utf-8");
+			}
 		}
 		}catch(Exception e){
 			e.printStackTrace();
