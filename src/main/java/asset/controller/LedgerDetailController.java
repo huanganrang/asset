@@ -450,7 +450,6 @@ public class LedgerDetailController {
 	        
 	        if(CollectionUtils.isNotEmpty(assetList)){
 	        	for(AssetBaseInfo baseinfo:assetList){
-	        		baseinfo.setAssetType("");
 	        		assetBaseService.add(baseinfo);        		
 	        	}
 	        }
