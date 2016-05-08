@@ -200,6 +200,7 @@ public class ExcelReader {
 	                	AssetBaseInfo baseInfo = new AssetBaseInfo();
 	                	baseInfo.setAssetModel("无");
 	                	baseInfo.setAssetStatus("1");
+	                	
 	                	baseInfo.setAssetCate(getValue(cate));
 	                	baseInfo.setAssetStockStatus(getValue(assetStockStatus));
 	                	baseInfo.setAssetBusiness(getValue(assetBusiness));
