@@ -78,7 +78,7 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 	<script src="${pageContext.request.contextPath}/assets/js/jquery.uploadify-3.1.min.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/uploadify.css" />
 	
-				<div class="page-content">
+				<div class="page-content" style="height:100%;">
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->

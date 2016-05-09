@@ -63,7 +63,7 @@
 </style>
 <script src="${pageContext.request.contextPath}/assets/js/jquery.uploadify-3.1.min.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/uploadify.css" />
- 	<div class="page-content">
+ 	<div class="page-content" style="height:100%;">
 						<div class="row">
 							<div class="col-xs-12">
 							    <!-- PAGE CONTENT BEGINS -->

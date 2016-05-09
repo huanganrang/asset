@@ -58,7 +58,7 @@
     border-bottom: 2px solid #ed6c44;
 }
 </style>
-<div class="page-content">
+<div class="page-content" style="height:100%;">
 						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->

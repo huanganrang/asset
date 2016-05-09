@@ -47,14 +47,14 @@ a{
 .page2 .billpage>ul li:nth-child(2) input{height:30px; border-radius:5px; background:#e9e9e9;}
 .page2 .billpage>ul li:nth-child(3) input{height:30px; background:#50c14e; width:60px; border-radius:5px; color:#fff;}
 .page2 .billpage>ul li:nth-child(4) input{height:30px; background:#b47e43; width:60px; border-radius:5px; position:absolute;
-left:50%; bottom:-100%; color:#fff;}
+left:45%; bottom:-100%; color:#fff;}
 .uploadify-queue{ display: none;}
 .uploadify-button-text{  height: 30px;  background: #50c14e; width: 60px;
     border-radius: 5px; color: #fff;  padding-left: 15px;
     padding-top: 8px;padding-right: 15px;padding-bottom: 8px;}
 #file_import {height: 30px; width: 60px;} 
 </style>
-<div class="page-content">
+<div class="page-content" style="height:100%;">
 <div class="row">
 	<div class="col-xs-12">
 	    <!-- PAGE CONTENT BEGINS -->
