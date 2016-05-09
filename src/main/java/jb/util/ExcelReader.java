@@ -143,51 +143,88 @@ public class ExcelReader {
 	            	throw new IllegalArgumentException("param error");
 	            }
 	            // Read the Row
-	            for (int rowNum = 3; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
+	            for (int rowNum = 2; rowNum <= xssfSheet.getLastRowNum(); rowNum++) {
 	                XSSFRow xssfRow = xssfSheet.getRow(rowNum);
 	                if (xssfRow != null) {
-	                	AssetBaseInfo baseInfo = new AssetBaseInfo();
-	                	baseInfo.setAssetCate("台式机");
-	                	baseInfo.setAssetStockStatus("入库");
-	                	baseInfo.setAssetBusiness("");
-	                	baseInfo.setAssetType("");
 	                	//类别
-	                	XSSFCell cate = xssfRow.getCell(1);
-	                	//型号
-	                	XSSFCell assetModel = xssfRow.getCell(2);
+	                	XSSFCell cate = xssfRow.getCell(0);
+	                	//名称
+	                	XSSFCell assetName = xssfRow.getCell(1);
 	                	//出厂编号
-	                	XSSFCell assetSerial = xssfRow.getCell(3);
+	                	XSSFCell assetSerial = xssfRow.getCell(2);
 	                	//生产期
-	                    XSSFCell assetNumber = xssfRow.getCell(2);
-//	                    if(!NumberUtils.isDigits(getValue(seq)) 
-//	                    		|| !NumberUtils.isDigits(getValue(cardNo))
-//	                    		|| !NumberUtils.isDigits(getValue(assetNumber))){
-//	                    	continue;
-//	                    }
-	                   
-	                    XSSFCell assetArriveDate = xssfRow.getCell(12);
-	                    if(null == assetArriveDate){
-	                    	continue;
-	                    }
-	                    String arriveDate = getValue(assetArriveDate);
-	                    if(StringUtils.isBlank(arriveDate)){
-	                    	continue;
-	                    }
-	                    
+	                    XSSFCell assetBornDate = xssfRow.getCell(3);
+	                    //IT验收编号
 	                    XSSFCell assetItNumber = xssfRow.getCell(4);
-	                    XSSFCell assetName = xssfRow.getCell(3);
-	                 
+	                    //业务线条归属
+	                    XSSFCell  assetBusiness = xssfRow.getCell(5);
+	                    //采购执行编码
+	                    XSSFCell  assetBuyCode = xssfRow.getCell(6);
+	                    //固定资产编码
+	                    XSSFCell  assetNumber = xssfRow.getCell(7);
+	                    //设备状态
+	                    XSSFCell  assetDeviceStatus = xssfRow.getCell(8);
+	                    //在库状态
+	                    XSSFCell assetStockStatus = xssfRow.getCell(9);
 	                    
+	                    //到货入库日期
+	                    XSSFCell assetArriveDate = xssfRow.getCell(10);
+	                    
+	                    //领用部门
+	                    XSSFCell assetUseDepartment = xssfRow.getCell(11);
+	                    //领用人
+	                    XSSFCell assetUser = xssfRow.getCell(12);
+	                    //领用日期
+	                    XSSFCell assetUseDate = xssfRow.getCell(13);
+	                    //备注1
+	                    XSSFCell assetRemark = xssfRow.getCell(14);
+	                    //操作系统类型
+	                    XSSFCell ostype = xssfRow.getCell(16);
+	                    
+	                    //mac地址
+	                    XSSFCell mac = xssfRow.getCell(17);
+	                    //保修截止日期
+	                    XSSFCell assetRepairDate = xssfRow.getCell(18);
+	                    //备注2
+	                    XSSFCell assetRemark2 = xssfRow.getCell(19);
+	                    
+	                    //备注4
+	                    XSSFCell assetRemark4 = xssfRow.getCell(20);
+	                    //验收合格日期
+	                    XSSFCell assetCheckDate = xssfRow.getCell(21);
+	                    //发票号
+	                    XSSFCell assetInvoice = xssfRow.getCell(22);
+	                    //备注3
+	                    XSSFCell assetRemark3 = xssfRow.getCell(23);
+	                    
+	                	AssetBaseInfo baseInfo = new AssetBaseInfo();
+	                	baseInfo.setAssetModel("无");
+	                	baseInfo.setAssetStatus("1");
+	                	
+	                	baseInfo.setAssetCate(getValue(cate));
+	                	baseInfo.setAssetStockStatus(getValue(assetStockStatus));
+	                	baseInfo.setAssetBusiness(getValue(assetBusiness));
+	                	baseInfo.setAssetType(getValue(cate));
 	                    baseInfo.setAssetNumber(getValue(assetNumber));
 	                    baseInfo.setAssetItNumber(getValue(assetItNumber));
 	                    baseInfo.setAssetName(getValue(assetName));
-	                    baseInfo.setAssetModel(getValue(assetModel));
 //	                    baseInfo.setAssetDeviceLocation(assetDeviceLocation);
-//	                    baseInfo.setAssetReserve2();
-//	                    baseInfo.setAssetUser(assetUser);
-	                    baseInfo.setAssetArriveDate(arriveDate);
-//	                    baseInfo.setAssetBornDate(assetBornDate);
-//	                    baseInfo.setAssetRepairDate(assetRepairDate);
+	                    baseInfo.setAssetUser(getValue(assetUser));
+	                    baseInfo.setAssetArriveDate(getValue(assetArriveDate));
+	                    baseInfo.setAssetBornDate(getValue(assetBornDate));
+	                    
+	                    baseInfo.setAssetInvoice(getValue(assetInvoice));
+	                    baseInfo.setAssetCheckDate(getValue(assetCheckDate));
+	                    baseInfo.setAssetRemark2(getValue(assetRemark2));
+	                    baseInfo.setAssetRemark(getValue(assetRemark));
+	                    baseInfo.setAssetRepairDate(getValue(assetRepairDate));
+	                    
+	                    baseInfo.setAssetUseDate(getValue(assetUseDate));
+	                    baseInfo.setAssetUseDepartment(getValue(assetUseDepartment));
+	                    
+	                    baseInfo.setAssetSerial(getValue(assetSerial));
+	                    baseInfo.setAssetDeviceStatus(getValue(assetDeviceStatus));
+	                    
 	                    list.add(baseInfo);
 	                }
 	            }
@@ -209,43 +246,85 @@ public class ExcelReader {
 	            for (int rowNum = 2; rowNum <= hssfSheet.getLastRowNum(); rowNum++) {
 	                HSSFRow hssfRow = hssfSheet.getRow(rowNum);
 	                if (hssfRow != null) {
-	                	AssetBaseInfo baseInfo = new AssetBaseInfo();
-	                	baseInfo.setAssetCate("台式机");
-	                	baseInfo.setAssetStockStatus("入库");
-	                	baseInfo.setAssetBusiness("");
-	                	baseInfo.setAssetType("");
-	                    HSSFCell assetNumber = hssfRow.getCell(2);
-	                    HSSFCell seq = hssfRow.getCell(0);
-	                    HSSFCell cardNo = hssfRow.getCell(1);
-	                    if(!NumberUtils.isNumber(getValue(seq)) 
-	                    		|| !NumberUtils.isNumber(getValue(cardNo))
-	                    		|| !NumberUtils.isNumber(getValue(assetNumber))){
-	                    	continue;
-	                    }
-	                    HSSFCell assetArriveDate = hssfRow.getCell(12);
-	                    if(null == assetArriveDate){
-	                    	continue;
-	                    }
-	                    String arriveDate = getValue(assetArriveDate);
-	                    if(StringUtils.isBlank(arriveDate)){
-	                    	continue;
-	                    }
+	                	//类别
+	                	HSSFCell cate = hssfRow.getCell(0);
+	                	//名称
+	                	HSSFCell assetName = hssfRow.getCell(1);
+	                	//出厂编号
+	                	HSSFCell assetSerial = hssfRow.getCell(2);
+	                	//生产期
+	                    HSSFCell assetBornDate = hssfRow.getCell(3);
+	                    //IT验收编号
 	                    HSSFCell assetItNumber = hssfRow.getCell(4);
-	                    HSSFCell assetName = hssfRow.getCell(3);
-	                    HSSFCell assetModel = hssfRow.getCell(5);
+	                    //业务线条归属
+	                    HSSFCell  assetBusiness = hssfRow.getCell(5);
+	                    //采购执行编码
+	                    HSSFCell  assetBuyCode = hssfRow.getCell(6);
+	                    //固定资产编码
+	                    HSSFCell  assetNumber = hssfRow.getCell(7);
+	                    //设备状态
+	                    HSSFCell  assetDeviceStatus = hssfRow.getCell(8);
+	                    //在库状态
+	                    HSSFCell assetStockStatus = hssfRow.getCell(9);
 	                    
+	                    //到货入库日期
+	                    HSSFCell assetArriveDate = hssfRow.getCell(10);
+	                    
+	                    //领用部门
+	                    HSSFCell assetUseDepartment = hssfRow.getCell(11);
+	                    //领用人
+	                    HSSFCell assetUser = hssfRow.getCell(12);
+	                    //领用日期
+	                    HSSFCell assetUseDate = hssfRow.getCell(13);
+	                    //备注1
+	                    HSSFCell assetRemark = hssfRow.getCell(14);
+	                    //操作系统类型
+	                    HSSFCell ostype = hssfRow.getCell(16);
+	                    
+	                    //mac地址
+	                    HSSFCell mac = hssfRow.getCell(17);
+	                    //保修截止日期
+	                    HSSFCell assetRepairDate = hssfRow.getCell(18);
+	                    //备注2
+	                    HSSFCell assetRemark2 = hssfRow.getCell(19);
+	                    
+	                    //备注4
+	                    HSSFCell assetRemark4 = hssfRow.getCell(20);
+	                    //验收合格日期
+	                    HSSFCell assetCheckDate = hssfRow.getCell(21);
+	                    //发票号
+	                    HSSFCell assetInvoice = hssfRow.getCell(22);
+	                    //备注3
+	                    HSSFCell assetRemark3 = hssfRow.getCell(23);
+	                    
+	                	AssetBaseInfo baseInfo = new AssetBaseInfo();
+	                	baseInfo.setAssetStatus("1");
+	                	baseInfo.setAssetModel("无");
+	                	baseInfo.setAssetCate(getValue(cate));
+	                	baseInfo.setAssetStockStatus(getValue(assetStockStatus));
+	                	baseInfo.setAssetBusiness(getValue(assetBusiness));
+	                	baseInfo.setAssetType(getValue(cate));
 	                    baseInfo.setAssetNumber(getValue(assetNumber));
 	                    baseInfo.setAssetItNumber(getValue(assetItNumber));
 	                    baseInfo.setAssetName(getValue(assetName));
-	                    baseInfo.setAssetModel(getValue(assetModel));
-	                    
 //	                    baseInfo.setAssetDeviceLocation(assetDeviceLocation);
-//	                    baseInfo.setAssetReserve2();
-//	                    baseInfo.setAssetUser(assetUser);
-	                    //入库日期
-	                    baseInfo.setAssetArriveDate(arriveDate);
-//	                    baseInfo.setAssetBornDate(assetBornDate);
-//	                    baseInfo.setAssetRepairDate(assetRepairDate);
+	                    baseInfo.setAssetUser(getValue(assetUser));
+	                    baseInfo.setAssetArriveDate(getValue(assetArriveDate));
+	                    baseInfo.setAssetBornDate(getValue(assetBornDate));
+	                    
+	                    baseInfo.setAssetInvoice(getValue(assetInvoice));
+	                    baseInfo.setAssetCheckDate(getValue(assetCheckDate));
+	                    baseInfo.setAssetRemark2(getValue(assetRemark2));
+	                    baseInfo.setAssetRemark(getValue(assetRemark));
+	                    baseInfo.setAssetRepairDate(getValue(assetRepairDate));
+	                    
+	                    baseInfo.setAssetUseDate(getValue(assetUseDate));
+	                    baseInfo.setAssetUseDepartment(getValue(assetUseDepartment));
+	                    
+	                    baseInfo.setAssetSerial(getValue(assetSerial));
+	                    baseInfo.setAssetDeviceStatus(getValue(assetDeviceStatus));
+	                    
+	                    list.add(baseInfo);
 	                    list.add(baseInfo);
 	                }
 	            }

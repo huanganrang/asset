@@ -84,7 +84,7 @@
 		<header class="navbar navbar-default" id="navbar">
 			<div class="navbar-container" id="navbar-container">
 				<div class="navbar-header pull-left" style="width:190px;height:70px;background-color:#ed6c44">
-					<a href="#" class="navbar-brand" style="width:86px;height:50px;background:url(${pageContext.request.contextPath}/assets/images/logo.png) no-repeat 40% 60%;margin:5px 10px 0px 50px">
+					<a  id = "logo" href="javascript:void(0)" class="navbar-brand" style="width:86px;height:50px;background:url(${pageContext.request.contextPath}/assets/images/logo.png) no-repeat 40% 60%;margin:5px 10px 0px 50px">
 					</a><!-- /.brand -->
 				</div><!-- /.navbar-header -->
 				
@@ -342,6 +342,10 @@
 			
 			 $("body").addClass("skin-1"); 
 			 $(".ace-nav > li.grey").addClass("dark"); 
+			 
+			 $("#logo").click(function(){
+				 $('#mainFrame').attr('src',rootpath+'/home');
+			 });
 			
 		});
 		</script>
