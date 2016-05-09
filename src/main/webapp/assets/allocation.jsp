@@ -84,6 +84,7 @@
 										style="width: 100%;"></input></li>
 								            <li><a href="#" id="exportBtn" iconCls="icon-undo">导出</a></li>
 								            <li><a href="#" id="printBtn"  iconCls="icon-print">打印</a></li>
+								            <li><a href="#" id="deviceBtn" iconCls="icon-undo">设备去向</a></li>
 								            <li><a href="#" id="alloBtn" iconCls="icon-pencil">调拨</a></li>
 								        </ul>
 								  </div>
@@ -176,12 +177,6 @@
 													  }
 													  });
 												},
-								                onHeaderContextMenu: function(e, currfield){
-								                    e.preventDefault();
-								                  	if(currfield == "allocation_company"){
-								                  		 $('#dlg').dialog('open');
-								                  	}
-								                },
 								                onClickCell: onClickCell
 								            });
 								            
@@ -192,7 +187,11 @@
  											$("#printBtn").click(function(){
  												 CreateFormPage("打印",$("#dg"));
 								            });
-								            
+
+ 											$("#deviceBtn").click(function(){
+ 												$('#dlg').dialog('open');
+								            });
+ 											
 								            $("#alloBtn").click(allocation);
 								            
 								            $('#dlg').dialog('close');

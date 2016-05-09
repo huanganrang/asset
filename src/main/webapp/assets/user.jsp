@@ -36,13 +36,13 @@
 						      		<td>登录名称</td>
 						      		<td>
 						      		
-						      		<input id="nameInput"/>
+						      		<input id="nameInput" style="width:150px;height:28px"/>
 						      		</td>
 						      		</tr>
 						      		
 						      		<tr>
 						      		<td>密码</td>
-						      		<td><input id="pwdInput" type="password"/></td>
+						      		<td><input id="pwdInput" style="width:150px;height:28px" type="password"/></td>
 						      		</tr>
 						      		</table>
 						    </div>
@@ -68,13 +68,13 @@
 						      		<tr>
 						      		<td>登录名称<input id="idInput" type="hidden"/></td>
 						      		<td>
-						      		<input id="nameInput1"/>
+						      		<input id="nameInput1" style="width:150px;height:28px"/>
 						      		</td>
 						      		</tr>
 						      		
 						      		<tr>
 						      		<td>密码</td>
-						      		<td><input id="pwdInput1" type="password"/></td>
+						      		<td><input id="pwdInput1" style="width:150px;height:28px" type="password"/></td>
 						      		</tr>
 						      		</table>
 						    </div>
