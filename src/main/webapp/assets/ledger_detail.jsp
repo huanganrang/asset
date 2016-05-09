@@ -77,6 +77,7 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 </style>
 	<script src="${pageContext.request.contextPath}/assets/js/jquery.uploadify-3.1.min.js"></script>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/js/uploadify.css" />
+	
 				<div class="page-content">
 						<div class="row">
 							<div class="col-xs-12">
@@ -205,6 +206,76 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 													 
 												}
 												   
+											});
+									   		
+											$("#to-high").click(function(){
+												//$(this).css({"background":"#b47e43","width":"5%"});
+												$(".textbox2").show();
+												
+												
+											});
+											//弹出框关闭
+											$(".textbox2 .clos").click(function(){
+												$(".textbox2").hide();
+										    });
+											
+											$("#btn_hcancel").click(function(){
+												$(".textbox2").hide();
+										    });
+											
+											$(".textbox2").find("input").not(".selectAll").each(function(){
+												var hcolumns = $("#hcolumns").val();
+										    	var columnsArray = hcolumns.split(",");
+												var i = columnsArray.length;
+											    while (i--) {
+											       if (columnsArray[i] === $(this).val()) {
+											    	   $(this).prop("checked",true);
+											    	   break;
+											       }
+											    }
+											});
+											
+											$(".selectAll").click(function(){
+												if($(this).is(":checked")){
+//													 $("input:checkbox").not($(this)).attr("checked","checked");
+													$(this).parent().parent().find("dd input").each(function(){
+										    			$(this).prop("checked",true);
+										    		});
+												}else{
+										    		$(this).parent().parent().find("dd input").each(function(){
+										    			$(this).prop("checked",false);
+										    		});
+												}
+												
+											});
+
+											 $("#to-search").click(function(){
+													if($("#to-search").val() != ""){
+														location.href="${pageContext.request.contextPath}/asset/tosearch?key="+$("#key").val();
+													}
+												});
+//											 $("#to-high").click(function(){
+//														location.href="${pageContext.request.contextPath}/asset/tohigh?key="+$("#key").val();
+//												});
+											$("#btn_hconfirm").click(function(){
+												$(".textbox2").hide();
+												var baseids = "";
+												$(".base").find("input:checked").not(".selectAll").each(function(){
+													baseids = baseids+$(this).val()+",";
+												});
+												if(baseids.length > 1){
+													baseids = baseids.substring(0,baseids.length-1);
+												}
+												
+												var attrids = "";
+												$(".ext").find("input:checked").not(".selectAll").each(function(){
+													attrids = attrids+$(this).val()+",";
+												});
+												if(attrids.length > 1){
+													attrids = attrids.substring(0,attrids.length-1);
+												}
+												location.href = rootpath + "/ledger/detail?key="+$("#key").val() + "&baseids="+baseids+"&attrids="+attrids;
+												//location.href=rootpath+"/ledger/detail?baseids="+baseids+"&attrids="+attrids;
 											});
 
 								            var dg = $('#dg').datagrid({
@@ -338,6 +409,21 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								                }
 								              
 								            }
+								        };
+								        
+								        function showNav(o){
+								        	if($("dl:eq(" + o + ") dd:last-child").css('background-image').indexOf('1-3.png')>-1)
+								        	{
+								        		$("dl:eq(" + o + ") dd:gt(3)").css("display", "inline-block");
+								        		$("dl:eq(" + o + ") dd:last-child").css("background","url(../images/1-4.png) no-repeat");
+								        	}else
+								        	{
+								        		$("dl:eq(" + o + ") dd:gt(3)").css("display", "none");
+								        		$("dl:eq(" + o + ") dd:last-child").css("display", "inline-block");
+								        		$("dl:eq(" + o + ") dd:last-child").css("background","url(../images/1-3.png) no-repeat");
+								        		//$("dl dd:last-child").css("background","background:url(images/1-3.png) no-repeat");
+								        	}
 								        }
+								        
 								    </script>
 								<!-- PAGE CONTENT ENDS -->
