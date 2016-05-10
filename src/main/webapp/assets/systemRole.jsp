@@ -1,7 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@include file="/assets/common.jsp"%>
- <div style="height:420px">
+  <style type="text/css">
+	.datagrid .datagrid-pager  {
+			display: none;
+	}
+	.datagrid-pager {
+			display: none;
+	}
+ 	 .tablist{width:100%; height:30px;}
+	 .tablist>li{padding:0 1%; height:30px;line-height:30px;vertical-align: middle;float:left; background:#FFF; border-radius:2px; position:relative;}
+	 .tablist>li:nth-child(1) {background: #FFF url(../images/4-1.png)50% 50% no-repeat;}
+	 .tablist>li:nth-child(2){margin-left:1%; line-height:30px; background:#fff; padding:0 2%;}
+	 .tablist>li:nth-child(3) {margin-left:1%; background: #FFF url(../images/4-2.png)50% 50% no-repeat;}
+	 .tablist a{font-size: 13px;color:#666;text-decoration: none;}
+	 .tablist>li:nth-child(4){margin-left:60%; margin-right:1%; padding-left:30px;}
+	 
+	 #tag_a{
+	     width:40px;
+	     margin-left:10px;
+	     background: url("../assets/images/tag.png") #ffffff center center no-repeat;
+	     cursor: pointer;
+	 }
+ 	ul, ol {
+		list-style: none;
+		margin:0;
+	}
+	a{
+		text-decoration: none;
+	}
+
+	
+	.separator {
+    float: left;
+    height: 30px;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #fff;
+    margin: 5px 1px;
+	}
+
+
+</style>
+ 	<div class="page-content" style="height:100%;">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div style="margin:20 0 10 0;">
+										<ul class="tablist">
+								        	<li><a id="btn_prev" href="#" > </a> </li>
+								            <li><a id="pageindex">0/0</a></li>
+								            <li><a id="btn_next" href="#"> </a></li>
+								            <li><a href="#" onclick="$('#dlg').dialog('open');">添加</a></li>
+								            <li><a href="#" onclick="clickEditRole()">编辑</a></li>
+								            
+								            <li><a href="#" onClick="deleteRole()">批量删除</a></li>
+								        </ul>
+								</div>
+ 								<div style="height:420px">
 								  <table id="dg">
 							        <thead>
 							            <tr>
@@ -101,19 +156,70 @@
 						      		</tr>
 						      		</table>
 						    </div>
+						   </div>
+						 </div>
 								    <script type="text/javascript">
-								    var toolbar = [{
-							            text:'添加',
-							            iconCls:'icon-pencil',
-							            handler:function(){
-							            	$('#dlg').dialog('open');
-							            }
-							        },'-',{
-							            text:'编辑',
-							            iconCls:'icon-pencil',
-							            handler:function(){
-							            	var rows = $('#dg').datagrid('getSelections');
-							            	if(rows.length < 0){
+								        $(function(){
+								        	//全局变量
+											var pagenumber = 1;
+											var totalpage  = 1;
+								        	var rootpath = $("#rootpath").val();
+								            var dg = $('#dg').datagrid({
+								            	url:rootpath+'/roleController/treeGrid',
+								                pagination: true,
+								                fitColumns: true,
+								                fit:true,
+								                rownumbers: true,
+								                onLoadSuccess:function(data)
+												{
+								               	 //注意先后顺序
+													var p =$('#dg').datagrid('getPager'); 
+								               		var total = data.total;
+													var pagesize = p.pagination('options').pageSize;
+													totalpage = Math.ceil(total/pagesize);
+													$('#pageindex').text(pagenumber+'/'+totalpage);
+													
+													  $('#btn_next').unbind().bind('click', function(){
+														  if(pagenumber < totalpage){
+														  		p.pagination('select', ++pagenumber);
+														  }
+													  });
+													  $('#btn_prev').unbind().bind('click', function(){
+													  if(pagenumber >1){
+														  console.log(pagenumber)
+													  	   p.pagination('select', --pagenumber);
+													  }
+													  });
+												},
+								            });
+								            
+								            $('#pid').combotree({
+								    			url : rootpath+'/roleController/allTree',
+								    			parentField : 'pid',
+								    			lines : true,
+								    			panelHeight : 'auto',
+								    			value : '${role.pid}',
+								    			onLoadSuccess : function() {
+								    			}
+								    		});
+								            
+								            $('#pid1').combotree({
+								    			url : rootpath+'/roleController/allTree',
+								    			parentField : 'pid',
+								    			lines : true,
+								    			panelHeight : 'auto',
+								    			value : '${role.pid}',
+								    			onLoadSuccess : function() {
+								    			}
+								    		});
+								            
+								            $('#dlg').dialog('close');
+								            $('#dlg1').dialog('close');
+								        });
+								        
+								        function clickEditRole(){
+								        	var rows = $('#dg').datagrid('getSelections');
+							            	if(rows.length < 1){
 							            		$.messager.alert("提示","请先选择一个角色");
 							            	}else{
 							            		$("#idInput").val(rows[0].id);
@@ -122,14 +228,12 @@
 							            		$("#remark1").val(rows[0].remark);
 							            		$('#dlg1').dialog('open');
 							            	}
-							            	
-							            }
-							        },{
-							            text:'删除',
-							            iconCls:'icon-pencil',
-							            handler:function(){
-							            	 var rows = $('#dg').datagrid('getSelections');
-							            	 if(rows.length < 0){
+								        }
+								        
+								        function deleteRole()
+								        {
+								        	 var rows = $('#dg').datagrid('getSelections');
+							            	 if(rows.length < 1){
 								            		$.messager.alert("提示","请先选择一个角色");
 								            }else{
 								            	$.messager.confirm('询问', '您是否要删除当前角色?', function(r){
@@ -160,43 +264,7 @@
 								                    }
 								                });
 								            }
-							            }
-							        }];
-								        $(function(){
-								        	var rootpath = $("#rootpath").val();
-								            var dg = $('#dg').datagrid({
-								            	url:rootpath+'/roleController/treeGrid',
-								                pagination: true,
-								                toolbar:toolbar,
-								                fitColumns: true,
-								                fit:true,
-								                rownumbers: true
-								            });
-								            
-								            $('#pid').combotree({
-								    			url : rootpath+'/roleController/allTree',
-								    			parentField : 'pid',
-								    			lines : true,
-								    			panelHeight : 'auto',
-								    			value : '${role.pid}',
-								    			onLoadSuccess : function() {
-								    			}
-								    		});
-								            
-								            $('#pid1').combotree({
-								    			url : rootpath+'/roleController/allTree',
-								    			parentField : 'pid',
-								    			lines : true,
-								    			panelHeight : 'auto',
-								    			value : '${role.pid}',
-								    			onLoadSuccess : function() {
-								    			}
-								    		});
-								            
-								            $('#dlg').dialog('close');
-								            $('#dlg1').dialog('close');
-								        });
-								        
+								        }
 								        function addRole(){
 								          var nameInput = $("#nameInput").val();
 								          var seqInput = $("#seqInput").val();
