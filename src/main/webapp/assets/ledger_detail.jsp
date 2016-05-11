@@ -105,7 +105,7 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								            <li><a href="${pageContext.request.contextPath}/ledger/toAdd">新增</a></li>
 								            <li><a href="javascript:void(0)" onclick="$('#dlg').dialog('open');">导入</a></li>
 								            <li><a href="#" onClick="Export('asset', $('#dg'))">导出</a></li>
-								            <li><a href="">打印二维码</a>
+								            <li><a href="javascript:void(0)" onclick="print()">打印二维码</a>
 								            	<!--<ul class="tablistmin">
 								                	<li>全部</li>
 								                    <li>当前</li>
@@ -281,10 +281,10 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								            var dg = $('#dg').datagrid({
 								            	url:rootpath+'/ledger/data',
 								                pagination: true,
-								                remoteFilter: false,
 								                columns:eval($("#columns").val()),
 								                fitColumns: false,
 								                fit:true,
+								                singleSelect:true,
 								                rownumbers: true,
 												onLoadSuccess:function(data)
 												{
@@ -422,6 +422,13 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								        		$("dl:eq(" + o + ") dd:last-child").css("display", "inline-block");
 								        		$("dl:eq(" + o + ") dd:last-child").css("background","url(../images/1-3.png) no-repeat");
 								        		//$("dl dd:last-child").css("background","background:url(images/1-3.png) no-repeat");
+								        	}
+								        }
+								        
+								        function print(){
+								        	var row = $('#dg').datagrid('getSelected');
+								        	if (row){ 
+								        		PrintBarCode(row);
 								        	}
 								        }
 								        

@@ -14,7 +14,7 @@ import java.io.OutputStream;
 public final  class MatrixToImageWriter {
 
     private static final int BLACK = 0xFF000000;
-    private static final int WHITE = 0xFFFFFFFF;
+    private static final int WHITE = 0xd9d9d9;
 
     private MatrixToImageWriter() {}
 

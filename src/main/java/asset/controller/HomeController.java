@@ -4,20 +4,33 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jb.util.MatrixToImageWriter;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import asset.model.AssetBaseInfo;
+import asset.service.AssetBaseServiceI;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
 
 
 /**
@@ -28,10 +41,56 @@ import com.alibaba.fastjson.JSONObject;
 @Controller
 @RequestMapping("/")
 public class HomeController {
+	
+	@Autowired
+	private AssetBaseServiceI service;
 
 	 @RequestMapping("/index")
 	 public String index(HttpServletRequest request) {
 	        return "assets/index";
+	 }
+	 
+	 @RequestMapping("/getQ")
+	 public void getQ(HttpServletRequest request,HttpServletResponse response) {
+		 String idStr = request.getParameter("id");
+		 if(StringUtils.isBlank(idStr)){
+			 throw new IllegalArgumentException("param error");
+		 }
+		 try {
+			AssetBaseInfo baseInfo = service.getAssetBaseInfo(Integer.parseInt(idStr));
+			if(null == baseInfo){
+				 throw new IllegalArgumentException("param error");
+			}
+			String serial = baseInfo.getAssetSerial();
+			String bornDate = baseInfo.getAssetBornDate();
+			String beginDate = baseInfo.getAssetBeginDate();
+			
+			Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            hints.put(EncodeHintType.MARGIN, 0);
+            BitMatrix bitMatrix = new MultiFormatWriter().encode(serial+","+bornDate+","+beginDate, BarcodeFormat.QR_CODE, 100, 100, hints);
+            int[] rec = bitMatrix.getEnclosingRectangle();  
+            int resWidth = rec[2] + 1;  
+            int resHeight = rec[3] + 1;  
+            BitMatrix resMatrix = new BitMatrix(resWidth, resHeight);  
+            resMatrix.clear();  
+            for (int i = 0; i < resWidth; i++) {  
+                for (int j = 0; j < resHeight; j++) {  
+                    if (bitMatrix.get(i + rec[0], j + rec[1])) { 
+                         resMatrix.set(i, j); 
+                    } 
+                }  
+            }  
+            
+            
+            MatrixToImageWriter.writeToStream(bitMatrix, "png", response.getOutputStream());
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	 }
 	
 	

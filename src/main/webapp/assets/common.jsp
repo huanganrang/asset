@@ -113,6 +113,31 @@ function Export(strXlsName, exportGrid) {
     f.appendTo(document.body).submit();
 }
 
+function PrintBarCode(row){
+	  var name = "华鑫证券总部";
+	  var tableString = '<table cellspacing="0" border="0" style="width:250px;background-color:#d9d9d9">';
+	  tableString += '\n<tr>';
+	  tableString += '\n<th align="center" style="font-size:16px"';
+	  tableString += ' colspan="2"';
+	  tableString += '>' + name + '</th>';
+	  tableString += '\n</tr>';
+	  tableString += '\n<tr>';
+	  tableString += '\n<td width="135" height="20"></td><td></td>';
+	  tableString += '\n</tr>\n<tr>';
+	  tableString += '\n<td>IT验收编号</td><td>'+row.assetItNumber+'</td>';
+	  tableString += '\n</tr>\n<tr>';
+	  tableString += '\n<td>固定资产编号</td><td>'+row.assetNumber+'</td>';
+	  tableString += '\n</tr>\n<tr>';
+	  tableString += '\n<td>型号</td><td>'+row.assetModel+'</td>';
+	  tableString += '\n</tr>\n<tr>';
+	  tableString += '\n<td>设备名称</td><td>'+row.assetName+'</td>';
+	  tableString += '\n</tr>\n<tr>';
+	  tableString += '\n<td></td><td><img class="q_code" src="${pageContext.request.contextPath}/getQ?id='+row.assetId+'" /></td>';
+	  tableString += '\n</table>';
+		$("#printBody").val(tableString);
+	    window.open(rootpath+"/print.jsp", "打印窗口", "width=" + 800 + ", height=" + 600 + ",toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no,alwaysRaised=yes,depended=yes");
+}
+
 function CreateFormPage(strPrintName, printDatagrid) {
     var tableString = '<table cellspacing="0" class="pb">';
     var frozenColumns = printDatagrid.datagrid("options").frozenColumns;  // 得到frozenColumns对象
