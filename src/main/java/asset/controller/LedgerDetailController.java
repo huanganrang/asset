@@ -106,6 +106,28 @@ public class LedgerDetailController {
 	}
 	
 	
+	@RequestMapping("/getLocation")
+	@ResponseBody
+	public String getLocation(HttpServletRequest request) {
+		String assetItNumber = request.getParameter("assetItNumber");
+		try {
+			if(StringUtils.isBlank(assetItNumber)){
+				throw new IllegalArgumentException("param error");
+			}
+			Map<String, String> dicMap = assetDicService.getAssetDicMap(101);
+			for(Map.Entry<String, String> entry:dicMap.entrySet()){
+				String key = entry.getKey();
+				if(assetItNumber.startsWith(key)){
+					return entry.getValue();
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+	
 	@RequestMapping("/getItNumber")
 	@ResponseBody
 	public String getItNumber(HttpServletRequest request) {
