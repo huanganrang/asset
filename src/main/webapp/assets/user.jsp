@@ -54,7 +54,7 @@
 								            <li><a id="btn_next" href="#">> </a></li>
 								            <li><a href="#" onclick="$('#dlg').dialog('open');">添加</a></li>
 								            <li><a href="#" onclick="cEditUser()">编辑</a></li>
-								            <li><a href="#" onclick="multiGrant()">批量授权</a></li>
+								            <li><a href="#" onclick="multiGrant()">授权</a></li>
 								            <li><a href="#" onClick="multiDelete()">批量删除</a></li>
 								        </ul> 
 								</div>

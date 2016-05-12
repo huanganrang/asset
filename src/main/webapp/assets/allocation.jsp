@@ -99,6 +99,19 @@
 							    </div> -->
    								 <div style="height:420px">
 								 <table id="dg"   style="width:700px;height:450px">
+								 	<!-- 
+								 	<thead>
+							            <tr>
+							            	<th data-options="field:'ck',checkbox:true"></th>
+							            	<th data-options="field:'asset_it_number',width:80">IT验收编号</th>
+							                <th data-options="field:'asset_number',width:80">固定资产编号</th>
+							                <th data-options="field:'asset_name',width:100">设备名称</th>
+							                <th data-options="field:'asset_model',width:80,align:'right'">设备型号</th>
+							                <th data-options="field:'asset_device_status',width:80,align:'right'">设备状态</th>
+							                <th data-options="field:'allocation_company',editor: {type:'combobox',options:{data:Company, valueField: 'dicValue', textField: 'dicKey'}},width:80,align:'right'">设备去向</th>
+							                <th data-options="field:'allocation_date',width:80,align:'right'">调拨时间</th>
+							            </tr>
+							        </thead> -->
 							   	 </table>
 							   	 </div>
 							   	 <div id="dlg" class="easyui-dialog" title="新增设备去向" style="width:300px;height:150px;padding:10px"
@@ -145,14 +158,14 @@
 								                fit:true,
 								                rownumbers: true,
 								                columns: [[
-								                           	  /* { field: 'ck', checkbox:true}, */
-								                              { field: 'asset_it_number', title: 'IT验收编号'},
-								                              { field: 'asset_number', title: '固定资产编号'},
-								                              { field: 'asset_name', title: '设备名称'},
-								                              { field: 'asset_model', title: '设备型号'},
-								                              { field: 'asset_device_status', title: '设备状态'},
-								                              { field: 'allocation_company', title: '设备去向',editor: { type: 'combobox',  options: { data: Company, valueField: "dicValue", textField: "dicKey"} }},
-								                              { field: 'allocation_date', title: '调拨时间'}, 
+								                           	  { field: 'ck', checkbox:true}, 
+								                              { field: 'asset_it_number', title: 'IT验收编号',width:80},
+								                              { field: 'asset_number', title: '固定资产编号',width:80},
+								                              { field: 'asset_name', title: '设备名称',width:80},
+								                              { field: 'asset_model', title: '设备型号',width:80},
+								                              { field: 'asset_device_status', title: '设备状态',width:80},
+								                              { field: 'allocation_company', title: '设备去向',width:80,editor: { type: 'combobox',  options: { data: Company, valueField: "dicValue", textField: "dicKey"} }},
+								                              { field: 'allocation_date', title: '调拨时间',width:80}, 
 								                          ]],
 								                /* checkOnSelect:false, */
 								               // toolbar:'#tb',
