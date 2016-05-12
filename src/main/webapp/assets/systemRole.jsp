@@ -10,9 +10,9 @@
 	}
  	 .tablist{width:100%; height:30px;}
 	 .tablist>li{padding:0 1%; height:30px;line-height:30px;vertical-align: middle;float:left; background:#FFF; border-radius:2px; position:relative;}
-	 .tablist>li:nth-child(1) {background: #FFF url(../images/4-1.png)50% 50% no-repeat;}
+	 .tablist>li:nth-child(1) {background: #FFF;}
 	 .tablist>li:nth-child(2){margin-left:1%; line-height:30px; background:#fff; padding:0 2%;}
-	 .tablist>li:nth-child(3) {margin-left:1%; background: #FFF url(../images/4-2.png)50% 50% no-repeat;}
+	 .tablist>li:nth-child(3) {margin-left:1%; background: #FFF;}
 	 .tablist a{font-size: 13px;color:#666;text-decoration: none;}
 	 .tablist>li:nth-child(4){margin-left:60%; margin-right:1%; padding-left:30px;}
 	 
@@ -47,9 +47,9 @@
 								<!-- PAGE CONTENT BEGINS -->
 								<div style="margin:20 0 10 0;">
 										<ul class="tablist">
-								        	<li><a id="btn_prev" href="#" > </a> </li>
+								        	<li><a id="btn_prev" href="#" > <</a> </li>
 								            <li><a id="pageindex">0/0</a></li>
-								            <li><a id="btn_next" href="#"> </a></li>
+								            <li><a id="btn_next" href="#">> </a></li>
 								            <li><a href="#" onclick="$('#dlg').dialog('open');">添加</a></li>
 								            <li><a href="#" onclick="clickEditRole()">编辑</a></li>
 								            

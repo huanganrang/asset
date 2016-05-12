@@ -10,12 +10,14 @@
 	}
  	 .tablist{width:100%; height:30px;}
 	 .tablist>li{padding:0 1%; height:30px;line-height:30px;vertical-align: middle;float:left; background:#FFF; border-radius:2px; position:relative;}
-	 .tablist>li:nth-child(1) {background: #FFF url(../images/4-1.png)50% 50% no-repeat;}
+	 .tablist>li:nth-child(1) {background: #FFF;}
 	 .tablist>li:nth-child(2){margin-left:1%; line-height:30px; background:#fff; padding:0 2%;}
-	 .tablist>li:nth-child(3) {margin-left:1%; background: #FFF url(../images/4-2.png)50% 50% no-repeat;}
+	 .tablist>li:nth-child(3) {margin-left:1%; background: #FFF;}
 	 .tablist a{font-size: 13px;color:#666;text-decoration: none;}
-	 .tablist>li:nth-child(4){margin-left:60%; margin-right:1%; padding-left:30px;}
-	 
+	 .tablist>li:nth-child(4) {margin-left: 50%;margin-right: 1%;background: #FFF url(../images/plus.png)5px 65% no-repeat;padding-left: 30px;}
+	 .tablist>li:nth-child(5) {background: #FFF url(../images/pencil.png)5px 65% no-repeat;margin-right: 1%;padding-left: 30px;}
+	 .tablist>li:nth-child(6) {background: #FFF url(../images/key.png)5px 65% no-repeat; margin-right: 1%;padding-left: 30px;}
+	 .tablist>li:nth-child(7) { background: #fff url(../images/Trash.png)5px 65% no-repeat; padding-left: 30px;}
 	 #tag_a{
 	     width:40px;
 	     margin-left:10px;
@@ -47,9 +49,9 @@
 								<!-- PAGE CONTENT BEGINS -->
 								<div style="margin:20 0 10 0;">
 										<ul class="tablist">
-								        	<li><a id="btn_prev" href="#" > </a> </li>
+								        	<li><a id="btn_prev" href="#" > <</a> </li>
 								            <li><a id="pageindex">0/0</a></li>
-								            <li><a id="btn_next" href="#"> </a></li>
+								            <li><a id="btn_next" href="#">> </a></li>
 								            <li><a href="#" onclick="$('#dlg').dialog('open');">添加</a></li>
 								            <li><a href="#" onclick="cEditUser()">编辑</a></li>
 								            <li><a href="#" onclick="multiGrant()">批量授权</a></li>
