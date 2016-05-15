@@ -56,7 +56,7 @@
 								            <li><a href="#" onClick="deleteRole()">批量删除</a></li>
 								        </ul>
 								</div>
- 								<div style="height:420px">
+ 								<div style="height:600px">
 								  <table id="dg">
 							        <thead>
 							            <tr>
@@ -71,7 +71,7 @@
 							        </thead>
 							    </table>
 							    </div>
-							     <div id="dlg" class="easyui-dialog" title="添加角色" style="width:400px;height:200px;padding:10px"
+							     <div id="dlg" class="easyui-dialog" title="添加角色" style="width:400px;height:200px;padding:10px;top:200px;"
 						            data-options="
 						                iconCls: 'icon-save',
 						                buttons: [{

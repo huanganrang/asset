@@ -57,8 +57,8 @@
 .current {
     border-bottom: 2px solid #ed6c44;
 }
-.textbox2{display:none;width:95%; background:#dad7d7; overflow-y: scroll; height:80%; box-shadow:0 1px 2px #666; position:fixed; top:90px;
-left:5%;}
+.textbox2{display:none;width:98%; background:#dad7d7; overflow-y: scroll; height:90%; box-shadow:0 1px 2px #666; position:fixed; top:90px;
+left:1%;}
 .textbox2 dl{width:98%; background:#ededed; margin:10px auto; font-size:0;  background:#fff;
 position:relative;}
 .textbox2 dl dt,dd{width:20%; display:inline-block; font:15px/20px "黑体"; color:#999;}
@@ -83,7 +83,7 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								  <div id="tabs">
-								  <div class="tab current" data="/ledger/detail">台账管理</div>
+								  <div class="tab current" data="/ledger/detail">台账明细</div>
 								  <div class="separator"></div>
 								  <div class="tab" data="/stock/tostock">库存</div>
 								  <div class="separator"></div>
@@ -116,8 +116,8 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								            
 								        </ul>
 								  </div>
-								  <div style="height:420px">
-								  <table id="dg" style="width:700px;height:420px">
+								  <div style="height:600px">
+								  <table id="dg" style="width:800px;height:600px">
 								  </table>
 								  </div>
 								  <div class="textbox2">

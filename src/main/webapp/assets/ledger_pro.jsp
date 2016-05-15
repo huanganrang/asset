@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@include file="/assets/common.jsp"%>
+    <style type="text/css">
+    input{
+		width: 150px  ! important ;
+	}
+	table{
+		width: 150px  ! important ;
+	}
+    </style>
 								  <input type="hidden" id = "assetId"  value = "${assetId }"/>
 								   <table id="pg" class="easyui-propertygrid" style="width:700px;height:450px" data-options="
 						                url:'${pageContext.request.contextPath}/ledger/pro?assetId=${assetId }',
@@ -19,7 +27,7 @@
 								            	//open model window
 								            }
 								        },'-',{
-								            text:'Save',
+								            text:'保存',
 								            iconCls:'icon-save',
 								            handler:getChanges
 								        }];

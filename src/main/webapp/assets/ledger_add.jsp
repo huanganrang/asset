@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/assets/common.jsp"%>
-
+ 
 					<input type="hidden" id = "cate"  value = "${cate }"/>
 					<input type="hidden" id = "type"  value = "${type }"/>
-								   <table id="pg" class="easyui-propertygrid" style="width:700px;height:480px" data-options="
+								   <table id="pg" class="easyui-propertygrid" style="width:800px;height:480px" data-options="
 						                url:'${pageContext.request.contextPath}/ledger/addPro?cate=${cate }&type=${type }',
 						                method:'get',
 						                showGroup:false,

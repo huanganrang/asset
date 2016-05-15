@@ -65,7 +65,7 @@
 							<div class="col-xs-12">
 							    <!-- PAGE CONTENT BEGINS -->
  								<div id="tabs">
-								  <div class="tab" data="/ledger/detail">台账管理</div>
+								  <div class="tab" data="/ledger/detail">台账明细</div>
 								  <div class="separator"></div>
 								  <div class="tab current" data="/stock/tostock">库存</div>
 								  <div class="separator"></div>
@@ -87,15 +87,15 @@
 								            
 								        </ul>
 								</div>
- 								<div style="height:420px">
-								  <table id="dg" style="width:700px;height:420px">
+								<div style="height:600px">
+								  <table id="dg" style="width:800px;height:600px">
 							        <thead>
 							            <tr>
 							            	<th data-options="field:'ck',checkbox:true"></th>
 							            	<!-- <th data-options="field:'assetId',hidden:true"></th> -->
-							                <th data-options="field:'assetItNumber',width:80">IT验收编号</th>
-							                <th data-options="field:'assetNumber',width:100">固定资产编号</th>
-							                <th data-options="field:'assetName',width:80,align:'right'">设备名称</th>
+							                <th data-options="field:'assetItNumber',width:120">IT验收编号</th>
+							                <th data-options="field:'assetNumber',width:120">固定资产编号</th>
+							                <th data-options="field:'assetName',width:120,align:'right'">设备名称</th>
 							                <th data-options="field:'assetModel',width:80,align:'right'">设备型号</th>
 							                <th data-options="field:'assetAddMethod',width:250">设备增加方式</th>
 							            </tr>

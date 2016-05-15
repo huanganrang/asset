@@ -63,7 +63,7 @@
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								  <div id="tabs">
-									  <div class="tab" data="/ledger/detail">台账管理</div>
+									  <div class="tab" data="/ledger/detail">台账明细</div>
 									  <div class="separator"></div>
 									  <div class="tab" data="/stock/tostock">库存</div>
 									  <div class="separator"></div>
@@ -97,8 +97,8 @@
 							        <a href="#" class="easyui-linkbutton" id="printBtn" iconCls="icon-print">打印</a>
 							        <a href="#" class="easyui-linkbutton" id="alloBtn" iconCls="icon-pencil">调拨</a>
 							    </div> -->
-   								 <div style="height:420px">
-								 <table id="dg"   style="width:700px;height:450px">
+   								 <div style="height:600px">
+								 <table id="dg"   style="width:800px;height:600px">
 								 	<!-- 
 								 	<thead>
 							            <tr>

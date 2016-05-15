@@ -107,11 +107,11 @@
 			</div><!-- /.container -->
 		</header>
 
-		<div class="main-container" id="main-container">
+		<div class="main-container" id="main-container" style="height:100%;">
 			<script type="text/javascript">
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
-			<div class="main-container-inner">
+			<div class="main-container-inner" style="height:100%;">
 			<div class="sidebar" id="sidebar">
 					<script type="text/javascript">
 						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
@@ -290,12 +290,12 @@
 						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
 					</script>
 				</div>
-				<div class="main-content">
-					<div class="page-content">
-					<div class="row">
-							<div class="col-xs-12">
+				<div class="main-content" style="height:100%;">
+					<div class="page-content" style="height:100%;">
+					<div class="row" style="height:100%;">
+							<div class="col-xs-12" style="height:100%;">
 								<!-- PAGE CONTENT BEGINS -->
-								<iframe id="mainFrame" frameborder='0' width='100%' height='500px'  scrolling="no" src="${pageContext.request.contextPath}/home"></iframe>	
+								<iframe id="mainFrame" frameborder='0' width='100%' height='100%'  scrolling="no" src="${pageContext.request.contextPath}/home"></iframe>	
 							</div>
 		</div>
 

@@ -59,7 +59,7 @@ left:45%; bottom:-100%; color:#fff;}
 	<div class="col-xs-12">
 	    <!-- PAGE CONTENT BEGINS -->
 		<div id="tabs">
-		  <div class="tab" data="/ledger/detail">台账管理</div>
+		  <div class="tab" data="/ledger/detail">台账明细</div>
 		  <div class="separator"></div>
 		  <div class="tab" data="/stock/tostock">库存</div>
 		  <div class="separator"></div>

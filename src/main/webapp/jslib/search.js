@@ -33,6 +33,9 @@ $(document).ready(function(){
 	    }
 	}];
 	$(function(){
+	//全局变量
+	var pagenumber = 1;
+	var totalpage  = 1;
 	var key=$("#key").val();
 	var columns = $("#columns").val();
 	$('#dg').datagrid({
@@ -42,10 +45,31 @@ $(document).ready(function(){
 	    fitColumns: false,
 	    fit:true,
 	    rownumbers:true,
-	    toolbar:toolbar,
+	    //toolbar:toolbar,
 	    scrollbarSize:18,
 	    singleSelect: true,
 	    pagination:true,
+	    onLoadSuccess:function(data)
+		{
+       	 //注意先后顺序
+			var p =$('#dg').datagrid('getPager'); 
+       		var total = data.total;
+			var pagesize = p.pagination('options').pageSize;
+			totalpage = Math.ceil(total/pagesize);
+			$('#pageindex').text(pagenumber+'/'+totalpage);
+			
+			  $('#btn_next').unbind().bind('click', function(){
+				  if(pagenumber < totalpage){
+				  		p.pagination('select', ++pagenumber);
+				  }
+			  });
+			  $('#btn_prev').unbind().bind('click', function(){
+			  if(pagenumber >1){
+				  console.log(pagenumber)
+			  	   p.pagination('select', --pagenumber);
+			  }
+			  });
+		},
 	    onDblClickRow: function(index,row){
 	    	location.href=rootpath+"/ledger/property/"+row.assetId;
 	    },

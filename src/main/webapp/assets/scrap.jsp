@@ -68,7 +68,7 @@
 							<div class="col-xs-12">
 							    <!-- PAGE CONTENT BEGINS -->
  								<div id="tabs">
-								  <div class="tab" data="/ledger/detail">台账管理</div>
+								  <div class="tab" data="/ledger/detail">台账明细</div>
 								  <div class="separator"></div>
 								  <div class="tab" data="/stock/tostock">库存</div>
 								  <div class="separator"></div>
@@ -102,7 +102,7 @@
 							        		<li><a href="#" class="easyui-linkbutton" id="scrapBtn" iconCls="icon-pencil">报废</a></li>
 								        </ul> 
 								</div>
-								<div style="height:420px">
+								 <div style="height:600px">
 								  <table id="dg" >
 							        <thead>
 							            <tr>
@@ -112,7 +112,7 @@
 							                <th data-options="field:'assetNumber',width:100">固定资产编号</th>
 							                <th data-options="field:'assetName',width:100,align:'right'">设备名称</th>
 							                <th data-options="field:'assetModel',width:100,align:'right'">设备型号</th>
-							                <th data-options="field:'useTime',width:100">使用时间</th>
+							                <th data-options="field:'useTime',width:100">使用时间(天)</th>
 							                <th data-options="field:'scrapReason',width:150">报废原因</th>
 							                <th data-options="field:'assetDeviceStatus',width:150">处理意见</th>
 							            </tr>

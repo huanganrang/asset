@@ -52,13 +52,13 @@
 								        	<li><a id="btn_prev" href="#" > <</a> </li>
 								            <li><a id="pageindex">0/0</a></li>
 								            <li><a id="btn_next" href="#">> </a></li>
-								            <li><a href="#" onclick="$('#dlg').dialog('open');">添加</a></li>
+								            <li><a href="#" onclick="cAddUser()">添加</a></li>
 								            <li><a href="#" onclick="cEditUser()">编辑</a></li>
 								            <li><a href="#" onclick="multiGrant()">授权</a></li>
 								            <li><a href="#" onClick="multiDelete()">批量删除</a></li>
 								        </ul> 
 								</div>
- 								<div style="height:420px">
+ 								<div style="height:600px">
 								  <table id="dg">
 							        <thead>
 							            <tr>
@@ -72,7 +72,7 @@
 							        </thead>
 							    </table>
 							    </div>
-							     <div id="dlg" class="easyui-dialog" title="添加用户" style="width:400px;height:200px;padding:10px"
+							     <div id="dlg" class="easyui-dialog" title="添加用户" style="width:400px;height:200px;padding:10px;top:200px;"
 						            data-options="
 						                iconCls: 'icon-save',
 						                buttons: [{
@@ -227,6 +227,11 @@
 								            $('#dlg2').dialog('close');
 								        });
 								        
+								        function cAddUser()
+								        {
+								        	$('#dlg').dialog('open');
+								        }
+								        
 								        function addUser(){
 								          var nameInput = $("#nameInput").val();
 								          var pwdInput = $("#pwdInput").val();
@@ -260,6 +265,7 @@
 								    			}
 								    		});
 								        }
+								        
 								        
 								        function cEditUser(){
 								        	  var rows = $('#dg').datagrid('getSelections');
