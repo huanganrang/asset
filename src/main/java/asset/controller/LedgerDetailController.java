@@ -527,6 +527,11 @@ public class LedgerDetailController {
 				JSONArray rows = new JSONArray();
 				for(AssetInfo asset:assetList){
 					AssetBaseInfo baseInfo = asset.getBaseInfo();
+					if("报废".equals(baseInfo.getAssetDeviceStatus()))
+					{
+						continue;
+					}
+					
 					JSONObject json;
 					if(null != baseInfo){
 						json = JSON.parseObject(JSON.toJSONString(baseInfo));

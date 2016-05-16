@@ -86,9 +86,15 @@ public class ScrapController {
 				for(AssetBaseInfo baseInfo:assetList){
 					String assetUseDate = baseInfo.getAssetUseDate();
 					String assetDeviceStatus = baseInfo.getAssetDeviceStatus();
-					Date useDate = sdf.parse(assetUseDate);
+					long times = 100;
+					if(assetUseDate!=null&&!assetUseDate.equals(""))
+					{
+						Date useDate = sdf.parse(assetUseDate);
+						times = (endYear.getTime()-useDate.getTime())/(1000*3600*24);
+					}
 					JSONObject json = JSON.parseObject(JSON.toJSONString(baseInfo));
-					json.put("useTime", (endYear.getTime()-useDate.getTime())/(1000*3600*24));
+					//json.put("useTime", (endYear.getTime()-useDate.getTime())/(1000*3600*24));
+					json.put("useTime", times);
 					json.put("scrapReason", "超期");
 					if(!"待报废".equals(assetDeviceStatus) && !"报废".equals(assetDeviceStatus)){
 						json.put("assetDeviceStatus", "");
