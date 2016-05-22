@@ -28,7 +28,7 @@
 						                scrollbarSize:0
 						            "></table>
 						            
-						             <div id="w" class="easyui-window" title="查看服务器"  style="width:800px;height:800px;">
+						             <div id="w" class="easyui-window" title="查看服务器"  style="width:600px;height:600px;">
 								        <img src="${pageContext.request.contextPath}/pic/${assetId }.jpg" />
 								    </div>
 								<!-- PAGE CONTENT ENDS -->
@@ -37,6 +37,7 @@
 								    	$("img").error(function(){
 								    		  $("img").replaceWith("图片找不到");
 								    		});
+								    	$('#w').window('close');
 								    });
 								    
 									    var toolbar = [{

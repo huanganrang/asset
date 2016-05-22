@@ -418,7 +418,12 @@ public class LedgerDetailController {
 				json.put("key", key);
 				json.put("flag", "base");
 				if(!"assetItNumber".equals(key)){
-					json.put("editor", "text");
+					if(dicMap.get(key).contains("日期")){
+						json.put("editor", "datebox");
+					}else{
+						json.put("editor", "text");
+					}
+					
 				}
 				resultArray.add(json);
 			}
@@ -450,7 +455,12 @@ public class LedgerDetailController {
 						json.put("value", ext.getAssetAttrValue());
 						json.put("key", ext.getAssetAttrId());
 						json.put("flag", "ext");
-						json.put("editor", "text");
+						if(ext.getAssetAttrName().contains("日期")){
+							json.put("editor", "datebox");
+						}else{
+							json.put("editor", "text");
+						}
+						
 						resultArray.add(json);
 					}
 				}
