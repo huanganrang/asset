@@ -14,7 +14,10 @@
 	 .tablist>li:nth-child(2){margin-left:1%; line-height:30px; background:#fff; padding:0 2%;}
 	 .tablist>li:nth-child(3) {margin-left:1%; background: #FFF;}
 	 .tablist a{font-size: 13px;color:#666;text-decoration: none;}
-	 .tablist>li:nth-child(4){margin-left:60%; margin-right:1%; padding-left:30px;}
+	 .tablist>li:nth-child(4){margin-left:60%; margin-right:1%; background:#FFF url(../images/plus.png)5px 65% no-repeat;padding-left:30px;}
+	 .tablist>li:nth-child(5){background:#FFF url(../images/pencil.png)5px 65% no-repeat; margin-right:1%;padding-left:30px;}
+     .tablist>li:nth-child(6){background:#fff url(../images/Trash.png)5px 65% no-repeat; padding-left:30px;}
+	 
 	 
 	 #tag_a{
 	     width:40px;
@@ -31,6 +34,21 @@
 	}
 
 	
+	#tabs{
+	height:40px;
+	width: 100%;
+	border-bottom:1px solid #ccc;
+	}
+	#tabs .tab{
+	    float:left;
+		height: 40px;
+		width:100px;
+		text-align: center;
+		line-height: 40px;
+		vertical-align: middle;
+		cursor: pointer;
+	}
+	
 	.separator {
     float: left;
     height: 30px;
@@ -39,11 +57,20 @@
     margin: 5px 1px;
 	}
 
+	.current {
+    border-bottom: 2px solid #ed6c44;
+	}
+
 
 </style>
  	<div class="page-content" style="height:100%;">
 						<div class="row">
 							<div class="col-xs-12">
+								<div id="tabs">
+								  <div class="tab" data="/system/system">用户管理</div>
+								  <div class="separator"></div>
+								  <div class="tab current" data="/system/roleManager">角色管理</div>
+								</div>
 								<!-- PAGE CONTENT BEGINS -->
 								<div style="margin:20 0 10 0;">
 										<ul class="tablist">

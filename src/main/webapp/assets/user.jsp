@@ -32,6 +32,20 @@
 		text-decoration: none;
 	}
 
+	#tabs{
+	height:40px;
+	width: 100%;
+	border-bottom:1px solid #ccc;
+	}
+	#tabs .tab{
+	    float:left;
+		height: 40px;
+		width:100px;
+		text-align: center;
+		line-height: 40px;
+		vertical-align: middle;
+		cursor: pointer;
+	}
 	
 	.separator {
     float: left;
@@ -41,11 +55,20 @@
     margin: 5px 1px;
 	}
 
+	.current {
+    border-bottom: 2px solid #ed6c44;
+	}
+
 
 </style>
  	<div class="page-content" style="height:100%;">
 						<div class="row">
 							<div class="col-xs-12">
+								<div id="tabs">
+								  <div class="tab current" data="/system/system">用户管理</div>
+								  <div class="separator"></div>
+								  <div class="tab" data="/system/roleManager">角色管理</div>
+								</div>
 								<!-- PAGE CONTENT BEGINS -->
 								<div style="margin:20 0 10 0;">
 										<ul class="tablist">
