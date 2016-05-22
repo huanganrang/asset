@@ -39,4 +39,13 @@ public interface AssetDicServiceI {
 	 * @throws Exception
 	 */
 	void saveOrUpdate(AssetDic dic) throws Exception;
+	
+	
+	/**
+	 * 更新字典信息
+	 * @param type
+	 * @param key
+	 * @param value
+	 */
+	public void updateDicValue(Integer type,String key,String value);
 }

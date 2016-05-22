@@ -48,6 +48,9 @@ public class AssetDicServiceImpl  implements AssetDicServiceI {
 		dicDao.saveOrUpdate(dic);
 	}
 	
+	public void updateDicValue(Integer type,String key,String value){
+		dicDao.executeHql("update AssetDic set dicValue = '"+value+"' where dicType="+type+" and dicKey = '"+key+"'");
+	}
 	
 	
 	

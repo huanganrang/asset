@@ -84,10 +84,10 @@ public class ScrapController {
 			if(null != assetList && assetList.size() > 0){
 				JSONArray rows = new JSONArray();
 				for(AssetBaseInfo baseInfo:assetList){
-					String assetUseDate = baseInfo.getAssetUseDate();
+					String assetUseDate = baseInfo.getAssetBeginDate();
 					String assetDeviceStatus = baseInfo.getAssetDeviceStatus();
 					long times = 100;
-					if(assetUseDate!=null&&!assetUseDate.equals(""))
+					if(StringUtils.isNotBlank(assetUseDate))
 					{
 						Date useDate = sdf.parse(assetUseDate);
 						times = (endYear.getTime()-useDate.getTime())/(1000*3600*24);

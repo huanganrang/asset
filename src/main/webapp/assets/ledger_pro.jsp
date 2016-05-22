@@ -2,11 +2,20 @@
     pageEncoding="UTF-8"%>
     <%@include file="/assets/common.jsp"%>
     <style type="text/css">
-    input{
-		width: 150px  ! important ;
+     .datagrid-editable table{
+		width: 155px ! important ; 
 	}
-	table{
-		width: 150px  ! important ;
+	
+	.datagrid-editable table .datebox{
+		width: 155px ! important ; 
+	}
+	
+	.datagrid-editable table .datebox input{
+		width: 131px ! important ; 
+	}
+	
+	.datagrid-editable-input{
+		width: 155px ! important ; 
 	}
     </style>
 								  <input type="hidden" id = "assetId"  value = "${assetId }"/>
@@ -18,13 +27,23 @@
 						                toolbar:toolbar,
 						                scrollbarSize:0
 						            "></table>
+						            
+						             <div id="w" class="easyui-window" title="查看服务器"  style="width:800px;height:800px;">
+								        <img src="${pageContext.request.contextPath}/pic/${assetId }.jpg" />
+								    </div>
 								<!-- PAGE CONTENT ENDS -->
 								    <script type="text/javascript">
+								    $(function(){
+								    	$("img").error(function(){
+								    		  $("img").replaceWith("图片找不到");
+								    		});
+								    });
+								    
 									    var toolbar = [{
 								            text:'查看服务器',
 								            iconCls:'icon-search',
 								            handler:function(){
-								            	//open model window
+								            	$('#w').window('open');
 								            }
 								        },'-',{
 								            text:'保存',

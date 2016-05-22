@@ -1,9 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/assets/common.jsp"%>
- 
-					<input type="hidden" id = "cate"  value = "${cate }"/>
+
+ <style type="text/css">
+    .datagrid-editable table{
+		width: 155px ! important ; 
+	}
+	
+	.datagrid-editable table .datebox{
+		width: 155px ! important ; 
+	}
+	
+	.datagrid-editable table .datebox input{
+		width: 131px ! important ; 
+	}
+	
+	.datagrid-editable-input{
+		width: 155px ! important ; 
+	}
+    </style>
 					<input type="hidden" id = "type"  value = "${type }"/>
+					<form id="ledgerForm" enctype="multipart/form-data" method="post" action="${pageContext.request.contextPath}/ledger/save" style="display:none">
+						<input type="file" id = "upload" name="img"  />
+						<input type="hidden" id = "cate" name="c"  value = "${cate }"/>
+						<input type="hidden"  id ="b"  name="b" />
+						<input type="hidden"  id ="e"  name="e" />
+					</form>
+					
 								   <table id="pg" class="easyui-propertygrid" style="width:800px;height:480px" data-options="
 						                url:'${pageContext.request.contextPath}/ledger/addPro?cate=${cate }&type=${type }',
 						                method:'get',
@@ -33,7 +56,7 @@
 								            text:'选择图片',
 								            iconCls:'icon-search',
 								            handler:function(){
-								            	//open model window
+								            	$("#upload").trigger("click");
 								            }
 								        },'-',{
 								            text:'提交',
@@ -60,7 +83,12 @@
 								                title:'请等待',
 								                msg:'加载中...'
 								           });
-								        	 $.ajax({
+								             
+								            $("#b").val(b);
+								            $("#e").val(e);
+								            $("#ledgerForm").submit();
+								            
+								        	/*  $.ajax({
 								    			url:"${pageContext.request.contextPath}/ledger/save",
 								    			type:"post",
 								    			data:"b="+b+"&e="+e+"&c="+$("#cate").val(),
@@ -75,7 +103,7 @@
 								    				$.messager.progress('close');
 								    				$.messager.alert("提示","新增失败，请稍后再试或联系管理员");
 								    			}
-								    		});
+								    		}); */
 								        }
 									    
 									    $(function(){
@@ -95,6 +123,7 @@
 									    			}
 									    		}
 									    	});
+									    	
 									    });
 									    
 									    function getItNumber(type){
