@@ -279,7 +279,7 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 											});
 
 								            var dg = $('#dg').datagrid({
-								            	url:rootpath+'/ledger/data',
+								            	url:rootpath+'/ledger/data?sort=assetAddTime&order=desc',
 								                pagination: true,
 								                columns:eval($("#columns").val()),
 								                fitColumns: false,

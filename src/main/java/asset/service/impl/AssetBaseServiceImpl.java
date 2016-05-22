@@ -121,7 +121,7 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 	}
 	
 	protected String whereHql(String key) {
-		String whereHql = "where t.assetStatus = 1 ";	
+		String whereHql = "where t.assetStatus = 1 and t.assetDeviceStatus != '报废' ";	
 		if (StringUtils.isNotBlank(key)) {
 			whereHql += " and ( t.assetItNumber like '%"+key+"%' or ";
 			whereHql += " t.assetNumber like '%"+key+"%' or ";
@@ -215,7 +215,7 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 	
 	@Override
 	public List<AssetInfo> getAssetList(Map<String,String> paramMap,PageHelper ph) throws Exception {
-		StringBuilder hql = new StringBuilder("from AssetBaseInfo t where t.assetStatus = 1 ");
+		StringBuilder hql = new StringBuilder("from AssetBaseInfo t where t.assetStatus = 1 and t.assetDeviceStatus != '报废' ");
 		List<AssetBaseInfo> list = null;
 		long s1 = System.currentTimeMillis();
 		if(null != paramMap && paramMap.size() > 0){
@@ -378,7 +378,7 @@ public class AssetBaseServiceImpl  implements AssetBaseServiceI {
 	public List<AssetInfo> getAssetList(Map<String, String> baseMap,
 			Map<String, String> extMap, PageHelper ph) throws Exception {
 		
-		StringBuilder hql = new StringBuilder("select a from AssetBaseInfo a,AssetExtInfo b where a.assetId = b.assetId");
+		StringBuilder hql = new StringBuilder("select a from AssetBaseInfo a,AssetExtInfo b where a.assetDeviceStatus != '报废' and  a.assetId = b.assetId");
 		if(MapUtils.isNotEmpty(baseMap)){
 			for(Map.Entry<String, String> entry:baseMap.entrySet()){
 				String key = entry.getKey();

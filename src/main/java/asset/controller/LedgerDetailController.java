@@ -1,8 +1,10 @@
 package asset.controller;
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,6 +26,7 @@ import jb.util.ExcelReader;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -128,6 +131,11 @@ public class LedgerDetailController {
 		return "";
 	}
 	
+	/**
+	 * 有并发问题
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/getItNumber")
 	@ResponseBody
 	public String getItNumber(HttpServletRequest request) {
@@ -138,6 +146,7 @@ public class LedgerDetailController {
 			}
 			Map<String, String> dicMap = assetDicService.getAssetDicMap(100);
 			if(dicMap.containsKey(ownership)){
+				
 				Integer value = Integer.parseInt(dicMap.get(ownership))+1;
 				String init = value.toString();
 				StringBuilder sb = new StringBuilder();
@@ -146,6 +155,8 @@ public class LedgerDetailController {
 						 sb.append("0");
 					}
 				}
+				
+				assetDicService.updateDicValue(100, ownership, init);
 				return ownership+sb.toString()+value;
 			}else{
 				AssetDic dic = new AssetDic();
@@ -247,6 +258,7 @@ public class LedgerDetailController {
 				if("assetItNumber".equals(key)){
 					
 					String init = Integer.parseInt(itNumberMap.get("A"))+1+"";
+					assetDicService.updateDicValue(100, "A", init);
 					StringBuilder sb = new StringBuilder();
 					if(init.length()<8){
 						for(int i = 0;i<8-init.length();i++){
@@ -653,9 +665,7 @@ public class LedgerDetailController {
 	
 	
 	@RequestMapping("/save")
-	@ResponseBody
-	public Json saveAsset(HttpServletRequest request) {
-		Json j = new Json();
+	public String saveAsset(HttpServletRequest request) {
 		try {
 			//基本信息
 			String base = request.getParameter("b");
@@ -708,11 +718,21 @@ public class LedgerDetailController {
 						assetBaseService.addExtInfo(extInfo);
 					}
 				}
-				j.setSuccess(true);
+				
+				//图片
+				MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+		        MultipartFile multipartFile = multipartRequest.getFile("img");
+		        if(null != multipartFile){
+		        	String fileName = multipartFile.getOriginalFilename();
+		        	Properties properties = PropertiesLoaderUtils.loadAllProperties("config.properties");
+		        	String filePath = properties.getProperty("tupian.file.path","uploadfiles");
+		        	String fileExt = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+		        	multipartFile.transferTo(new File(filePath+File.separator+ assetId+".jpg"));
+		        }
+		        
 		} catch (Exception e) {
 			e.printStackTrace();
-			j.setSuccess(false);
 		} 
-		return j;
+		return "redirect:/ledger/detail";
 	}
 }
