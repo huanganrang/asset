@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="/assets/common.jsp"%>
-
+<script src="${pageContext.request.contextPath}/assets/js/scrollview.js"></script>
 <style type="text/css">
 	.datagrid .datagrid-pager  {
 			display: none;
@@ -143,7 +143,7 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 																	</c:if>
 								          	 	<dd <c:if test="${status.index>3}">style="display: none" </c:if> >
 								          	 		<input type="checkbox" name="${mymap.key}"  value="${attr.attrId}"/>${attr.attrName}</dd>
-								          	</c:forEach>
+								        	 </c:forEach>
 								         	    <dd onClick="showNav(${status0.index+1})"></dd>
 							         	</dl>
 							       </c:forEach>
@@ -284,6 +284,7 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								                columns:eval($("#columns").val()),
 								                fitColumns: false,
 								                fit:true,
+								                view:scrollview,
 								                singleSelect:true,
 								                rownumbers: true,
 												onLoadSuccess:function(data)
