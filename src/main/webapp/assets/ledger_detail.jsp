@@ -328,7 +328,7 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								                }
 								            });
 											//注意先后顺序
-										var pager = $('#dg').datagrid().datagrid('getPager');	// get the pager of datagrid
+										var pager = $('#dg').datagrid('getPager');	// get the pager of datagrid
 								        /* 	dg.datagrid('enableFilter'); */
 								        
 								            $("#file_import").uploadify({
