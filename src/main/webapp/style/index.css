@@ -9,10 +9,11 @@ header .list li{list-style-type:none;}
 header .list li:nth-child(1){width:34px; position:absolute; height:34px; top:20px;left:172px; background:url(../images/System%20switch-1.png) no-repeat;}
 header .list li:nth-child(2){width:34px; height:34px;margin-top:20px; margin-left:40px; background:url(../images/Alarm-1.png) no-repeat;}
 header .list li:nth-child(3){height:34px; position:absolute; top:20px; left:40%; font:16px/34px "黑体";}
-header .list li:nth-child(4){width:34px; height:34px; position:absolute; top:20px; right:80px;background:url(../images/search-top1.png) no-repeat;}
-header .list li:nth-child(4)>input{display:none; width:180px; height:34px; border-radius:17px; background:#f0f4f6 url(../images/search-top1.png)150px 1px no-repeat;
-position:absolute; left:-150px; border:1px solid #f0f4f6;}
-header .list li:nth-child(5){display:none; width:34px; height:34px; position:absolute; top:20px; right:10px;
+header .list li:nth-child(4){width:34px; height:34px; position:absolute; top:20px; right:80px;}
+header .list li:nth-child(4)>input{width:180px; height:34px; border-radius:17px; background:#f0f4f6;
+position:absolute; left:-200px; border:1px solid #f0f4f6;}
+header .list li:nth-child(5){width:34px; height:34px; position:absolute; top:20px; right:80px;background:url(../images/search-top1.png) no-repeat;}
+header .list li:nth-child(6){display:none; width:34px; height:34px; position:absolute; top:20px; right:10px;
 background:url(../images/Graphic-lists-the-Convert-button1.png) no-repeat;}
 
 header .listmin{width:1000%; height:34px; border:1px s0lid #F00; position:absolute; top:0; left:0px; z-index:80; color:#7a7979;

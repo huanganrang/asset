@@ -11,13 +11,10 @@ $(document).ready(function(){
 	
 		var g=$(".list li:nth-child(4)");
 		g.click(function(){
-			if($(this).children().css("display")=="block"){
-				$(this).children().css({"display":"none"});
-				} else {
+				if($(this).children().css("display")=="none"){
 					$(this).children().css({"display":"block"});
-					}
-			
-			
+				}
+				alert("111");
 			});
 			
 			$(".rightlist").click(function(){

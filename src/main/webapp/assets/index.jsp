@@ -102,7 +102,7 @@
 				    </li>
 				    <li><a href="#"></a></li>
 				    <li>华鑫证券资产管理系统</li>
-				    <li><input/></li>
+				    <li><input type="text" id="key" name="key"/></li>
 				    <li></li>
 				    
 				 </ul>
@@ -331,6 +331,7 @@
 				}
 			})
 			
+
 			$("#logout").click(function(){
 				 $.ajax({
 		    			url:"${pageContext.request.contextPath}/userController/logout",
@@ -347,13 +348,15 @@
 		    		});
 			});
 			
-			var g=$(".list li:nth-child(4)");
+
+			var g=$(".list li:nth-child(5)");
+
 			g.click(function(){
-				if($(this).children().css("display")=="block"){
-					$(this).children().css({"display":"none"});
-					} else {
-						$(this).children().css({"display":"block"});
-						}
+				//if($(this).children().css("display")=="none"){
+					//	$(this).children().css({"display":"block"});
+						//}
+				var src="${pageContext.request.contextPath}/asset/headerSearch?key="+$("#key").val();;
+				$("#mainFrame").attr("src",src);
 			});
 			
 			var sm = $(".list li:nth-child(1)")
