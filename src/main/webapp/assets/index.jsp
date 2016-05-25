@@ -17,9 +17,9 @@
 }
 .nav-list>li>a {
     display: block;
-    height: 38px;
+    height: 36px;
     line-height: 36px;
-    padding: 0 16px 0 0px;
+    padding: 0;
 }
 
 .nav-list>li>a:hover {
@@ -77,6 +77,9 @@
 .menu-zutai{
 			background: url("assets/images/zutai.png") #414b51 center center no-repeat;
 }
+.menu-head{
+			background: url("assets/images/head.png") #414b51 center center no-repeat;
+}
 
 </style>
 </head>
@@ -112,7 +115,7 @@
 				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
 			</script>
 			<div class="main-container-inner" style="height:100%;">
-			<div class="sidebar" id="sidebar">
+			<div class="sidebar" id="sidebar" style="height:100%;">
 					<script type="text/javascript">
 						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
 					</script>
@@ -285,6 +288,15 @@
 					<div class="sidebar-collapse" id="sidebar-collapse">
 						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
 					</div>
+					
+					<ul class="nav nav-list" style="position: fixed;bottom: 0px;z-index: 99">
+						<li>
+							<a href="javascript:void(0)" id="logout">
+								<span class="menu-span menu-head"></span>
+								<span class="menu-text"> 退出 </span>
+							</a>
+						</li>
+					</ul>
 
 					<script type="text/javascript">
 						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
@@ -318,6 +330,22 @@
 					$("#mainFrame").attr("src",src);
 				}
 			})
+			
+			$("#logout").click(function(){
+				 $.ajax({
+		    			url:"${pageContext.request.contextPath}/userController/logout",
+		    			type:"get",
+		    			dataType:"json",
+		    			cache:false,
+		    			success:function(response){
+		    				if(response.success){
+		    					location.href=rootpath+"/index";
+		    				}
+		    			},
+		    			error:function(e){
+		    			}
+		    		});
+			});
 			
 			var g=$(".list li:nth-child(4)");
 			g.click(function(){
