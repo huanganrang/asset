@@ -257,34 +257,41 @@
 								        function allocation(){
 								            var ss ="";
 								            $('#dg').datagrid('endEdit', editIndex);
-								            var rows = $('#dg').datagrid('getChanges');
+								            var rows = $('#dg').datagrid('getSelections');
+								            if(rows.length == 0){
+								            	$.messager.alert("提示","请先选择一条记录");
+								            	return false;
+								            }
 								            for(var i=0; i<rows.length; i++){
-								            		ss += rows[i].asset_id + ':' + rows[i].allocation_company + ',';
+								            	     if(rows[i].allocation_company != ""){
+								            			ss += rows[i].asset_id + ':' + rows[i].allocation_company + ',';
+								            	     }
 								            }
 								            if(ss == ""){
 								            	$.messager.alert("提示","请输入设备去向");
 								            	return false;
 								            }
-								            $.messager.progress({
-									              title:'请等待',
-									              msg:'加载中...'
-									         });
-								           $.ajax({
-								    			url:"${pageContext.request.contextPath}/allocation/allocation",
-								    			type:"post",
-								    			data:"ss="+ss,
-								    			dataType:"json",
-								    			cache:false,
-								    			success:function(response){
-								    				$.messager.progress('close');
-								    				$.messager.alert("提示","调拨成功");
-								    				$('#dg').datagrid('reload');
-								    			},
-								    			error:function(e){
-								    				$.messager.progress('close');
-								    				$.messager.alert("提示","调拨失败，请稍后再试或联系管理员");
-								    			}
-								    		});
+									            $.messager.progress({
+										              title:'请等待',
+										              msg:'加载中...'
+										         });
+									           $.ajax({
+									    			url:"${pageContext.request.contextPath}/allocation/allocation",
+									    			type:"post",
+									    			data:"ss="+ss,
+									    			dataType:"json",
+									    			cache:false,
+									    			success:function(response){
+									    				$.messager.progress('close');
+									    				$.messager.alert("提示","调拨成功");
+									    				$('#dg').datagrid('reload');
+									    			},
+									    			error:function(e){
+									    				$.messager.progress('close');
+									    				$.messager.alert("提示","调拨失败，请稍后再试或联系管理员");
+									    			}
+									    		});
+								            
 								        } 
 								        
 								        function addCompany(){

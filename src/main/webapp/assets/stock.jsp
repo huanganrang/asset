@@ -220,10 +220,16 @@
 								        function outstock(){
 								            var ss = [];
 								            var rows = $('#dg').datagrid('getSelections');
+								            if(rows.length == 0){
+								            	$.messager.alert("提示","请先选择一条记录");
+								            	return false;
+									        }
 								            for(var i=0; i<rows.length; i++){
 								                var row = rows[i];
 								                ss.push(row.assetId);
 								            }
+								          
+								            
 								          var assetIds = ss.join(',');
 								          
 								          var assetUser = $("#assetUser").val();
