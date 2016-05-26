@@ -84,22 +84,27 @@ public class ScrapController {
 			if(null != assetList && assetList.size() > 0){
 				JSONArray rows = new JSONArray();
 				for(AssetBaseInfo baseInfo:assetList){
-					String assetUseDate = baseInfo.getAssetBeginDate();
-					String assetDeviceStatus = baseInfo.getAssetDeviceStatus();
-					long times = 100;
-					if(StringUtils.isNotBlank(assetUseDate))
-					{
-						Date useDate = sdf.parse(assetUseDate);
-						times = (endYear.getTime()-useDate.getTime())/(1000*3600*24);
+					try {
+						String assetUseDate = baseInfo.getAssetBeginDate();
+						String assetDeviceStatus = baseInfo.getAssetDeviceStatus();
+						long times = 100;
+						if(StringUtils.isNotBlank(assetUseDate))
+						{
+							Date useDate = sdf.parse(assetUseDate);
+							times = (endYear.getTime()-useDate.getTime())/(1000*3600*24);
+						}
+						JSONObject json = JSON.parseObject(JSON.toJSONString(baseInfo));
+						//json.put("useTime", (endYear.getTime()-useDate.getTime())/(1000*3600*24));
+						json.put("useTime", times);
+						json.put("scrapReason", "超期");
+						if(!"待报废".equals(assetDeviceStatus) && !"报废".equals(assetDeviceStatus)){
+							json.put("assetDeviceStatus", "");
+						}
+						rows.add(json);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					JSONObject json = JSON.parseObject(JSON.toJSONString(baseInfo));
-					//json.put("useTime", (endYear.getTime()-useDate.getTime())/(1000*3600*24));
-					json.put("useTime", times);
-					json.put("scrapReason", "超期");
-					if(!"待报废".equals(assetDeviceStatus) && !"报废".equals(assetDeviceStatus)){
-						json.put("assetDeviceStatus", "");
-					}
-					rows.add(json);
 				}
 				
 				dataGrid.setRows(rows);

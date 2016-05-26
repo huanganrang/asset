@@ -14,15 +14,9 @@
 	 .tablist>li:nth-child(2){margin-left:1%; line-height:30px; background:#fff; padding:0 2%;}
 	 .tablist>li:nth-child(3) {margin-left:1%; background: #FFF;}
 	 .tablist a{font-size: 13px;color:#666;text-decoration: none;}
-	 .tablist>li:nth-child(5){margin-left:60%; margin-right:1%; }
+	 .tablist>li:nth-child(4){margin-left:60%; margin-right:1%; }
+	 .tablist>li:nth-child(5){margin-right:1%; }
 	 .tablist>li:nth-child(6){margin-right:1%; }
-	 .tablist>li:nth-child(7){margin-right:1%; }
-	 #tag_a{
-	     width:40px;
-	     margin-left:10px;
-	     background: url("../assets/images/tag.png") #ffffff center center no-repeat;
-	     cursor: pointer;
-	 }
  	ul, ol {
 		list-style: none;
 		margin:0;
@@ -80,8 +74,7 @@
 								        	<li><a id="btn_prev" href="#" ><</a> </li>
 								            <li><a id="pageindex">0/0</a></li>
 								            <li><a id="btn_next" href="#">></a></li>
-								            <li id="tag_a"></li>
-								            <li><a href="javascript:void(0)" onclick="$('#dlg').dialog('open');">出库</a></li>
+								            <li><a href="javascript:void(0)" onclick="out()">出库</a></li>
 								            <li><a href="#" onClick="CreateFormPage('打印',$('#dg'));">打印</a></li>
 								            <li><a href="#" onClick="Export('asset', $('#dg'))">导出</a></li>
 								            
@@ -169,6 +162,15 @@
 								            	Export('asset', $('#dg'));
 								            }
 								        }];*/
+								        
+								        function out(){
+								        	  var rows = $('#dg').datagrid('getSelections');
+									            if(rows.length == 0){
+									            	$.messager.alert("提示","请先选择一条记录");
+									            	return false;
+										        }
+								        	$('#dlg').dialog('open');
+								        }
 								        $(function(){
 								        	var rootpath = $("#rootpath").val();
 								        	//全局变量
@@ -220,10 +222,16 @@
 								        function outstock(){
 								            var ss = [];
 								            var rows = $('#dg').datagrid('getSelections');
+								            if(rows.length == 0){
+								            	$.messager.alert("提示","请先选择一条记录");
+								            	return false;
+									        }
 								            for(var i=0; i<rows.length; i++){
 								                var row = rows[i];
 								                ss.push(row.assetId);
 								            }
+								          
+								            
 								          var assetIds = ss.join(',');
 								          
 								          var assetUser = $("#assetUser").val();
