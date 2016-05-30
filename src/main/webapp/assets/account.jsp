@@ -102,7 +102,7 @@ left:45%; bottom:-100%; color:#fff;}
 			        'swf': rootpath+'/assets/js/uploadify/uploadify.swf',
 			        'fileObjName':'file',
 			        // 后台处理的页面
-			         'uploader':rootpath+'/account/upload',
+			         'uploader':rootpath+'/account/upload;jsessionid=${pageContext.session.id}',
 			        // 按钮显示的文字
 			        'buttonText': '导入',
 			        'formData':{type:-1},
@@ -114,6 +114,7 @@ left:45%; bottom:-100%; color:#fff;}
 			        'onProgress':false,
 			        'width':'60px',
 			        onUploadSuccess :function(event, response, status){
+			        	console.log(response)
 			        	var data = jQuery.parseJSON(response);
 			        	if(data.msg){
 			        		$("#exportBtn").removeAttr("disabled");
