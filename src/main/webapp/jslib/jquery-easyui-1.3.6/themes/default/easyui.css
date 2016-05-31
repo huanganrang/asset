@@ -1309,6 +1309,7 @@
 
 .datagrid-header .datagrid-cell {
 	height: auto;
+	text-align: center;
 }
 
 .datagrid-header .datagrid-cell span {
