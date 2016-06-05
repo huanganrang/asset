@@ -89,8 +89,8 @@
 							            	<!-- <th data-options="field:'assetId',hidden:true"></th> -->
 							                <th data-options="field:'name',width:80">登录名称</th>
 							                <th data-options="field:'createdatetime',width:100">创建时间</th>
-							                <th data-options="field:'modifydatetime',width:80,align:'right'">最后修改时间</th>
-							                <th data-options="field:'roleNames',width:80,align:'right'">所属角色名称</th>
+							                <th data-options="field:'modifydatetime',width:80,">最后修改时间</th>
+							                <th data-options="field:'roleNames',width:80,">所属角色名称</th>
 							            </tr>
 							        </thead>
 							    </table>
