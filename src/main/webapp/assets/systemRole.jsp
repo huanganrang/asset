@@ -91,9 +91,9 @@
 							            	<!-- <th data-options="field:'assetId',hidden:true"></th> -->
 							                <th data-options="field:'name',width:60">角色名称</th>
 							                <th data-options="field:'seq',width:20">排序</th>
-							                <th data-options="field:'pname',width:20,align:'right'">上级角色</th>
-							                <th data-options="field:'resourceIds',width:180,align:'right',formatter:formatResource" >拥有资源</th>
-							                <th data-options="field:'remark',width:20,align:'right'">备注</th>
+							                <th data-options="field:'pname',width:30,">上级角色</th>
+							                <th data-options="field:'resourceIds',width:180,formatter:formatResource" >拥有资源</th>
+							                <th data-options="field:'remark',width:20,">备注</th>
 							            </tr>
 							        </thead>
 							    </table>
