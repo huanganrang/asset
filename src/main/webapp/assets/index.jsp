@@ -295,7 +295,7 @@
 						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
 					</div>
 					
-					<ul class="nav nav-list" id="log_ul" style="position:fixed; bottom: 0px;width:190px;">
+					<ul class="nav nav-list" id="log_ul" style="position:fixed; bottom: 0px;width:190px;z-index: 99">
 						<li>
 							<a href="javascript:void(0)"  class="dropdown-toggle" onclick="return false;">
 								<span class="menu-span menu-head"></span>
@@ -332,6 +332,13 @@
 		</div><!-- /.main-container -->
 		<script type="text/javascript">
 		$(function(){
+			
+			if($("#sidebar").hasClass("menu-min")){
+				$("#log_ul").width(34);
+			}else{
+				$("#log_ul").width(190);
+			}
+			
 			$(".nav-list a").click(function(){
 				//$("#mainFrame").src=;
 				var src =$(this).attr("src");
