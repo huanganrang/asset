@@ -17,6 +17,17 @@
 	 .tablist a{font-size: 13px;color:#666;text-decoration: none;}
 	 .tablist>li:nth-child(5){margin-left:40%; margin-right:1%; padding-left:1%;}
 	 
+	 .uploadify-button {
+		 background: #FFF;
+		 font-size: 13px;
+	     color: #666;
+	     text-align: center;
+	 }
+	 
+	 #queue{
+	 background-color: #ffffff;
+	 }
+	 
 	 #tag_a{
 	     width:40px;
 	     margin-left:10px;
@@ -103,7 +114,7 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								            <li id="tag_a"></li>
 								            <li><a id="to-high">高级</a></li>
 								            <li><a href="${pageContext.request.contextPath}/ledger/toAdd">新增</a></li>
-								            <li><a href="javascript:void(0)" onclick="$('#dlg').dialog('open');">导入</a></li>
+								            <li><input id="file_import" name="file_import" type="file" value="导入" style="width:44px"/></li>
 								            <li><a href="#" onClick="Export('asset', $('#dg'))">导出</a></li>
 								            <li><a href="javascript:void(0)" onclick="print()">打印二维码</a>
 								            	<!--<ul class="tablistmin">
@@ -115,8 +126,9 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 								            <li><a href="#" onClick="CreateFormPage('打印',$('#dg'));">打印</a></li>
 								            
 								        </ul>
+								         <div id="queue"></div>
 								  </div>
-								  <div style="height:600px">
+								  <div style="height:500px">
 								  <table id="dg" style="width:800px;height:600px">
 								  </table>
 								  </div>
@@ -151,18 +163,6 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 										<input id="btn_hconfirm" type="button" value="确定" /> <input id="btn_hcancel" type="button" value="取消" />
 							        </div>
 							   </div>
-								  <div id="dlg" class="easyui-dialog" title="导入台账" style="width:400px;height:200px;padding:10px"
-						            data-options="
-						                iconCls: 'icon-save',
-						                buttons: [{
-						                    text:'取消',
-						                    handler:function(){
-						                       $('#dlg').dialog('close')
-						                    }
-						                }]
-						            ">
-						            <input id="file_import" name="file_import" type="file" value="导入"/>
-								  </div>
 								  </div>
 								  </div>
 								    <%-- <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/datagrid-filter.js"></script> --%>
@@ -346,16 +346,11 @@ font: 16px/30px "黑体"; color: #333; border-radius: 5px; margin-left: 27%;}
 										        'auto': true,
 										        // 设置为true将允许多文件上传
 										        'multi': false,
-										        onUploadSuccess :function(event, response, status){
-										        	var data = jQuery.parseJSON(response);
-										        	if(data.success){
-										        		$.messager.alert("提示","导入成功");
-										        		$('#dlg').dialog('close');
-										        		$('#dg').datagrid('reload');
-										        	}else{
-										        		$('#dlg').dialog('close');
-										        		$.messager.alert("错误",data.msg);
-										        	}
+										        'queueID'  : 'queue',
+										        'width':44,
+										        'heigth':30,
+										        onUploadSuccess :function(file, data, response){
+										        	 $('#' + file.id).find('.data').html(' 上传完毕');
 										        }
 										    });
 								        });

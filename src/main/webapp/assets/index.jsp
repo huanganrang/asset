@@ -81,6 +81,10 @@
 			background: url("assets/images/head.png") #414b51 center center no-repeat;
 }
 
+.logout{
+	background: url("assets/images/logout.png") #414b51 center center no-repeat;
+}
+
 </style>
 </head>
 <body>
@@ -283,20 +287,25 @@
 								</li>
 							</ul>
 						</li>
+						
+						
 					</ul><!-- /.nav-list -->
 
 					<div class="sidebar-collapse" id="sidebar-collapse">
 						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
 					</div>
 					
-					<ul class="nav nav-list" style="position: fixed;bottom: 0px;z-index: 99">
+					<ul class="nav nav-list" id="log_ul" style="position:fixed; bottom: 0px;width:190px;">
 						<li>
-							<a href="javascript:void(0)" id="logout">
+							<a href="javascript:void(0)"  class="dropdown-toggle" onclick="return false;">
 								<span class="menu-span menu-head"></span>
-								<span class="menu-text"> 退出 </span>
+								<span class="menu-text"> 金榜智能 </span>
+								<b class="arrow  logout" id="logout"></b>
 							</a>
 						</li>
-					</ul>
+					</ul> 
+					
+					
 
 					<script type="text/javascript">
 						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
@@ -331,6 +340,13 @@
 				}
 			})
 			
+			$("#sidebar-collapse").click(function(){
+				if($("#sidebar").hasClass("menu-min")){
+					$("#log_ul").width(34);
+				}else{
+					$("#log_ul").width(190);
+				}
+			});
 
 			$("#logout").click(function(){
 				 $.ajax({
