@@ -208,7 +208,7 @@ public class LedgerDetailController {
 	public DataGrid addPro(HttpServletRequest request) {
 		DataGrid dataGrid = new DataGrid();
 		try {
-			String cate = request.getParameter("cate");
+			String cate = java.net.URLDecoder.decode(request.getParameter("cate"), "UTF-8");
 			String type = request.getParameter("type");
 			if(StringUtils.isBlank(cate) || StringUtils.isBlank(type)){
 				throw new IllegalArgumentException("param error");
