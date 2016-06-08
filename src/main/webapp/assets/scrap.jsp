@@ -94,12 +94,12 @@
 										    </li>
 										    <li>
 										    	    截止时间: <input class="easyui-datetimebox" id="endDateInput" required style="width:140px">
-							        			 <a href="#" class="easyui-linkbutton" id="searchBtn" iconCls="icon-search">查询</a>
+							        			 <a href="#" class="easyui-linkbutton" id="searchBtn" >查询</a>
 										    </li>
-								            <li><a href="#" class="easyui-linkbutton" id="saveBtn" iconCls="icon-save">保存</a></li>
-							        		<li><a href="#" class="easyui-linkbutton" iconCls="icon-undo" id="exportBtn">导出</a></li>
-							        		<li><a href="#" class="easyui-linkbutton" iconCls="icon-print" id="printBtn">打印</a></li>
-							        		<li><a href="#" class="easyui-linkbutton" id="scrapBtn" iconCls="icon-pencil">报废</a></li>
+								            <li><a href="#" class="easyui-linkbutton" id="saveBtn" >保存</a></li>
+							        		<li><a href="#" class="easyui-linkbutton" id="exportBtn">导出</a></li>
+							        		<li><a href="#" class="easyui-linkbutton" id="printBtn">打印</a></li>
+							        		<li><a href="#" class="easyui-linkbutton" id="scrapBtn" >报废</a></li>
 								        </ul> 
 								</div>
 								 <div style="height:600px">
@@ -129,9 +129,9 @@
 							            <option value="5">5年</option>
 							        </select>
 							         截止时间: <input class="easyui-datetimebox" id="endDateInput" required style="width:140px">
-							        <a href="#" class="easyui-linkbutton" id="searchBtn" iconCls="icon-search">查询</a>
+							        <a href="#" class="easyui-linkbutton" id="searchBtn" >查询</a>
 							        
-							        <a href="#" class="easyui-linkbutton" id="saveBtn" iconCls="icon-save">保存</a>
+							        <a href="#" class="easyui-linkbutton" id="saveBtn" >保存</a>
 							        <a href="#" class="easyui-linkbutton" iconCls="icon-undo" id="exportBtn">导出</a>
 							        <a href="#" class="easyui-linkbutton" iconCls="icon-print" id="printBtn">打印</a>
 							        <a href="#" class="easyui-linkbutton" id="scrapBtn" iconCls="icon-pencil">报废</a>

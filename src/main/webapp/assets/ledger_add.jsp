@@ -28,7 +28,7 @@
 					</form>
 					
 								   <table id="pg" class="easyui-propertygrid" style="width:800px;height:480px" data-options="
-						                url:'${pageContext.request.contextPath}/ledger/addPro?cate=${cate }&type=${type }',
+						                url:'${pageContext.request.contextPath}/ledger/addPro?cate='+encodeURI('${cate}')+'&type=${type}',
 						                method:'get',
 						                showGroup:false,
 						                showHeader:false,
@@ -54,13 +54,11 @@
 								   });
 									    var toolbar = [{
 								            text:'选择图片',
-								            iconCls:'icon-search',
 								            handler:function(){
 								            	$("#upload").trigger("click");
 								            }
 								        },'-',{
 								            text:'提交',
-								            iconCls:'icon-save',
 								            handler:getChanges
 								        }];
 									    function getChanges(){
