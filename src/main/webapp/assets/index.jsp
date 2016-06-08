@@ -83,6 +83,17 @@
 
 .logout{
 	background: url("assets/images/logout.png") #414b51 center center no-repeat;
+    display: inline-block;
+    width: 17px!important;
+    height: 17px;
+    line-height: 17px;
+    text-shadow: none;
+    font-size: 18px;
+    position: absolute;
+    right: 11px;
+    top: 11px;
+    padding: 0;
+    color: #666;
 }
 
 </style>
@@ -300,7 +311,7 @@
 							<a href="javascript:void(0)"  class="dropdown-toggle" onclick="return false;">
 								<span class="menu-span menu-head"></span>
 								<span class="menu-text"> 金榜智能 </span>
-								<b class="arrow  logout" id="logout"></b>
+								<b class="logout" id="logout"></b>
 							</a>
 						</li>
 					</ul> 
