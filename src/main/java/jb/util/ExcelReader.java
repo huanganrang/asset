@@ -32,7 +32,7 @@ public class ExcelReader {
 		XSSFSheet sheet=xs.createSheet("对账");
 		XSSFRow row=sheet.createRow((short)0);
 		short i = 0;
-		String[] titles = new String[]{"IT验收编号","存放地点","使用部门","IT验收编号","存放地点","使用部门"};
+		String[] titles = new String[]{"IT验收编号","使用部门","IT验收编号","使用部门"};
 		for(String title: titles){
 			row.createCell(i).setCellValue(title); 
 			i++;
@@ -42,7 +42,7 @@ public class ExcelReader {
 			row = sheet.createRow(j);
 			i = 0;
 			String[] split = line.split("###");
-			if(null != split && split.length == 6){
+			if(null != split && split.length == 4){
 				for(String value:split){
 					row.createCell(i).setCellValue(value); 
 					i++;
@@ -77,19 +77,19 @@ public class ExcelReader {
 	            	throw new IllegalArgumentException("param error");
 	            }
 	            // Read the Row
-	            for (int rowNum = 5; rowNum <= xssfSheet.getLastRowNum()-5; rowNum++) {
+	            for (int rowNum = 3; rowNum <= xssfSheet.getLastRowNum()-3; rowNum++) {
 	                XSSFRow xssfRow = xssfSheet.getRow(rowNum);
 	                if (xssfRow != null) {
 	                	Map<String,String> map= new HashMap<String,String>();
 	                	
 //	                    int total =  xssfRow.getPhysicalNumberOfCells();
-	                    XSSFCell number = xssfRow.getCell(1);
-	                    XSSFCell useDepartment = xssfRow.getCell(6);
-	                    XSSFCell address = xssfRow.getCell(24);
+	                    XSSFCell number = xssfRow.getCell(4);
+	                    XSSFCell useDepartment = xssfRow.getCell(11);
+//	                    XSSFCell address = xssfRow.getCell(24);
 	                  
 	                    map.put("number", getValue(number));
 	                    map.put("useDepartment", getValue(useDepartment));
-	                    map.put("address", getValue(address));
+//	                    map.put("address", getValue(address));
 	                    list.add(map);
 	                }
 	            }

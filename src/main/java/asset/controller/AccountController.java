@@ -66,7 +66,6 @@ public class AccountController {
 	        	for(Map<String,String> map:mapList){
 	        		String itNumber = map.get("number");
 	        		String useDepartment = map.get("useDepartment");
-	        		String address = map.get("address");
 	        		
 	        		if(StringUtils.isNotBlank(itNumber)){
 	        			boolean need = false;
@@ -77,14 +76,14 @@ public class AccountController {
 	        			if(null != baseInfo){
 	        				 aud = baseInfo.getAssetUseDepartment();
 	        				 adl = baseInfo.getAssetDeviceLocation();
-	        				 if(!useDepartment.equals(aud) || !address.equals(adl)){
+	        				 if(!useDepartment.equals(aud)){
 	        					 need = true;
 	        				 }
 	        			}else{
 	        				need = true;
 	        			}
 	        			if(need){
-	        				rows.add(ain+"###"+aud+"###"+adl+"###"+itNumber+"###"+useDepartment+"###"+address);
+	        				rows.add(ain+"###"+aud+"###"+itNumber+"###"+useDepartment);
 	        			}
 	        		}
 	        	}
