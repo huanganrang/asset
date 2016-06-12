@@ -82,6 +82,7 @@ left:45%; bottom:-100%; color:#fff;}
 				  </form>
 			</li>
             <li><input id="file_import" name="file_import" type="file"  value="导入"/></li>
+            <li><div id="queue"></div></li>
             <li><input type="button" id="exportBtn"  value="导出"  value="对账"/></li>
         </ul>
     </div>
@@ -89,9 +90,9 @@ left:45%; bottom:-100%; color:#fff;}
  </div>  
  </div>
 </div>
-  <form id="downloadTable" target="downloadIframe" method="post" style="display: none;">
+  <!-- <form id="downloadTable" target="downloadIframe" method="post" style="display: none;">
     <input id="fileName" name="fileName"  value="" type="hidden"  />
-  </form> 
+  </form -->> 
   <iframe id="downloadIframe" name="downloadIframe" style="display: none;"></iframe>
 	<script src="${pageContext.request.contextPath}/assets/js/jquery.uploadify-3.1.min.js"></script>
     <script type="text/javascript">
@@ -111,11 +112,14 @@ left:45%; bottom:-100%; color:#fff;}
 			        'auto': true,
 			        // 设置为true将允许多文件上传
 			        'multi': false,
-			        'onProgress':false,
+			        'queueID'  : 'queue',
 			        'width':'60px',
-			        onUploadSuccess :function(event, response, status){
-			        	console.log(response)
-			        	var data = jQuery.parseJSON(response);
+			        onSelect:function(fileObj){
+			        	$("#fileName").val(fileObj.name);
+			        },
+			        onUploadSuccess :function(fileObj, data, response){
+			        	$('#' + fileObj.id).find('.data').html(' 上传完毕');
+			        	data = $.parseJSON(data);
 			        	if(data.msg){
 			        		$("#exportBtn").removeAttr("disabled");
 			        		$("#fileName").val(data.msg);
