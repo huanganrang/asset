@@ -70,7 +70,7 @@ left:45%; bottom:-100%; color:#fff;}
 		  <div class="tab" data="/allocation/toallocation">调拨</div>
 		</div>
  <input type="hidden" id="company" value='${company}'/>
- <div style="height:420px">
+ <div style="height:520px">
  <div class="page2">
  	<aside><a>账单</a><a>账物</a></aside>
     <div class="billpage">
@@ -82,7 +82,11 @@ left:45%; bottom:-100%; color:#fff;}
 				  </form>
 			</li>
             <li><input id="file_import" name="file_import" type="file"  value="导入"/></li>
-            <li><div id="queue"></div></li>
+            <li style="width:267px">
+	            <div class="progress progress-striped" id="progess_bar" style="display:none">
+					<div class="progress-bar progress-bar-inverse" id="progress" ></div>
+				</div>
+			</li>
             <li><input type="button" id="exportBtn"  value="导出"  value="对账"/></li>
         </ul>
     </div>
@@ -112,17 +116,20 @@ left:45%; bottom:-100%; color:#fff;}
 			        'auto': true,
 			        // 设置为true将允许多文件上传
 			        'multi': false,
-			        'queueID'  : 'queue',
 			        'width':'60px',
 			        onSelect:function(fileObj){
 			        	$("#fileName").val(fileObj.name);
 			        },
+			        'onUploadProgress' : function(file, bytesUploaded, bytesTotal, totalBytesUploaded, totalBytesTotal) {
+			            $("#progess_bar").show();
+			        	$("#progress").width(totalBytesUploaded/totalBytesTotal*100+"%");
+			        },
 			        onUploadSuccess :function(fileObj, data, response){
-			        	$('#' + fileObj.id).find('.data').html(' 上传完毕');
+			        	$("#progess_bar").hide();
 			        	data = $.parseJSON(data);
 			        	if(data.msg){
 			        		$("#exportBtn").removeAttr("disabled");
-			        		$("#fileName").val(data.msg);
+			        		/* $("#fileName").val(data.msg); */
 			        	}
 			        }
 			    });
