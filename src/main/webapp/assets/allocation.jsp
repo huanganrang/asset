@@ -113,7 +113,6 @@
 						                iconCls: 'icon-save',
 						                buttons: [{
 						                    text:'添加',
-						                    iconCls:'icon-ok',
 						                    handler:function(){
 						                      addCompany();
 						                    }

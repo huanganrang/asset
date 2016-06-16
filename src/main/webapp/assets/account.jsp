@@ -47,7 +47,7 @@ a{
 .page2 .billpage>ul li:nth-child(2) input{height:30px; border-radius:5px; background:#e9e9e9;}
 .page2 .billpage>ul li:nth-child(3) input{height:30px; background:#50c14e; width:60px; border-radius:5px; color:#fff;}
 .page2 .billpage>ul li:nth-child(4) input{height:30px; background:#b47e43; width:60px; border-radius:5px; position:absolute;
-left:45%; bottom:-100%; color:#fff;}
+left:35%; bottom:-100%; color:#fff;}
 .uploadify-queue{ display: none;}
 .uploadify-button-text{  height: 30px;  background: #50c14e; width: 60px;
     border-radius: 5px; color: #fff;  padding-left: 15px;
@@ -82,12 +82,12 @@ left:45%; bottom:-100%; color:#fff;}
 				  </form>
 			</li>
             <li><input id="file_import" name="file_import" type="file"  value="导入"/></li>
+            <li><input type="button" id="exportBtn"  value="导出"  value="对账"/></li>
             <li style="width:267px">
 	            <div class="progress progress-striped" id="progess_bar" style="display:none">
 					<div class="progress-bar progress-bar-inverse" id="progress" ></div>
 				</div>
 			</li>
-            <li><input type="button" id="exportBtn"  value="导出"  value="对账"/></li>
         </ul>
     </div>
     </div> 

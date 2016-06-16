@@ -100,7 +100,7 @@
 						                iconCls: 'icon-save',
 						                buttons: [{
 						                    text:'确认',
-						                    iconCls:'icon-ok',
+						                    
 						                    handler:function(){
 						                       outstock();
 						                    }
