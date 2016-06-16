@@ -24,7 +24,7 @@
         </div>
         <div class="msg2">
         	<a class="icon"><img src="${pageContext.request.contextPath}/assets/images/password-1.png"/></a>
-            <input type="password" id="pwd" placeholder="密码"/>
+            <input type="password" id="pwd" placeholder="密码"  onkeydown="return keydown(event)"/>
           
         </div>
         <div class="msg3">
@@ -46,7 +46,6 @@
 		
 <script type="text/javascript">
 $(function(){
-
 	$.base64.utf8encode = true;
 	var cookie_user = $.cookie("cookie_user");
 	if(cookie_user){
@@ -54,40 +53,51 @@ $(function(){
 		$("#pwd").val($.base64.decode(cookie_user.split(":")[1]));
 		$("#rempw").attr("checked", true);
 	}
-
 	$("#submit").click(function(){
-		var returnUrl = "${returnUrl}";
-		if(returnUrl == ""){
-			returnUrl = "${pageContext.request.contextPath}/index";
-		}
-		$("#msg").hide();
-		var data = "name="+$("#name").val()+"&pwd="+$("#pwd").val();
-		$.ajax({
-			url:"${pageContext.request.contextPath}/userController/login",
-			type:"post",
-			data:data,
-			dataType:"json",
-			cache:false,
-			success:function(response){
-				if(response.success){
-					if($("#rempw").is(" :checked")){
-						$.cookie("cookie_user", $.base64.encode($("#name").val()) + ":" + $.base64.encode($("#pwd").val()), {path: "/", expires: 7});
-					}else {
-						$.cookie("cookie_user", "", {path: "/", expires: -1});
-					}
-				    location.href=returnUrl;
-				}else{
-					 $("#msg").text("用户名密码错误");
-					 $("#msg").show();
-				}
-			},
-			error:function(e){
-				 $("#msg").text("服务器内部错误");
-				 $("#msg").show();
-			}
-		});
+		login();
 	});
 });
+
+function keydown(event){
+	var keyCode = event.keyCode?event.keyCode:event.which?event.which:event.charCode;
+	if (keyCode ==13){
+		login();
+	}
+}
+
+function login(){
+	var returnUrl = "${returnUrl}";
+	if(returnUrl == ""){
+		returnUrl = "${pageContext.request.contextPath}/index";
+	}
+	$("#msg").hide();
+	var data = "name="+$("#name").val()+"&pwd="+$("#pwd").val();
+	$.ajax({
+		url:"${pageContext.request.contextPath}/userController/login",
+		type:"post",
+		data:data,
+		dataType:"json",
+		cache:false,
+		success:function(response){
+			if(response.success){
+				if($("#rempw").is(" :checked")){
+					$.cookie("cookie_user", $.base64.encode($("#name").val()) + ":" + $.base64.encode($("#pwd").val()), {path: "/", expires: 7});
+				}else {
+					$.cookie("cookie_user", "", {path: "/", expires: -1});
+				}
+			    location.href=returnUrl;
+			}else{
+				 $("#msg").text("用户名密码错误");
+				 $("#msg").show();
+			}
+		},
+		error:function(e){
+			 $("#msg").text("服务器内部错误");
+			 $("#msg").show();
+		}
+	});
+}
+
 </script>
 
 </body>

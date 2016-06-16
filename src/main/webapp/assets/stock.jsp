@@ -114,28 +114,28 @@
 						      		<table>
 						      		<tr>
 						      		<td>领用人</td>
-						      		<td><input id="assetUser"/></td>
+						      		<td><input id="assetUser" class="easyui-validatebox" data-options="required:true"/></td>
 						      		</tr>
 						      		
 						      		<tr>
 						      		<td>领用部门</td>
-						      		<td><input id="assetUseDepartment"/></td>
+						      		<td><input id="assetUseDepartment" class="easyui-validatebox" data-options="required:true"/></td>
 						      		</tr>
 						      		
-						      		<tr>
+						      		<!-- <tr>
 						      		<td>领用时间</td>
 						      		<td><input id="assetUseDate" class="easyui-datebox"/></td>
-						      		</tr>
+						      		</tr> -->
 						      		
 						      		<tr>
 						      		<td>存放地点</td>
-						      		<td><input id="assetDeviceLocation"/></td>
+						      		<td><input id="assetDeviceLocation" class="easyui-validatebox" data-options="required:true"/></td>
 						      		</tr>
 						      		
-						      		<tr>
+						      		<!-- <tr>
 						      		<td>操作员</td>
 						      		<td><input id="assetAddUser"/></td>
-						      		</tr>
+						      		</tr> -->
 						      		</table>
 						    </div>
 						  </div>
@@ -236,16 +236,19 @@
 								          
 								          var assetUser = $("#assetUser").val();
 								          var assetUseDepartment = $("#assetUseDepartment").val();
-								          var assetUseDate = $("#assetUseDate").val();
+								          /* var assetUseDate = $("#assetUseDate").val(); */
 								          var assetDeviceLocation = $("#assetDeviceLocation").val();
-								          var assetAddUser = $("#assetAddUser").val();
-								          
+								          /*  var assetAddUser = $("#assetAddUser").val(); */
+								          if(assetUser == "" || assetUseDepartment =="" || assetDeviceLocation==""){
+								        	  $.messager.alert("提示","参数不能为空");
+								        	  return false;
+								          }
 								          
 								          $.ajax({
 								    			url:"${pageContext.request.contextPath}/stock/outstock",
 								    			type:"post",
 								    			data:"assetIds="+assetIds+"&assetUser="+assetUser+"&assetUseDepartment="+assetUseDepartment
-								    				+"&assetUseDate="+assetUseDate+"&assetDeviceLocation="+assetDeviceLocation+"&assetAddUser="+assetAddUser,
+								    				+"&assetDeviceLocation="+assetDeviceLocation,
 								    			dataType:"json",
 								    			cache:false,
 								    			success:function(response){

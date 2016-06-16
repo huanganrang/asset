@@ -219,6 +219,38 @@
 								</li>
 							</ul>
 						</li>
+						
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<span class="menu-span menu-report"></span>
+								<span class="menu-text"> 运维管理</span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="#">
+										<i class="icon-double-angle-right"></i>
+										巡检
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<i class="icon-double-angle-right"></i>
+										维护
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<i class="icon-double-angle-right"></i>
+										操作日志
+									</a>
+								</li>
+							</ul>
+						</li>
 
 						<li>
 							<a href="#" class="dropdown-toggle">

@@ -1,5 +1,6 @@
 package asset.controller;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,9 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import jb.pageModel.DataGrid;
 import jb.pageModel.Json;
 import jb.pageModel.PageHelper;
+import jb.pageModel.SessionInfo;
+import jb.util.ConfigUtil;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -109,9 +113,10 @@ public class StockController {
 			}
 			String assetUser = request.getParameter("assetUser");
 			String assetUseDepartment = request.getParameter("assetUseDepartment");
-			String assetUseDate = request.getParameter("assetUseDate");
+			String assetUseDate = DateFormatUtils.format(Calendar.getInstance(), "yyyy-MM-dd");
 			String assetDeviceLocation = request.getParameter("assetDeviceLocation");
-			String assetAddUser = request.getParameter("assetAddUser");
+			SessionInfo sessionInfo = (SessionInfo) request.getSession().getAttribute(ConfigUtil.getSessionInfoName());
+			String assetAddUser = sessionInfo.getName();
 			for(String assetId:assetIdArray){
 				AssetBaseInfo baseInfo = new AssetBaseInfo();
 				baseInfo.setAssetId(Integer.parseInt(assetId));
