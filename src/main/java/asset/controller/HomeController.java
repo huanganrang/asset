@@ -64,11 +64,26 @@ public class HomeController {
 			String serial = baseInfo.getAssetSerial();
 			String bornDate = baseInfo.getAssetBornDate();
 			String beginDate = baseInfo.getAssetBeginDate();
+			String assetItNumber = baseInfo.getAssetItNumber();
+			String assetModel = baseInfo.getAssetModel();
+			String assetName = baseInfo.getAssetName();
+			String assetNumber = baseInfo.getAssetNumber();
+			
+			JSONObject json = new JSONObject();
+			json.put("设备名称", assetName);
+			json.put("型号", assetModel);
+			json.put("出厂编号", serial);
+			json.put("出厂日期", bornDate);
+			json.put("IT验收编号", assetItNumber);
+			
+			json.put("开始使用日期", beginDate);
+			json.put("固定资产编号", assetNumber);
+		
 			
 			Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
             hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
             hints.put(EncodeHintType.MARGIN, 0);
-            BitMatrix bitMatrix = new MultiFormatWriter().encode(serial+","+bornDate+","+beginDate, BarcodeFormat.QR_CODE, 100, 100, hints);
+            BitMatrix bitMatrix = new MultiFormatWriter().encode(json.toJSONString(), BarcodeFormat.QR_CODE, 100, 100, hints);
             int[] rec = bitMatrix.getEnclosingRectangle();  
             int resWidth = rec[2] + 1;  
             int resHeight = rec[3] + 1;  
