@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import asset.model.AssetBaseInfo;
 import asset.service.AssetBaseServiceI;
+import asset.service.AssetDicServiceI;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -44,6 +47,10 @@ public class HomeController {
 	
 	@Autowired
 	private AssetBaseServiceI service;
+	
+	
+	@Autowired
+	private AssetDicServiceI dicService;
 
 	 @RequestMapping("/index")
 	 public String index(HttpServletRequest request) {
@@ -68,8 +75,16 @@ public class HomeController {
 			String assetModel = baseInfo.getAssetModel();
 			String assetName = baseInfo.getAssetName();
 			String assetNumber = baseInfo.getAssetNumber();
-			
 			JSONObject json = new JSONObject();
+			if(StringUtils.isNotBlank(assetItNumber)){
+				String letter = assetItNumber.substring(0, 1);
+				LinkedHashMap<String, String> dicMap = dicService.getAssetDicMap(101);
+				if(dicMap.containsKey(letter)){
+					json.put("设备所属", dicMap.get(letter));
+				}
+			}
+			
+			
 			json.put("设备名称", assetName);
 			json.put("型号", assetModel);
 			json.put("出厂编号", serial);
