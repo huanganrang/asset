@@ -117,7 +117,7 @@
 				    </li>
 				    <li><a href="#"></a></li>
 				    <li>华鑫证券资产管理系统</li>
-				    <li><input type="text" id="key" name="key"/></li>
+				    <li><input type="text" id="key" name="key" onkeydown="return keydown(event)"/></li>
 				    <li></li>
 				    
 				 </ul>
@@ -374,6 +374,15 @@
 			</a>
 		</div><!-- /.main-container -->
 		<script type="text/javascript">
+		
+		function keydown(event){
+			var keyCode = event.keyCode?event.keyCode:event.which?event.which:event.charCode;
+			if (keyCode ==13){
+				var src="${pageContext.request.contextPath}/asset/headerSearch?key="+$("#key").val();;
+				$("#mainFrame").attr("src",src);
+			}
+		}
+		
 		$(function(){
 			
 			if($("#sidebar").hasClass("menu-min")){
