@@ -48,6 +48,20 @@ public class AllocationServiceImpl implements AllocationService {
 		}
 		String sql = "select a.asset_id,a.asset_it_number,a.asset_number,a.asset_type,a.asset_name,a.asset_model,a.asset_device_status,b.allocation_date,b.allocation_company from asset_base_info as a left join asset_allocation as b ";
 		String where = withHql(key);
+		if(null != paramMap && paramMap.size() > 0){
+			for(Map.Entry<String, String> entry:paramMap.entrySet()){
+				String k = entry.getKey();
+				if(!"key".equals(k)){
+				 if(!"allocation_company".equals(k) && !"allocation_date".equals(k)){
+						String value = entry.getValue();
+						where += " and a."+entry.getKey()+" like '%"+value+"%' ";
+				 }else{
+					 String value = entry.getValue();
+						where += " and b."+entry.getKey()+" like '%"+value+"%' ";
+				 }
+				}
+		}
+		}
 		List<Map> sql2Map = new ArrayList<Map>();
 		if(null != ph){
 			sql2Map = allocationDao.findBySql2Map(sql + where + orderHql(ph), ph.getPage(), ph.getRows());

@@ -140,6 +140,7 @@
 						      </div>
 						  </div>
 								    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/date.js"></script>
+								    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/datagrid-filter.js"></script>
 								    <script type="text/javascript">
 								        $(function(){
 								        	var rootpath = $("#rootpath").val();
@@ -151,6 +152,7 @@
 								                pagination: true,
 								                fitColumns: true,
 								                fit:true,
+								                remoteFilter: true,
 								                rownumbers: true,
 								                onLoadSuccess:function(data)
 												{
@@ -168,13 +170,12 @@
 													  });
 													  $('#btn_prev').unbind().bind('click', function(){
 													  if(pagenumber >1){
-														  console.log(pagenumber)
 													  	   p.pagination('select', --pagenumber);
 													  }
 													  });
 												},
 								            });
-								            
+								            dg.datagrid('enableFilter');
 								            var time = new Date().Format("yyyy-MM-dd hh:mm:ss");
 								            $('#endDateInput').datetimebox('setValue', time);
 								            

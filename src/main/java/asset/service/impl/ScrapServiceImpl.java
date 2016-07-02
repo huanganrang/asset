@@ -48,6 +48,20 @@ public class ScrapServiceImpl implements ScrapService {
 		}
 		
 		hql.append(" and t.assetBeginDate != '' and  t.assetBeginDate < '" + endDate+"'");
+		
+		if(null != paramMap && paramMap.size() > 0){
+			for(Map.Entry<String, String> entry:paramMap.entrySet()){
+				String k = entry.getKey();
+				String value = entry.getValue();
+				if(!"endDate".equals(k)){
+				 if(!"useTime".equals(k) && !"scrapReason".equals(k)){
+					 hql.append(" and t."+entry.getKey()+" like '%"+value+"%' ");
+				 }
+				}
+		}
+		}
+		
+		
 		List<AssetBaseInfo> list = baseDao.find(hql + orderHql(ph), null, ph.getPage(), ph.getRows());
 		return list;
 	}
@@ -63,7 +77,19 @@ public class ScrapServiceImpl implements ScrapService {
 			throw new IllegalArgumentException("param error");
 		}
 		
-		hql.append(" and t.assetBeginDate < '" + endDate+"'");
+		hql.append(" and t.assetBeginDate != ''  and t.assetBeginDate < '" + endDate+"'");
+		
+		if(null != paramMap && paramMap.size() > 0){
+			for(Map.Entry<String, String> entry:paramMap.entrySet()){
+				String k = entry.getKey();
+				String value = entry.getValue();
+				if(!"endDate".equals(k)){
+				 if(!"useTime".equals(k) && !"scrapReason".equals(k)){
+					 hql.append(" and t."+entry.getKey()+" like '%"+value+"%' ");
+				 }
+				}
+		}
+		}
 		return baseDao.count(hql.toString());
 	}
 }

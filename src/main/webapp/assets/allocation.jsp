@@ -135,6 +135,7 @@
 				    		 </div>
 						  </div>
 						  </div>
+						  <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/datagrid-filter.js"></script>
 								    <script type="text/javascript">
 								        $(function(){
 								            var Company = eval($("#company").val());
@@ -149,6 +150,7 @@
 								                pagination: true,
 								                fitColumns: true,
 								                fit:true,
+								                remoteFilter: true,
 								                rownumbers: true,
 								                columns: [[
 								                           	  { field: 'ck', checkbox:true}, 
@@ -191,7 +193,7 @@
 								                },
 								                onClickCell: onClickCell
 								            });
-								            
+								            dg.datagrid('enableFilter');
 								            $("#exportBtn").click(function(){
  												Export('asset', $('#dg'));
 								            });
@@ -252,11 +254,16 @@
 								            $('#dg').datagrid('endEdit', editIndex);
 								            var rows = $('#dg').datagrid('getSelections');
 								            if(rows.length == 0){
-								            	$.messager.alert("提示","请先选择一条记录");
+								            
 								            	return false;
 								            }
 								            for(var i=0; i<rows.length; i++){
-								            	     if(rows[i].allocation_company != ""){
+								            	     if(rows[i].asset_device_status == "已调拨"){
+								            	    		$.messager.alert("提示","已经是已调拨状态");
+								            	    	 return false;
+								            	     }
+								            		 
+								            	     if(rows[i].allocation_company != "" && undefined != rows[i].allocation_company){
 								            			ss += rows[i].asset_id + ':' + rows[i].allocation_company + ',';
 								            	     }
 								            }

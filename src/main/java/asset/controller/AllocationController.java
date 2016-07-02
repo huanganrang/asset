@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import asset.model.AllocationInfo;
 import asset.model.AssetAllocation;
+import asset.model.AssetBaseInfo;
 import asset.model.AssetDic;
 import asset.service.AllocationService;
 import asset.service.AssetBaseServiceI;
@@ -28,6 +29,7 @@ import asset.service.AssetDicServiceI;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * 库存Controller
@@ -67,10 +69,20 @@ public class AllocationController {
 		
 		DataGrid dataGrid = new DataGrid();
 		try {
-			
+			String rulesStr = request.getParameter("filterRules");
 			String key = request.getParameter("key");
 			HashMap<String,String> paramMap = new HashMap<String,String>();
 			paramMap.put("key", key);
+			if(StringUtils.isNotBlank(rulesStr)){
+				JSONArray rules = JSONArray.parseArray(rulesStr);
+				for(int i = 0;i<rules.size();i++){
+					JSONObject jsonObject = rules.getJSONObject(i);
+					String field = jsonObject.getString("field");
+					String value = jsonObject.getString("value");
+					paramMap.put(field, value);
+				}
+			}
+			
 			List<AllocationInfo> searchList = allocationService.searchAllocation(paramMap,ph);
 			if(CollectionUtils.isNotEmpty(searchList)){
 				JSONArray rows = JSONArray.parseArray(JSON.toJSONString(searchList));
@@ -106,16 +118,18 @@ public class AllocationController {
 				String[] split = assetId.split(":");
 				AssetAllocation allo = new AssetAllocation();
 				if(split.length == 2){
-					if("undefined".equals(split[1])){
-						allo.setAllocationCompany("");
-						allo.setAssetId(Integer.parseInt(split[0]));
-						allo.setAllocationDate("");
-					}else{
+					if(!"undefined".equals(split[1])){
 						allo.setAllocationCompany(split[1]);
 						allo.setAssetId(Integer.parseInt(split[0]));
 						allo.setAllocationDate(DateFormatUtils.format(date, "yyyy-MM-dd"));
+						allocationService.addAllocation(allo);
+						//设备状态改为已调拨
+						AssetBaseInfo base = new AssetBaseInfo();
+						base.setAssetId(Integer.parseInt(split[0]));
+						base.setAssetDeviceStatus("已调拨");
+						assetBaseService.updateAssetById(base);
 					}
-					allocationService.addAllocation(allo);
+					
 				}
 			}
 			j.setSuccess(true);

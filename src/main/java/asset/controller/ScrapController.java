@@ -61,6 +61,7 @@ public class ScrapController {
 	public DataGrid scrapData(HttpServletRequest request, PageHelper ph) {
 		
 		DataGrid dataGrid = new DataGrid();
+		String rulesStr = request.getParameter("filterRules");
 		List<AssetBaseInfo> assetList = null;
 		try {
 			
@@ -80,6 +81,17 @@ public class ScrapController {
 			String endDate = DateFormatUtils.format(endYear, format);
 			HashMap<String,String> paramMap = new HashMap<String,String>();
 			paramMap.put("endDate", endDate);
+			
+			if(StringUtils.isNotBlank(rulesStr)){
+				JSONArray rules = JSONArray.parseArray(rulesStr);
+				for(int i = 0;i<rules.size();i++){
+					JSONObject jsonObject = rules.getJSONObject(i);
+					String field = jsonObject.getString("field");
+					String value = jsonObject.getString("value");
+					paramMap.put(field, value);
+				}
+			}
+			
 			assetList = scrapService.getScrapList(paramMap,ph);	
 			if(null != assetList && assetList.size() > 0){
 				JSONArray rows = new JSONArray();
@@ -108,7 +120,6 @@ public class ScrapController {
 				}
 				
 				dataGrid.setRows(rows);
-				System.out.println(rows.toJSONString());
 				dataGrid.setTotal(scrapService.countScrap(paramMap));	
 				return dataGrid;
 			}
